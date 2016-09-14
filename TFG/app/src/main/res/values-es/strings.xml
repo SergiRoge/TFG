@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LostAndFound</string>
+    <string name="btn_foundItem_txt">He perdido</string>
+    <string name="btn_login_txt">Acceder</string>
+    <string name="btn_lostItem_txt">He perdido</string>
+    <string name="btn_register_txt">Registrarse</string>
+    <string name="txt_MainMenu_txt">Que has perdido ?</string>
+    <string name="txt_password_txt">Contraseña</string>
+    <string name="txt_username_txt">Usuario</string>
+</resources>
