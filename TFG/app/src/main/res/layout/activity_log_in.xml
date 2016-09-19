@@ -16,15 +16,17 @@
         android:id="@+id/imageView" />
 
 
+
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/btn_login_txt"
         android:id="@+id/btn_login"
-        android:layout_below="@+id/editText2"
-        android:layout_alignStart="@+id/editText2"
+        android:layout_below="@+id/txt_password"
+        android:layout_alignStart="@+id/txt_password"
         android:layout_marginTop="27dp"
-        android:layout_alignEnd="@+id/editText2" />
+        android:layout_alignEnd="@+id/txt_password" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,7 +40,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
+        android:id="@+id/txt_username"
         android:hint="@string/txt_username_txt"
         android:layout_below="@+id/imageView"
         android:layout_alignStart="@+id/imageView"
@@ -51,10 +53,10 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:id="@+id/editText2"
-        android:layout_below="@+id/editText"
-        android:layout_alignStart="@+id/editText"
+        android:id="@+id/txt_password"
+        android:layout_below="@+id/txt_username"
+        android:layout_alignStart="@+id/txt_username"
         android:layout_marginTop="27dp"
-        android:layout_alignEnd="@+id/editText" />
+        android:layout_alignEnd="@+id/txt_username" />
 
 </RelativeLayout>

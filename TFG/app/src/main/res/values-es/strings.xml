@@ -8,4 +8,12 @@
     <string name="txt_MainMenu_txt">Que has perdido ?</string>
     <string name="txt_password_txt">Contraseña</string>
     <string name="txt_username_txt">Usuario</string>
+    <string name="txt_lostItem">He perdido</string>
+    <string name="lbl_MainMenu_txt">Que has perdido ?</string>
+    <string name="lbl_LostScreen_txt">Que has perdido ?</string>
+    <string name="hint_itemType_txt">¿Que has perdido ?</string>
+    <string name="btn_next_txt">Siguiente</string>
+    <string name="hint_itemBrand_txt">¿Que marca era?</string>
+    <string name="hint_itemColor_txt">¿De que color era ?</string>
+    <string name="hint_itemMaterial_txt">¿De que material era ?</string>
 </resources>

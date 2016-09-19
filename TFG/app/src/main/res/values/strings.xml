@@ -4,8 +4,16 @@
     <string name="txt_password_txt">Password</string>
     <string name="btn_login_txt">Login</string>
     <string name="btn_register_txt">Register</string>
-    <string name="txt_MainMenu_txt">What did You lost ?</string>
+    <string name="lbl_LostScreen_txt">What did You lost ?</string>
     <string name="btn_foundItem_txt">I Found</string>
     <string name="btn_lostItem_txt">I Lost</string>
+    <string name="txt_lostItem_txt">I Lost</string>
+    <string name="hint_itemType_txt">What did You lost ?</string>
+    <string name="hint_itemColor_txt">What color was?</string>
+    <string name="hint_itemBrand_txt">What brand was ?</string>
+    <string name="hint_itemMaterial_txt">What material was?</string>
+    <string name="lbl_MainMenu_txt">What did You lost ?</string>
+    <string name="btn_next_txt">Next</string>
+
 
 </resources>
