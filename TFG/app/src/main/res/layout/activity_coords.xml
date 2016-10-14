@@ -35,7 +35,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="X = "
-                    android:id="@+id/textView"
+                    android:id="@+id/txtCoordX1"
                     android:layout_weight="0.58" />
 
                 <TextView
@@ -43,14 +43,14 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="Y = "
-                    android:id="@+id/textView2"
+                    android:id="@+id/txtCoordY1"
                     android:layout_weight="0.49" />
 
                 <Button
                     android:layout_width="84dp"
                     android:layout_height="wrap_content"
                     android:text="New"
-                    android:id="@+id/button2" />
+                    android:id="@+id/btn_New1" />
             </LinearLayout>
 
             <LinearLayout
@@ -67,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="X = "
-                    android:id="@+id/textView3"
+                    android:id="@+id/txtCoordX2"
                     android:layout_weight="0.58" />
 
                 <TextView
@@ -75,14 +75,14 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="Y = "
-                    android:id="@+id/textView4"
+                    android:id="@+id/txtCoordY2"
                     android:layout_weight="0.49" />
 
                 <Button
                     android:layout_width="84dp"
                     android:layout_height="wrap_content"
                     android:text="New"
-                    android:id="@+id/button3" />
+                    android:id="@+id/btn_New2" />
             </LinearLayout>
 
             <LinearLayout
@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="X = "
-                    android:id="@+id/textView5"
+                    android:id="@+id/txtCoordX3"
                     android:layout_weight="0.58" />
 
                 <TextView
@@ -108,23 +108,31 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="Y = "
-                    android:id="@+id/textView6"
+                    android:id="@+id/txtCoordY3"
                     android:layout_weight="0.49" />
 
                 <Button
                     android:layout_width="84dp"
                     android:layout_height="wrap_content"
                     android:text="New"
-                    android:id="@+id/button4" />
+                    android:id="@+id/btn_New3" />
             </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Large Text"
-                android:id="@+id/lbl_coords_txt"
+                android:id="@+id/lblCoords"
+                android:text="@string/lbl_coords_txt"
                 android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_next_txt"
+                android:id="@+id/btn_next"
+                android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true" />
         </RelativeLayout>
 

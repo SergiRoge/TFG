@@ -1,19 +1,43 @@
 <resources>
+
+    <!-- Login Screen-->
     <string name="app_name">LostAndFound</string>
     <string name="txt_username_txt">Username</string>
     <string name="txt_password_txt">Password</string>
     <string name="btn_login_txt">Login</string>
     <string name="btn_register_txt">Register</string>
+
+
+    <!-- Main Screen-->
     <string name="lbl_LostScreen_txt">What did You lost ?</string>
     <string name="btn_foundItem_txt">I Found</string>
     <string name="btn_lostItem_txt">I Lost</string>
+
+
     <string name="txt_lostItem_txt">I Lost</string>
     <string name="hint_itemType_txt">What did You lost ?</string>
+    <string name="hint_itemTypeFound_txt">What did You found ?</string>
     <string name="hint_itemColor_txt">What color was?</string>
     <string name="hint_itemBrand_txt">What brand was ?</string>
     <string name="hint_itemMaterial_txt">What material was?</string>
+
+
     <string name="lbl_MainMenu_txt">What did You lost ?</string>
+    <string name="lbl_MainMenuFound_txt">What did You found ?</string>
     <string name="btn_next_txt">Next</string>
+    <string name="lbl_coords_txt">Introduce up to 3 positions </string>
+    <string name="btn_save_item">Save </string>
+    <string name="lbl_extra_information">Add some extra information (Optional) </string>
+    <string name="lbl_txt_back">Back </string>
+
+
+    <!-- User Registration Screen-->
+    <string name="lbl_register_scren">Register</string>
+    <string name="hint_username">Username</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_email">email</string>
+    <string name="txt_extraInformation">Do you want to add some extra information ?</string>
 
 
 </resources>
+

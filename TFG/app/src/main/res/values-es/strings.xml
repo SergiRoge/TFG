@@ -16,4 +16,9 @@
     <string name="hint_itemBrand_txt">¿Que marca era?</string>
     <string name="hint_itemColor_txt">¿De que color era ?</string>
     <string name="hint_itemMaterial_txt">¿De que material era ?</string>
+    <string name="lbl_coords_txt">Introduce hasta 3 posiciones</string>
+    <string name="lbl_extra_information">Añade información adicional (Opcional)</string>
+    <string name="hint_itemTypeFound_txt">¿Que has encontrado ?</string>
+    <string name="lbl_register_screne">Registro</string>
+    <string name="txt_extraInformation">¿Quieres añadir información adicional ?</string>
 </resources>
