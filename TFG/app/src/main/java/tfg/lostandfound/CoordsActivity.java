@@ -48,8 +48,8 @@ public class CoordsActivity extends AppCompatActivity {
             public void onClick(View v)
             {
                 //Launch Register User Activity
-                //Intent I = new Intent(CoordsActivity.this);
-                //startActivity(I);
+                Intent I = new Intent(CoordsActivity.this,NewCoordActivity.class);
+                startActivity(I);
             }
         });
 
