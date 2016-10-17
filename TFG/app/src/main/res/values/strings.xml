@@ -20,6 +20,11 @@
     <string name="hint_itemColor_txt">What color was?</string>
     <string name="hint_itemBrand_txt">What brand was ?</string>
     <string name="hint_itemMaterial_txt">What material was?</string>
+    <string name="hint_NewCoord_txt">Add a coordenate</string>
+    <string name="hint_x_coord">X coordinate</string>
+    <string name="hint_y_coord">Y Coordinate</string>
+
+    hint_y_coord
 
 
     <string name="lbl_MainMenu_txt">What did You lost ?</string>

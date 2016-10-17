@@ -1,5 +1,6 @@
 package tfg.lostandfound;
 
+
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,13 +8,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import Connection.Connection;
+
+import static Auxiliar.Auxiliar.showMessageError;
+
+
 public class LogInActivity extends AppCompatActivity {
 
 
     Button btnRegister;
     Button btnLogin;
-    EditText txtUser;
-    EditText txtPassword;
+
+    Connection connection;
 
 
 
@@ -25,8 +31,44 @@ public class LogInActivity extends AppCompatActivity {
 
         btnRegister = (Button) findViewById(R.id.btn_register);
         btnLogin = (Button) findViewById(R.id.btn_login);
-        txtUser = (EditText) findViewById(R.id.txt_username);
-        txtPassword = (EditText) findViewById(R.id.txt_password);
+
+        connection = new Connection();
+
+
+        /*
+            Listener for Login button
+         */
+        btnLogin.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v)
+            {
+
+                EditText txtEmail = (EditText) findViewById(R.id.txt_email);
+                EditText txtPassword = (EditText) findViewById(R.id.txt_password);
+
+                String strTxtEmail = txtEmail.getText().toString();
+                String strTxtPassword = txtPassword.getText().toString();
+
+
+                int intError = checkUser(strTxtEmail, strTxtPassword);
+
+                if(intError == 0)
+                {
+                    Intent I = new Intent(LogInActivity.this, MainActivity.class);
+                    startActivity(I);
+                }
+                else
+                {
+                    showMessageError(intError);
+
+                }
+
+
+
+
+            }
+        });
+
 
         /*
             Listener for Register button
@@ -40,22 +82,12 @@ public class LogInActivity extends AppCompatActivity {
                 startActivity(I);
             }
         });
-        /*
-            Listener for Login button
-         */
-        btnLogin.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v)
-            {
-                //Launch Main Activity
-                Intent I = new Intent(LogInActivity.this, MainActivity.class);
-                startActivity(I);
-
-
-
-            }
-        });
-
     }
 
+
+    private int checkUser(String pstrTxtUser, String pstrTxtPassword)
+    {
+        //TODO Logica de comprobacion de usuario
+       return 0;
+    }
 }

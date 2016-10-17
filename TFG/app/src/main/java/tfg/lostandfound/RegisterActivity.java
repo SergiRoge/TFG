@@ -30,12 +30,23 @@ public class RegisterActivity extends AppCompatActivity {
         txtPassword = (EditText) findViewById(R.id.txt_password);
         txtEmail = (EditText) findViewById(R.id.txt_email);
 
+        String strTxtUsername = txtUsername.getText().toString();
+        String strTxtPassword = txtPassword.getText().toString();
+        String strTxtEmail = txtEmail.getText().toString();
+
         /*
             Listener for Save button
          */
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+
+
+
+
+
                 //Launch Register User Activity
                 Intent I = new Intent(RegisterActivity.this, MainActivity.class);
                 startActivity(I);

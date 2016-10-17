@@ -1,16 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin">
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:map="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:hint="@string/hint_NewCoord_txt"
+        android:id="@+id/lbl_lost_screen"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="36dp" />
+
+    <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="500dp"
-        android:layout_height="500dp"
-        tools:context="tfg.lostandfound.NewCoordActivity" />
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        tools:context="tfg.lostandfound.NewCoordActivity"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:hint="@string/hint_x_coord"
+        android:id="@+id/txt_x_coord"
+        android:layout_below="@+id/map"
+        android:layout_alignBaseline="@+id/txt_y_coord"
+        android:layout_alignBottom="@+id/txt_y_coord"
+        android:layout_alignStart="@+id/map" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_save_item"
+        android:id="@+id/btn_save_coord"
+        android:layout_marginTop="14dp"
+        android:layout_below="@+id/txt_x_coord"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:hint="@string/hint_y_coord"
+        android:id="@+id/txt_y_coord"
+        android:layout_below="@+id/map"
+        android:layout_alignEnd="@+id/map" />
 
 </RelativeLayout>
 

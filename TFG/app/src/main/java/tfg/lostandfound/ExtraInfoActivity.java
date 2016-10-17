@@ -27,6 +27,7 @@ public class ExtraInfoActivity extends AppCompatActivity {
             {
                 //Launch Register User Activity
                 Intent I = new Intent(ExtraInfoActivity.this, MainActivity.class);
+                I.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(I);
             }
         });

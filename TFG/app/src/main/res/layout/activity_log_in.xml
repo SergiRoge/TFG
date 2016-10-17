@@ -37,8 +37,8 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/txt_username"
-        android:hint="@string/txt_username_txt"
+        android:id="@+id/txt_email"
+        android:hint="@string/hint_email"
         android:layout_below="@+id/imageView"
         android:layout_alignStart="@+id/imageView"
         android:layout_marginTop="30dp"
@@ -51,9 +51,9 @@
         android:inputType="textPassword"
         android:ems="10"
         android:id="@+id/txt_password"
-        android:layout_below="@+id/txt_username"
-        android:layout_alignStart="@+id/txt_username"
+        android:layout_below="@+id/txt_email"
+        android:layout_alignStart="@+id/txt_email"
         android:layout_marginTop="27dp"
-        android:layout_alignEnd="@+id/txt_username" />
+        android:layout_alignEnd="@+id/txt_email" />
 
 </RelativeLayout>
