@@ -43,6 +43,10 @@ public final class Auxiliar {
                 strTitle = WARNING;
                 strMessage = "The user/ password is incorrect";
                 break;
+            case EMAIL_ALREADY_REGISTERED:
+                strTitle = WARNING;
+                strMessage = "The email is already registered";
+                break;
             default:
                 break;
         }
@@ -51,7 +55,6 @@ public final class Auxiliar {
         alertDialog.setTitle(strTitle);
         alertDialog.setMessage(strMessage);
         alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
-        Log.d("Context ", " -> " + context);
         alertDialog.setPositiveButton(
                 strButtonMessage,
                 new DialogInterface.OnClickListener() {

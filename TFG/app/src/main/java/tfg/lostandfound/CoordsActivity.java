@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import Classes.Item;
+
 import static Auxiliar.Constants.*;
 
 public class CoordsActivity extends AppCompatActivity {
@@ -40,6 +42,9 @@ public class CoordsActivity extends AppCompatActivity {
 
         String getExtraActivityFrom = bundle.getString("Activity");
 
+        // To retrieve object in second Activity
+        Item item = (Item) getIntent().getSerializableExtra("Item");
+        Log.d("Item when lost : ", "--" + item.getIntWhen());
         try
         {
             if(getExtraActivityFrom.equals("LostItem")) {

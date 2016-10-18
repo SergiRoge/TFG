@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -57,13 +62,25 @@
         android:layout_alignEnd="@+id/txt_ItemBrand"
         android:hint="@string/hint_itemMaterial_txt" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_next_txt"
-        android:id="@+id/btn_Next"
-        android:layout_below="@+id/txt_ItemMaterial"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="35dp" />
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="29dp"
+            android:id="@+id/spin_when"
+            android:layout_below="@+id/txt_ItemMaterial"
+            android:layout_alignStart="@+id/txt_ItemMaterial"
+            android:layout_alignEnd="@+id/txt_ItemMaterial"/>
 
-</RelativeLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_next_txt"
+            android:id="@+id/btn_Next"
+            android:layout_below="@+id/spin_when"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+</ScrollView>
