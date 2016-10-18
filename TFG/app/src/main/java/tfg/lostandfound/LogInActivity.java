@@ -7,10 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import Controller.Controller;
 
-import Connection.Connection;
-
-import static Auxiliar.Auxiliar.showMessageError;
+import static Auxiliar.Auxiliar.*;
+import static Auxiliar.Constants.*;
 
 
 public class LogInActivity extends AppCompatActivity {
@@ -18,8 +18,8 @@ public class LogInActivity extends AppCompatActivity {
 
     Button btnRegister;
     Button btnLogin;
+    Controller controller;
 
-    Connection connection;
 
 
 
@@ -29,10 +29,10 @@ public class LogInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_log_in);
 
 
+
         btnRegister = (Button) findViewById(R.id.btn_register);
         btnLogin = (Button) findViewById(R.id.btn_login);
-
-        connection = new Connection();
+        controller = new Controller();
 
 
         /*
@@ -49,23 +49,22 @@ public class LogInActivity extends AppCompatActivity {
                 String strTxtEmail = txtEmail.getText().toString();
                 String strTxtPassword = txtPassword.getText().toString();
 
+                //Call to controller to check if user exists or not
 
-                int intError = checkUser(strTxtEmail, strTxtPassword);
+                int intError = controller.checkIfUserExists(strTxtEmail, strTxtPassword);
 
-                if(intError == 0)
+
+                //intError = SERVER_ERROR;
+                //intError = INCORRECT_USER_PASSWORD;
+                if(intError == OK)
                 {
                     Intent I = new Intent(LogInActivity.this, MainActivity.class);
                     startActivity(I);
                 }
                 else
                 {
-                    showMessageError(intError);
-
+                    showMessageError(LogInActivity.this,intError);
                 }
-
-
-
-
             }
         });
 
@@ -84,10 +83,4 @@ public class LogInActivity extends AppCompatActivity {
         });
     }
 
-
-    private int checkUser(String pstrTxtUser, String pstrTxtPassword)
-    {
-        //TODO Logica de comprobacion de usuario
-       return 0;
-    }
 }

@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import static Auxiliar.Constants.*;
+
 public class CoordsActivity extends AppCompatActivity {
 
 
@@ -26,11 +28,7 @@ public class CoordsActivity extends AppCompatActivity {
 
     String strFromActivity = "FoundItem";
 
-    private final static int OK = 1;
 
-    private final static int BUTTON_1 = 1;
-    private final static int BUTTON_2 = 2;
-    private final static int BUTTON_3 = 3;
 
 
     @Override
