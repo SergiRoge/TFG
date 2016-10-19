@@ -3,6 +3,7 @@ package tfg.lostandfound;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -22,12 +23,24 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Intent intent = getIntent();
 
-        btnChats = (ImageButton) findViewById(R.id.btn_chats);
-        btnArchive = (ImageButton) findViewById(R.id.btn_archive);
-        btnOptions = (ImageButton) findViewById(R.id.btn_options);
-        btnILost = (Button) findViewById(R.id.btn_lost);
-        btnIFound = (Button) findViewById(R.id.btn_found);
+        initializeComponents();
+        initializeListeners();
 
+        //TODO Crear demonio que estará eternamente comprobando
+
+    }
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        //TODO Manage of the item saving
+
+    }
+    /**
+     *  Method that initialize all the listeners related to the components
+     */
+    public void initializeListeners()
+    {
         /*
             Listener for Chats button
          */
@@ -36,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v)
             {
                 //Launch Register User Activity
+                //TODO CHATS SCREEN
                 Intent I = new Intent(MainActivity.this, ChatsActivity.class);
                 startActivity(I);
             }
@@ -48,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v)
             {
                 //Launch Register User Activity
+                //TODO ARCHIVE SCREEN
                 Intent I = new Intent(MainActivity.this, ArchiveActivity.class);
                 startActivity(I);
             }
@@ -60,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v)
             {
                 //Launch Register User Activity
+                //TODO OPTIONS SCREEN
                 Intent I = new Intent(MainActivity.this, OptionsActivity.class);
                 startActivity(I);
             }
@@ -89,8 +105,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
 
-        //TODO Crear demonio que estará eternamente comprobando
-
+    /**
+     *  Method that initialize all components that exist in the activity
+     */
+    public void initializeComponents()
+    {
+        btnChats = (ImageButton) findViewById(R.id.btn_chats);
+        btnArchive = (ImageButton) findViewById(R.id.btn_archive);
+        btnOptions = (ImageButton) findViewById(R.id.btn_options);
+        btnILost = (Button) findViewById(R.id.btn_lost);
+        btnIFound = (Button) findViewById(R.id.btn_found);
     }
 }

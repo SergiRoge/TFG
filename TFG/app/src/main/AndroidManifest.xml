@@ -69,8 +69,10 @@
             android:label="@string/title_activity_new_coord"
             android:launchMode="singleInstance" />
 
+        <!--<service
             android:name="Services.NotificationDaemon"
             android:enabled="true"
+            android:exported="true"></service>-->
     </application>
 
 </manifest>

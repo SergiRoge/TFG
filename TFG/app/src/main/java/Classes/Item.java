@@ -1,6 +1,7 @@
 package Classes;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import DatabaseAuxiliar.DatabaseObject;
 
@@ -12,11 +13,18 @@ public class Item extends DatabaseObject implements Serializable {
 
 
 
-    private String strItemType      = "";
-    private String strItemColor     = "";
-    private String strItemBrand     = "";
-    private String strItemMaterial  = "";
-    private int intWhen             = 0;
+
+    private ArrayList<Coordinate>  arrayListCoordsAdded;
+    private String strItemType = "";
+    private String strItemColor = "";
+    private String strItemBrand = "";
+    private String strItemMaterial = "";
+    private int intWhen = 0;
+
+
+
+    private String strDescription= "";
+
 
     public Item(String pstrItemType, String pstrItemColor, String pstrItemBrand, String pstrItemMaterial, int pintWhen)
     {
@@ -25,6 +33,7 @@ public class Item extends DatabaseObject implements Serializable {
         strItemBrand    = pstrItemBrand;
         strItemMaterial = pstrItemMaterial;
         intWhen         = pintWhen;
+        arrayListCoordsAdded = new ArrayList<Coordinate>(3);
     }
 
 
@@ -80,5 +89,24 @@ public class Item extends DatabaseObject implements Serializable {
         this.intWhen = intWhen;
     }
 
+    public String getStrDescription() {
+        return strDescription;
+    }
 
+    public void setStrDescription(String strDescription) {
+        this.strDescription = strDescription;
+    }
+    public ArrayList<Coordinate> getArrayListCoordsAdded() {
+        return arrayListCoordsAdded;
+    }
+
+    public void setArrayListCoordsAdded(ArrayList<Coordinate> arrayListCoordsAdded) {
+        this.arrayListCoordsAdded = arrayListCoordsAdded;
+    }
+
+    public void addCoordinateToArray(Coordinate pCoordinate)
+
+    {
+        arrayListCoordsAdded.add(pCoordinate);
+    }
 }

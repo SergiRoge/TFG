@@ -15,11 +15,12 @@ import static Auxiliar.Constants.*;
 
 public class LogInActivity extends AppCompatActivity {
 
-
+    /**
+     * All the components needed
+     */
     Button btnRegister;
     Button btnLogin;
     Controller controller;
-
 
 
 
@@ -28,15 +29,27 @@ public class LogInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
+        initializeComponents();
+        initializeListeners();
+    }
 
-
+    /**
+     *  Method that initialize all components that exist in the activity
+     */
+    public void initializeComponents()
+    {
         btnRegister = (Button) findViewById(R.id.btn_register);
         btnLogin = (Button) findViewById(R.id.btn_login);
         controller = new Controller();
+    }
 
-
-        /*
-            Listener for Login button
+    /**
+     *  Method that initialize all the listeners related to the components
+     */
+    public void initializeListeners()
+    {
+        /**
+         *  Listener for Login button
          */
         btnLogin.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -53,9 +66,6 @@ public class LogInActivity extends AppCompatActivity {
 
                 int intError = controller.checkIfUserExists(strTxtEmail, strTxtPassword);
 
-
-                //intError = SERVER_ERROR;
-                //intError = INCORRECT_USER_PASSWORD;
                 if(intError == OK)
                 {
                     Intent I = new Intent(LogInActivity.this, MainActivity.class);
@@ -69,8 +79,8 @@ public class LogInActivity extends AppCompatActivity {
         });
 
 
-        /*
-            Listener for Register button
+        /**
+         * Listener for Register button
          */
         btnRegister.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -82,5 +92,4 @@ public class LogInActivity extends AppCompatActivity {
             }
         });
     }
-
 }

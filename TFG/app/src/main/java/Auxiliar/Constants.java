@@ -21,7 +21,7 @@ public final class Constants {
     public final static int BUTTON_2 = 2;
     public final static int BUTTON_3 = 3;
 
-    //When
+     //When
 
     public final static int TODAY           = 0;
     public final static int YESTERDAY       = 1;

@@ -15,6 +15,10 @@ import static Auxiliar.Constants.SERVER_ERROR;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    /**
+     * All the components needed
+     */
+
     Button btnSave;
     EditText txtUsername;
     EditText txtPassword;
@@ -28,14 +32,17 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        Intent intent = getIntent();
+        initializeComponents();
+        initializeListeners();
 
-        controller = new Controller();
+    }
 
-
-        btnSave = (Button) findViewById(R.id.btn_save);
-
-        /*
+    /**
+     *  Method that initialize all the listeners related to the components
+     */
+    public void initializeListeners()
+    {
+         /*
             Listener for Save button
          */
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -51,11 +58,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String strTxtPassword = txtPassword.getText().toString();
                 String strTxtEmail = txtEmail.getText().toString();
 
-
                 int intError = controller.checkIfUserExists(strTxtEmail, strTxtPassword);
-                //intError = SERVER_ERROR;
-                //intError = INCORRECT_USER_PASSWORD;
-                //intError = EMAIL_ALREADY_REGISTERED;
 
                 //If an OK is returned, the user already exists, an error is shown
                 if(intError == OK)
@@ -84,7 +87,13 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
-
-
+    }
+    /**
+     *  Method that initialize all components that exist in the activity
+     */
+    public void initializeComponents()
+    {
+        controller = new Controller();
+        btnSave = (Button) findViewById(R.id.btn_save);
     }
 }
