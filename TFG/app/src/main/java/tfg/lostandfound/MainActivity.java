@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import Classes.Item;
+import Controller.Controller;
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -16,6 +19,10 @@ public class MainActivity extends AppCompatActivity {
     ImageButton btnOptions;
     Button btnILost;
     Button btnIFound;
+
+    Controller controller;
+
+    Item item = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +40,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume()
     {
         super.onResume();
-        //TODO Manage of the item saving
+
+        item = (Item) getIntent().getSerializableExtra("Item");
+        if(item != null)
+        {
+            //Aquí tenemos el item, dependiendo si es Lost o si es Found haremos una cosa u otra
+
+
+            controller.saveItem(item);
+        }
 
     }
     /**
@@ -77,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 //Launch Register User Activity
                 //TODO OPTIONS SCREEN
                 Intent I = new Intent(MainActivity.this, OptionsActivity.class);
+
                 startActivity(I);
             }
         });
@@ -88,7 +104,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v)
             {
                 //Launch Register User Activity
-                Intent I = new Intent(MainActivity.this, LostItemActivity.class);
+                Log.d("Button pressed","Lost Button");
+                Intent I = new Intent(MainActivity.this, RegisterItem.class);
+                I.putExtra("ItemType","Lost");
                 startActivity(I);
             }
         });
@@ -100,7 +118,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v)
             {
                 //Launch Register User Activity
-                Intent I = new Intent(MainActivity.this, FoundItemActivity.class);
+                Log.d("Button pressed","Found Button");
+                Intent I = new Intent(MainActivity.this, RegisterItem.class);
+                I.putExtra("ItemType","Found");
                 startActivity(I);
             }
         });
@@ -112,6 +132,8 @@ public class MainActivity extends AppCompatActivity {
      */
     public void initializeComponents()
     {
+        controller = new Controller();
+
         btnChats = (ImageButton) findViewById(R.id.btn_chats);
         btnArchive = (ImageButton) findViewById(R.id.btn_archive);
         btnOptions = (ImageButton) findViewById(R.id.btn_options);

@@ -1,7 +1,6 @@
 package tfg.lostandfound;
 
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,28 +15,32 @@ import java.util.ArrayList;
 import Classes.Item;
 import Controller.Controller;
 
-import static Auxiliar.Constants.*;
-
-public class LostItemActivity extends AppCompatActivity {
+public class RegisterItem extends AppCompatActivity {
 
     /**
      * All the components needed
      */
-    Item item = null;
-    Controller controller;
-    EditText txtLost;
-    EditText txtColor;
-    EditText txtBrand;
-    EditText txtMaterial;
-    Button btnNext;
-    Spinner spinnerWhen;
+    private Item item = null;
+    private Controller controller;
+    private EditText txtLost;
+    private EditText txtColor;
+    private EditText txtBrand;
+    private EditText txtMaterial;
+    private Button btnNext;
+    private Spinner spinnerWhen;
+    private String strItemTypeStatus;   //Found or Lost
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lost_item);
+        setContentView(R.layout.activity_register_item);
 
         controller = new Controller();
+
+        final Bundle bundle = getIntent().getExtras();
+        strItemTypeStatus = bundle.getString("ItemType");
+
+
 
         initializeComponents();
         initializeListeners();
@@ -90,11 +93,10 @@ public class LostItemActivity extends AppCompatActivity {
                 int intOption = spinnerWhen.getSelectedItemPosition();
 
                 item = controller.createItem(strItemType, strItemColor, strItemBrand,
-                        strItemMaterial, intOption);
+                        strItemMaterial, intOption, strItemTypeStatus);
 
-                Intent I = new Intent(LostItemActivity.this, CoordsActivity.class);
+                Intent I = new Intent(RegisterItem.this, CoordsActivity.class);
                 I.putExtra("Item", (Serializable) item);
-                I.putExtra("Activity", "LostItem");
                 startActivity(I);
             }
         });

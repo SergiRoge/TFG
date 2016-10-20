@@ -25,21 +25,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--
+            android:launchMode="singleInstance"-->
         <activity
-            android:name=".MainActivity"
-            android:launchMode="singleTop" />
+            android:name=".MainActivity" />
         <activity
-            android:name=".LostItemActivity"
-            android:launchMode="singleInstance" />
+            android:name=".RegisterItem" />
         <activity
-            android:name=".CoordsActivity"
-            android:launchMode="singleInstance" />
+            android:name=".CoordsActivity"/>
         <activity
-            android:name=".FoundItemActivity"
-            android:launchMode="singleInstance" />
-        <activity
-            android:name=".ExtraInfoActivity"
-            android:launchMode="singleInstance" />
+            android:name=".ExtraInfoActivity" />
         <activity
             android:name=".ChatsActivity"
             android:launchMode="singleInstance" />
@@ -47,8 +42,7 @@
             android:name=".ArchiveActivity"
             android:launchMode="singleInstance" />
         <activity
-            android:name=".RegisterActivity"
-            android:launchMode="singleInstance" />
+            android:name=".RegisterActivity" />
         <activity
             android:name=".OptionsActivity"
             android:launchMode="singleInstance" />

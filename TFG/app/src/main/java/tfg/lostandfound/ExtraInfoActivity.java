@@ -7,10 +7,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.io.Serializable;
+
+import Classes.Item;
+
 public class ExtraInfoActivity extends AppCompatActivity {
 
+    /**
+     * All components needed
+     */
     Button btnSave;
     EditText txtExtraInfo;
+    Item item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +28,7 @@ public class ExtraInfoActivity extends AppCompatActivity {
         initializeComponents();
         initializeListeners();
 
-
+        item = (Item) getIntent().getSerializableExtra("Item");
 
     }
 
@@ -46,7 +54,10 @@ public class ExtraInfoActivity extends AppCompatActivity {
             {
                 //Launch Register User Activity
                 Intent I = new Intent(ExtraInfoActivity.this, MainActivity.class);
+                item.setStrDescription(txtExtraInfo.getText().toString());
+                I.putExtra("Item", (Serializable) item);
                 I.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                finishAffinity();
                 startActivity(I);
             }
         });

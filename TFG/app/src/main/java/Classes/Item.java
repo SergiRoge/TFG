@@ -20,19 +20,18 @@ public class Item extends DatabaseObject implements Serializable {
     private String strItemBrand = "";
     private String strItemMaterial = "";
     private int intWhen = 0;
-
-
-
     private String strDescription= "";
 
+    private String strStatus;
 
-    public Item(String pstrItemType, String pstrItemColor, String pstrItemBrand, String pstrItemMaterial, int pintWhen)
+    public Item(String pstrItemType, String pstrItemColor, String pstrItemBrand, String pstrItemMaterial, int pintWhen, String pstrStatus)
     {
         strItemType     = pstrItemType;
         strItemColor    = pstrItemColor;
         strItemBrand    = pstrItemBrand;
         strItemMaterial = pstrItemMaterial;
         intWhen         = pintWhen;
+        strStatus      = pstrStatus;
         arrayListCoordsAdded = new ArrayList<Coordinate>(3);
     }
 
@@ -109,4 +108,13 @@ public class Item extends DatabaseObject implements Serializable {
     {
         arrayListCoordsAdded.add(pCoordinate);
     }
+
+    public String getStrStatus() {
+        return strStatus;
+    }
+
+    public void setStrStatus(String strStatus) {
+        this.strStatus = strStatus;
+    }
+
 }

@@ -1,5 +1,7 @@
 package Controller;
 
+import android.util.Log;
+
 import Classes.Item;
 import Connection.ConnectionThread;
 
@@ -30,6 +32,14 @@ public class Controller {
         return OK;
     }
 
+    public int saveItem(Item pItem)
+    {
+
+        Log.d("ItemStatus ", "---------" + pItem.getStrStatus());
+        return OK;
+    }
+
+
     /**
      *  Method that creates and return an item
      *
@@ -40,9 +50,9 @@ public class Controller {
      * @param pintWhen          Integer When the item was lost
      * @return (Item) item      The item created
      */
-    public Item createItem(String pstrItemType, String pstrItemColor, String pstrItemBrand, String pstrItemMaterial, int pintWhen)
+    public Item createItem(String pstrItemType, String pstrItemColor, String pstrItemBrand, String pstrItemMaterial, int pintWhen, String pstrStatus)
     {
-        Item item = new Item(pstrItemType, pstrItemColor, pstrItemBrand, pstrItemMaterial, pintWhen);
+        Item item = new Item(pstrItemType, pstrItemColor, pstrItemBrand, pstrItemMaterial, pintWhen, pstrStatus);
         return item;
     }
 
