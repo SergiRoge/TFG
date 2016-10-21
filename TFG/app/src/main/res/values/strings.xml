@@ -34,6 +34,8 @@
     <string name="btn_save_item">Save </string>
     <string name="lbl_extra_information">Add some extra information (Optional) </string>
     <string name="lbl_txt_back">Back </string>
+    <string name="txt_lbl_archive_screen">Archive </string>
+
 
 
     <!-- User Registration Screen-->

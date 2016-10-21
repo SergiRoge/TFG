@@ -21,9 +21,13 @@ public class Item extends DatabaseObject implements Serializable {
     private String strItemMaterial = "";
     private int intWhen = 0;
     private String strDescription= "";
-
     private String strStatus;
 
+
+    public  Item()
+    {
+
+    }
     public Item(String pstrItemType, String pstrItemColor, String pstrItemBrand, String pstrItemMaterial, int pintWhen, String pstrStatus)
     {
         strItemType     = pstrItemType;

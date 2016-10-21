@@ -7,6 +7,8 @@ import android.graphics.drawable.Icon;
 import android.util.Log;
 
 
+import Classes.Item;
+import Classes.ItemViewList;
 import Connection.Connection;
 
 import static Auxiliar.Constants.*;
@@ -23,6 +25,21 @@ public final class Auxiliar {
     private Auxiliar()
     {
 
+    }
+
+    public static Item createRandomItem(int intItem)
+    {
+        //String pstrItemType, String pstrItemColor, String pstrItemBrand, String pstrItemMaterial, int pintWhen, String pstrStatus
+        Item item = new Item("Scarf_"+intItem,"Black_"+intItem,"Nike_"+intItem,"Cloth_"+intItem,1,"Lost");
+        return item;
+
+    }
+    public static String  createRandomItemViewListItem(int intItem)
+    {
+        //String pstrItemType, String pstrItemColor, String pstrItemBrand, String pstrItemMaterial, int pintWhen, String pstrStatus
+        //R.drawable.icon_found
+        return ("Scarf_"+intItem);
+        // +", Black "+ intItem +", Nike "+intItem +", Cloth "+intItem + " Lost"
     }
 
 

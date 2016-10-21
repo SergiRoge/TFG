@@ -2,9 +2,16 @@ package Controller;
 
 import android.util.Log;
 
-import Classes.Item;
-import Connection.ConnectionThread;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
+import Classes.Item;
+import Classes.ItemViewList;
+import Connection.ConnectionThread;
+import tfg.lostandfound.R;
+
+import static Auxiliar.Auxiliar.*;
+import static Auxiliar.Auxiliar.createRandomItemViewListItem;
 import static Auxiliar.Constants.*;
 
 /**
@@ -17,6 +24,34 @@ public class Controller {
     {
 
     }
+
+
+    public ItemViewList[] getListItems()
+    {
+
+        //Metodo que llamara a servidor y recibirá en JSon los datos de los items
+
+        ItemViewList item_data[] = new ItemViewList[10];
+        Item item = new Item();
+        for(int iterator = 0; iterator < 10; iterator++)
+        {
+            int intIcon;
+            if(item.getStrItemBrand().equals("Lost"))
+            {
+                intIcon = R.drawable.icon_lost;
+            }
+            else
+            {
+                intIcon = R.drawable.icon_found;
+            }
+
+            item_data[iterator] = new ItemViewList(intIcon, createRandomItemViewListItem(iterator), item);
+
+        }
+        return item_data;
+
+    }
+
 
 
     public int checkIfUserExists(String pstrTxtEmail, String pstrTxtPassword)
