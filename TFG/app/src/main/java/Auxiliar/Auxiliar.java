@@ -7,6 +7,11 @@ import android.graphics.drawable.Icon;
 import android.util.Log;
 
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 import Classes.Item;
 import Classes.ItemViewList;
 import Connection.Connection;
@@ -42,6 +47,26 @@ public final class Auxiliar {
         // +", Black "+ intItem +", Nike "+intItem +", Cloth "+intItem + " Lost"
     }
 
+    public static String convertinputStreamToString(InputStream ists)
+            throws IOException {
+        if (ists != null) {
+            StringBuilder sb = new StringBuilder();
+            String line;
+
+            try {
+                BufferedReader r1 = new BufferedReader(new InputStreamReader(
+                        ists, "UTF-8"));
+                while ((line = r1.readLine()) != null) {
+                    sb.append(line).append("\n");
+                }
+            } finally {
+                ists.close();
+            }
+            return sb.toString();
+        } else {
+            return "";
+        }
+    }
 
     public static void showMessageError(Context context, int pintError)
     {

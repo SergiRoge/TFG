@@ -25,24 +25,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--
-            android:launchMode="singleInstance"-->
-        <activity
-            android:name=".MainActivity" />
-        <activity
-            android:name=".RegisterItem" />
-        <activity
-            android:name=".CoordsActivity"/>
-        <activity
-            android:name=".ExtraInfoActivity" />
+        <!-- android:launchMode="singleInstance" -->
+        <activity android:name=".MainActivity" />
+        <activity android:name=".RegisterItem" />
+        <activity android:name=".CoordsActivity" />
+        <activity android:name=".ExtraInfoActivity" />
         <activity
             android:name=".ChatsActivity"
             android:launchMode="singleInstance" />
         <activity
             android:name=".ArchiveActivity"
             android:launchMode="singleInstance" />
-        <activity
-            android:name=".RegisterActivity" />
+        <activity android:name=".RegisterActivity" />
         <activity
             android:name=".OptionsActivity"
             android:launchMode="singleInstance" />
@@ -63,10 +57,14 @@
             android:label="@string/title_activity_new_coord"
             android:launchMode="singleInstance" />
 
-        <!--<service
+        <!--
+            <service
             android:name="Services.NotificationDaemon"
             android:enabled="true"
-            android:exported="true"></service>-->
+            android:exported="true"></service>
+        -->
+        <activity android:name=".ItemViewActivity" />
+        <activity android:name=".ChatActivity"></activity>
     </application>
 
 </manifest>

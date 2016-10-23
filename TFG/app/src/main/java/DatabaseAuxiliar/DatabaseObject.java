@@ -12,7 +12,7 @@ public class DatabaseObject {
 
     public DatabaseObject()
     {
-        con = new Connection();
+
 
     }
 

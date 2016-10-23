@@ -61,8 +61,8 @@ public class NewCoordActivity extends FragmentActivity implements OnMapReadyCall
                 returnIntent.putExtra("XCoord", ""+txtXCoord.getText().toString());
                 returnIntent.putExtra("YCoord", ""+txtYCoord.getText().toString());
                 returnIntent.putExtra("button", ""+strButtonPressed);
-                Log.d("Boton en new cord :", ""+strButtonPressed );
-                setResult(CoordsActivity.RESULT_OK,returnIntent);
+
+                setResult(1,returnIntent);
                 finish();
 
             }

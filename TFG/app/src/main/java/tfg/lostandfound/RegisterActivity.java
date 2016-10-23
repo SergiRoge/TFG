@@ -1,17 +1,19 @@
 package tfg.lostandfound;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.io.IOException;
+
+import Classes.User;
 import Controller.Controller;
 
-import static Auxiliar.Auxiliar.showMessageError;
-import static Auxiliar.Constants.OK;
-import static Auxiliar.Constants.SERVER_ERROR;
+import static Auxiliar.Auxiliar.*;
+import static Auxiliar.Constants.*;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -58,9 +60,10 @@ public class RegisterActivity extends AppCompatActivity {
                 String strTxtPassword = txtPassword.getText().toString();
                 String strTxtEmail = txtEmail.getText().toString();
 
-                int intError = controller.checkIfUserExists(strTxtEmail, strTxtPassword);
+                //int intError = controller.checkIfUserExists(strTxtEmail, strTxtPassword);
 
                 //If an OK is returned, the user already exists, an error is shown
+                int intError = 231231;
                 if(intError == OK)
                 {
                     showMessageError(RegisterActivity.this,intError);
@@ -68,7 +71,19 @@ public class RegisterActivity extends AppCompatActivity {
                 //If something different than Server Error is returned, the user does not exist and we generate a new one with the provided data.
                 else if(intError != SERVER_ERROR)
                 {
-                    intError = controller.createUser(strTxtEmail, strTxtUsername, strTxtPassword);
+                    User user = new User(strTxtEmail, strTxtUsername, strTxtPassword);
+                    try
+                    {
+                        user.save();
+                        //TODO lanzar algo para que indicar al usuario que se está creando su usuario
+                    }
+                    catch (IOException e)
+                    {
+                        showMessageError(RegisterActivity.this,IO_EXCEPTION);
+
+                        //showMessageError();
+                    }
+
                     if(intError == OK)
                     {
                         //Launch Register User Activity

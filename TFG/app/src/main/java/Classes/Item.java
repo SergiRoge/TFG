@@ -9,7 +9,7 @@ import DatabaseAuxiliar.DatabaseObject;
  * Created by Llango on 16/10/2016.
  */
 
-public class Item extends DatabaseObject implements Serializable {
+public class Item extends DatabaseObject implements Serializable , Runnable {
 
 
 
@@ -39,12 +39,25 @@ public class Item extends DatabaseObject implements Serializable {
         arrayListCoordsAdded = new ArrayList<Coordinate>(3);
     }
 
-
     public void save()
     {
-
+        this.run();
     }
 
+
+    @Override
+    public void run()
+    {
+        /*
+        DefaultHttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(url);
+        httpPost.setEntity(new UrlEncodedFormEntity(params));
+
+        HttpResponse httpResponse = httpClient.execute(httpPost);
+        HttpEntity httpEntity = httpResponse.getEntity();
+        is = httpEntity.getContent();
+        */
+    }
 
     /**
      *
@@ -120,5 +133,6 @@ public class Item extends DatabaseObject implements Serializable {
     public void setStrStatus(String strStatus) {
         this.strStatus = strStatus;
     }
+
 
 }

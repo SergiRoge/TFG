@@ -11,6 +11,7 @@ public final class Constants {
     public final static int SERVER_ERROR                = 1;
     public final static int EMAIL_ALREADY_REGISTERED    = 2;
     public final static int INCORRECT_USER_PASSWORD     = 3;
+    public final static int IO_EXCEPTION                = 4;
 
     //Strings
     public final static String ERROR    = "Error";
@@ -28,6 +29,16 @@ public final class Constants {
     public final static int TWO_DAYS_AGO    = 2;
     public final static int ONE_WEEK_AGO    = 3;
     public final static int ONE_MONTH_AGO   = 4;
+
+
+    //Connection
+
+    public final static String IP               = "10.0.2.2";
+    //public final static String PORT             = "8080";
+
+    public final static String URL_SAVE_ITEM    = "TFG/Functions/SaveItem.php";
+    public final static String URL_SAVE_USER    = "http://10.0.2.2/TFG/ServerSide/Functions/SaveUser.php";
+
 
 
 

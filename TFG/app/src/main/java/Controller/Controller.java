@@ -2,11 +2,14 @@ package Controller;
 
 import android.util.Log;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import Classes.Item;
 import Classes.ItemViewList;
+import Classes.User;
+import Connection.Connection;
 import Connection.ConnectionThread;
 import tfg.lostandfound.R;
 
@@ -20,6 +23,8 @@ import static Auxiliar.Constants.*;
 
 public class Controller {
 
+    Connection connection;
+
     public Controller()
     {
 
@@ -32,9 +37,11 @@ public class Controller {
         //Metodo que llamara a servidor y recibirá en JSon los datos de los items
 
         ItemViewList item_data[] = new ItemViewList[10];
-        Item item = new Item();
+        Item item;
         for(int iterator = 0; iterator < 10; iterator++)
         {
+            item = createRandomItem(iterator);
+
             int intIcon;
             if(item.getStrItemBrand().equals("Lost"))
             {
@@ -60,10 +67,9 @@ public class Controller {
         return OK;
     }
 
-    public int createUser(String pstrTxtEmail, String pstrUserName, String pstrTxtPassword)
-    {
-
-
+    public int createUser(String pstrTxtEmail, String pstrUserName, String pstrTxtPassword) throws IOException {
+        User user = new User(pstrTxtEmail, pstrUserName, pstrTxtPassword);
+        user.save();
         return OK;
     }
 

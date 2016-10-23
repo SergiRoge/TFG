@@ -189,7 +189,7 @@ public class CoordsActivity extends AppCompatActivity {
     {
         Intent I = new Intent(CoordsActivity.this,NewCoordActivity.class);
         I.putExtra("button",""+pButtonPressed);
-        startActivityForResult(I,OK);
+        startActivityForResult(I,1);
     }
 
 

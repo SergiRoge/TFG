@@ -10,6 +10,7 @@ import android.widget.TextView;
  */
 
 public class ItemViewList{
+
     public int icon;
     public String title;
     Item item;
@@ -25,4 +26,29 @@ public class ItemViewList{
         item = pItem;
 
     }
+
+    public int getIcon() {
+        return icon;
+    }
+
+    public void setIcon(int icon) {
+        this.icon = icon;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
 }

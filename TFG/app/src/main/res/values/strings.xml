@@ -37,7 +37,6 @@
     <string name="txt_lbl_archive_screen">Archive </string>
 
 
-
     <!-- User Registration Screen-->
     <string name="lbl_register_scren">Register</string>
     <string name="hint_username">Username</string>
