@@ -3,17 +3,20 @@ package tfg.lostandfound;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import java.io.IOException;
 
+import Auxiliar.ErrorCode;
 import Classes.User;
 import Controller.Controller;
 
 import static Auxiliar.Auxiliar.*;
 import static Auxiliar.Constants.*;
+
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -28,6 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     Controller controller;
 
+    ErrorCode error;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,45 +64,33 @@ public class RegisterActivity extends AppCompatActivity {
                 String strTxtPassword = txtPassword.getText().toString();
                 String strTxtEmail = txtEmail.getText().toString();
 
-                //int intError = controller.checkIfUserExists(strTxtEmail, strTxtPassword);
 
-                //If an OK is returned, the user already exists, an error is shown
-                int intError = 231231;
-                if(intError == OK)
-                {
-                    showMessageError(RegisterActivity.this,intError);
-                }
-                //If something different than Server Error is returned, the user does not exist and we generate a new one with the provided data.
-                else if(intError != SERVER_ERROR)
+                try
                 {
                     User user = new User(strTxtEmail, strTxtUsername, strTxtPassword);
-                    try
+                    int error = user.save();
+                    if(error != OK)
                     {
-                        user.save();
-                        //TODO lanzar algo para que indicar al usuario que se está creando su usuario
-                    }
-                    catch (IOException e)
-                    {
-                        showMessageError(RegisterActivity.this,IO_EXCEPTION);
-
-                        //showMessageError();
-                    }
-
-                    if(intError == OK)
-                    {
-                        //Launch Register User Activity
-                        Intent I = new Intent(RegisterActivity.this, MainActivity.class);
-                        startActivity(I);
+                        showMessageError(RegisterActivity.this,error);
                     }
                     else
                     {
-                        showMessageError(RegisterActivity.this,intError);
+                        Intent I = new Intent(RegisterActivity.this, MainActivity.class);
+                        startActivity(I);
                     }
+
+
                 }
-                else
+
+                catch (IOException e)
                 {
-                    showMessageError(RegisterActivity.this,intError);
+                    showMessageError(RegisterActivity.this,IO_EXCEPTION);
                 }
+                catch (InterruptedException e)
+                {
+                    showMessageError(RegisterActivity.this,IO_EXCEPTION);
+                }
+
 
             }
         });
@@ -110,5 +102,7 @@ public class RegisterActivity extends AppCompatActivity {
     {
         controller = new Controller();
         btnSave = (Button) findViewById(R.id.btn_save);
+        error = new ErrorCode();
+
     }
 }

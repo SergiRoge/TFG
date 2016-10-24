@@ -2,10 +2,12 @@ package Classes;
 
 import java.io.IOException;
 
+import Auxiliar.ErrorCode;
 import Connection.ConnectionThread;
 import Connection.SQLObject;
 import DatabaseAuxiliar.DatabaseObject;
 
+import static Auxiliar.Auxiliar.setErrorCode;
 import static Auxiliar.Constants.*;
 
 /**
@@ -30,8 +32,8 @@ public class User extends SQLObject {
     }
 
 
-    public int save() throws IOException
-    {
+    public int save() throws IOException, InterruptedException {
+
         String content = "";
         content += "name="+strUserName + "&" +
                 "password="+strPassword + "&" +

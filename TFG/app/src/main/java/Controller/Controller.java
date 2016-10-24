@@ -69,7 +69,7 @@ public class Controller {
 
     public int createUser(String pstrTxtEmail, String pstrUserName, String pstrTxtPassword) throws IOException {
         User user = new User(pstrTxtEmail, pstrUserName, pstrTxtPassword);
-        user.save();
+        //user.save();
         return OK;
     }
 

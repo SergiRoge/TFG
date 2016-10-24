@@ -4,6 +4,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Icon;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 
 
@@ -17,6 +20,7 @@ import Classes.ItemViewList;
 import Connection.Connection;
 
 import static Auxiliar.Constants.*;
+import static Auxiliar.ErrorCode.*;
 
 /**
  * Created by Llango on 16/10/2016.
@@ -24,6 +28,7 @@ import static Auxiliar.Constants.*;
 
 public final class Auxiliar {
 
+    private static ErrorCode errorCode = new ErrorCode();
 
 
 
@@ -89,11 +94,27 @@ public final class Auxiliar {
                 strTitle = WARNING;
                 strMessage = "The email is already registered";
                 break;
+            case REGISTRATION_SUCCESFULLY:
+                strTitle = WARNING;
+                strMessage = "User registered succesfully";
+                break;
+
+
             default:
+                strTitle = WARNING;
+                strMessage = "Unkown error";
                 break;
         }
 
-        AlertDialog.Builder alertDialog  = new AlertDialog.Builder(context);
+        final Handler handler = new Handler() {
+            @Override
+            public void handleMessage(Message mesg) {
+                throw new RuntimeException();
+            }
+        };
+
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
         alertDialog.setTitle(strTitle);
         alertDialog.setMessage(strMessage);
         alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
@@ -101,12 +122,29 @@ public final class Auxiliar {
                 strButtonMessage,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
+                        int a = doSomethingWithValue("hola");
+                        handler.sendMessage(handler.obtainMessage());
+                        dialog.dismiss();
                     }
                 });
+        alertDialog.create();
         alertDialog.show();
 
+        try { Looper.loop(); }
+        catch(RuntimeException e2) {}
+
+    }
+    public static int doSomethingWithValue(String hoa)
+    {
+        return 1;
     }
 
+    public static ErrorCode getErrorCode() {
+        return errorCode;
+    }
+
+    public static void setErrorCode(int perrorCode) {
+        errorCode.setErrorCode(perrorCode);
+    }
 
 }

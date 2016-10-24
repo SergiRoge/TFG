@@ -17,14 +17,19 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import Auxiliar.ErrorCode;
+
 import static Auxiliar.Auxiliar.*;
+import static Auxiliar.Constants.*;
 
 /**
  * Created by Llango on 16/10/2016.
  */
 
-public class Connection implements Runnable {
+public class Connection extends Thread{
 
+
+    int SQLResult;
     URL strURL;
     HttpURLConnection httpsURLConnection;
     OutputStream OS;
@@ -32,11 +37,14 @@ public class Connection implements Runnable {
     BufferedWriter bufferedWriter;
     BufferedReader bufferedReader;
 
+    //ErrorCode error;
+
 
     String URL;
     String contents;
     
     public Connection(String pstrURL, String pstrContents) throws IOException {
+
         this.strURL = new URL(pstrURL);
         contents = pstrContents;
         httpsURLConnection = (HttpURLConnection)strURL.openConnection();
@@ -56,11 +64,12 @@ public class Connection implements Runnable {
         arrayList.add(pstrUserName);
         arrayList.add(pstrPassword);
 
+        /*
         String METHOD_NAME = "price";
         String URL = "10.0.2.2/service.php";
         String SOAP_ACTION = "http://www.{{mywebservicetest}}.com/demourn:demo/price";
         String NAMESPACE = "http://www.{{mywebservicetest}}.com/demourn:demo";
-
+        */
 
 
         ConnectionThread connectionThread = new ConnectionThread("checkUser",arrayList);
@@ -69,70 +78,48 @@ public class Connection implements Runnable {
         return 0;
     }
 
-    public void save() throws MalformedURLException {
+    public void execute() throws IOException  {
 
 
-        Log.d("Length : ",""+Integer.toString(contents.length()));
-        Log.d("URL", " - " + URL);
-        Log.d("contents", " - " + contents);
-        try {
+        httpsURLConnection.setReadTimeout(10000);
+        httpsURLConnection.setConnectTimeout(15000);
+        httpsURLConnection.setRequestMethod("POST");
+        httpsURLConnection.setDoInput(true);
+        httpsURLConnection.setDoOutput(true);
+        httpsURLConnection.setRequestProperty("Content-Length", Integer.toString(contents.length()));
+        httpsURLConnection.connect();
 
+        OS = httpsURLConnection.getOutputStream();
+        bufferedWriter = new BufferedWriter(new OutputStreamWriter(OS, "UTF-8"));
+        bufferedWriter.write(contents);
+        bufferedWriter.flush();
+        bufferedWriter.close();
+        OS.close();
 
-            httpsURLConnection.setReadTimeout(10000);
-            httpsURLConnection.setConnectTimeout(15000);
-            httpsURLConnection.setRequestMethod("POST");
-            httpsURLConnection.setDoInput(true);
-            httpsURLConnection.setDoOutput(true);
-            httpsURLConnection.setRequestProperty("Content-Length", Integer.toString(contents.length()));
-            httpsURLConnection.connect();
+        IS = httpsURLConnection.getInputStream();
 
-            OS = httpsURLConnection.getOutputStream();
-            bufferedWriter = new BufferedWriter(new OutputStreamWriter(OS, "UTF-8"));
-            bufferedWriter.write(contents);
-            bufferedWriter.flush();
-            bufferedWriter.close();
-            OS.close();
+        String strReturn = convertinputStreamToString(IS);
 
-            IS = httpsURLConnection.getInputStream();
-            String popo = convertinputStreamToString(IS);
-            Log.d("POPO","------------------"+popo);
-            IS.close();
+        SQLResult = Integer.parseInt(strReturn.trim());
 
+        IS.close();
 
-            httpsURLConnection.disconnect();
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        /*
-
-        Realizar conexion
-         */
-
-
-        // si la conexion fue bien, guarda
-
-
-        //si no fue bien, retorna error
-
-
-
+        httpsURLConnection.disconnect();
 
     }
 
 
     @Override
-    public void run() {
+    public void run()
+    {
 
-        try {
-            save();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
+        try
+        {
+            execute();
+        }
+        catch (IOException e)
+        {
+            setErrorCode(IO_EXCEPTION);
         }
 
     }

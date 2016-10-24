@@ -14,6 +14,10 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import Auxiliar.ErrorCode;
+
+import static Auxiliar.Auxiliar.setErrorCode;
+
 /**
  * Created by Sergi on 13/03/2016.
  */
@@ -34,11 +38,12 @@ public class SQLObject {
             Inicializar todo lo necesario para acceder a base de datos
          */
     }
-    public int save(String URL, String contents) throws IOException
-    {
-
-        (new Thread(new Connection(URL, contents))).start();
-        return 1;
-
+    public int save(String URL, String contents) throws IOException, InterruptedException {
+        Connection connection = new Connection(URL, contents);
+        Log.d("Empieza","empieza");
+        connection.start();
+        connection.join();
+        Log.d("acaba","acaba sqlresult " + connection.SQLResult);
+        return connection.SQLResult;
     }
 }
