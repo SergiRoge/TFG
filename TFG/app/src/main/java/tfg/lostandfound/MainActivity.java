@@ -7,8 +7,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import Classes.Item;
+import Classes.User;
 import Controller.Controller;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,8 +21,9 @@ public class MainActivity extends AppCompatActivity {
     ImageButton btnOptions;
     Button btnILost;
     Button btnIFound;
-
+    TextView txtWelcome;
     Controller controller;
+    User user;
 
     Item item = null;
 
@@ -134,10 +137,15 @@ public class MainActivity extends AppCompatActivity {
     {
         controller = new Controller();
 
+        user = (User) getIntent().getSerializableExtra("User");
+
         btnChats = (ImageButton) findViewById(R.id.btn_chats);
         btnArchive = (ImageButton) findViewById(R.id.btn_archive);
         btnOptions = (ImageButton) findViewById(R.id.btn_options);
         btnILost = (Button) findViewById(R.id.btn_lost);
         btnIFound = (Button) findViewById(R.id.btn_found);
+        txtWelcome = (TextView) findViewById(R.id.txt_welcome);
+        txtWelcome.setText("Welcome, " + user.getStrUserName());
+
     }
 }

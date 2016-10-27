@@ -7,6 +7,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.io.Serializable;
+
+import Classes.User;
 import Controller.Controller;
 
 import static Auxiliar.Auxiliar.*;
@@ -64,17 +71,46 @@ public class LogInActivity extends AppCompatActivity {
 
                 //Call to controller to check if user exists or not
 
-                int intError = controller.checkIfUserExists(strTxtEmail, strTxtPassword);
 
-                if(intError == OK)
+                int error = OK;
+                if(verifyNormalField(strTxtPassword) && verifyEmailField(strTxtEmail))
                 {
-                    Intent I = new Intent(LogInActivity.this, MainActivity.class);
-                    startActivity(I);
+                    User user = new User(strTxtEmail, strTxtPassword);
+                    try
+                    {
+
+                        String strUserName = user.checkEmailPasswprdMatches();
+                        user.setStrUserName(strUserName);
+                        //the result of the query is a COUNT(*), if the return is 1, there have been
+                        //a match with the email and password given, if the return is 0, there have
+                        //not been matching. Other results are managed by the else statement.
+                        if(strUserName != null && !strUserName.isEmpty())
+                        {
+                            Intent I = new Intent(LogInActivity.this, MainActivity.class);
+                            I.putExtra("User", (Serializable) user);
+                            startActivity(I);
+                        }
+                        else
+                        {
+                            showMessageError(LogInActivity.this,INCORRECT_DATA);
+                        }
+                    }
+                    catch (IOException e)
+                    {
+                        showMessageError(LogInActivity.this,IO_EXCEPTION);
+                    }
+                    catch (InterruptedException e)
+                    {
+                        showMessageError(LogInActivity.this,INTERRUPTION_EXCEPTION);
+                    }
+                    catch (JSONException e)
+                    {
+                        showMessageError(LogInActivity.this,JSON_EXCEPTION);
+                    }
+
+
                 }
-                else
-                {
-                    showMessageError(LogInActivity.this,intError);
-                }
+
             }
         });
 

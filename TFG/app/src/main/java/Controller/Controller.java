@@ -61,22 +61,19 @@ public class Controller {
 
 
 
-    public int checkIfUserExists(String pstrTxtEmail, String pstrTxtPassword)
+    public int checkEmailAlreadyRegistered(String pstrTxtEmail)
     {
 
+
+
+
         return OK;
     }
 
-    public int createUser(String pstrTxtEmail, String pstrUserName, String pstrTxtPassword) throws IOException {
-        User user = new User(pstrTxtEmail, pstrUserName, pstrTxtPassword);
-        //user.save();
-        return OK;
-    }
 
     public int saveItem(Item pItem)
     {
 
-        Log.d("ItemStatus ", "---------" + pItem.getStrStatus());
         return OK;
     }
 

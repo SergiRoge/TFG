@@ -29,7 +29,7 @@ import static Auxiliar.Constants.*;
 public class Connection extends Thread{
 
 
-    int SQLResult;
+    String SQLResult;
     URL strURL;
     HttpURLConnection httpsURLConnection;
     OutputStream OS;
@@ -98,9 +98,9 @@ public class Connection extends Thread{
 
         IS = httpsURLConnection.getInputStream();
 
-        String strReturn = convertinputStreamToString(IS);
+        SQLResult = convertinputStreamToString(IS);
 
-        SQLResult = Integer.parseInt(strReturn.trim());
+
 
         IS.close();
 

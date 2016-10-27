@@ -14,6 +14,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import Classes.Item;
 import Classes.ItemViewList;
@@ -72,7 +74,33 @@ public final class Auxiliar {
             return "";
         }
     }
+    public static boolean verifyNormalField(String pstrValue)
+    {
+        if(pstrValue.trim().length() < 4)
+        {
+            return false;
+        }
+        Pattern p = Pattern.compile("^[a-zA-Z0-9_-]{3,15}$");
+        Matcher m = p.matcher(pstrValue);
+        return m.matches();
+    }
 
+    public void passwordEncryption(String pstrPassword)
+    {
+
+    }
+
+    public static boolean verifyEmailField(String pstrValue)
+    {
+        if(pstrValue.trim().length() < 4)
+        {
+            return false;
+        }
+        Pattern p = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+        Matcher m = p.matcher(pstrValue);
+        return m.matches();
+    }
     public static void showMessageError(Context context, int pintError)
     {
 
@@ -97,6 +125,10 @@ public final class Auxiliar {
             case REGISTRATION_SUCCESFULLY:
                 strTitle = WARNING;
                 strMessage = "User registered succesfully";
+                break;
+            case INCORRECT_DATA:
+                strTitle = WARNING;
+                strMessage = "Incorrect fields";
                 break;
 
 

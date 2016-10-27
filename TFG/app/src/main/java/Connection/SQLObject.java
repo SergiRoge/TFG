@@ -38,12 +38,11 @@ public class SQLObject {
             Inicializar todo lo necesario para acceder a base de datos
          */
     }
-    public int save(String URL, String contents) throws IOException, InterruptedException {
+    public String ExecuteQuery(String URL, String contents) throws IOException, InterruptedException {
         Connection connection = new Connection(URL, contents);
-        Log.d("Empieza","empieza");
         connection.start();
         connection.join();
-        Log.d("acaba","acaba sqlresult " + connection.SQLResult);
         return connection.SQLResult;
     }
+
 }

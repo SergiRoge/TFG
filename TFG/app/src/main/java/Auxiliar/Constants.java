@@ -12,9 +12,11 @@ public final class Constants {
     public final static int EMAIL_ALREADY_REGISTERED    = 1062;
     public final static int INCORRECT_USER_PASSWORD     = 3;
     public final static int IO_EXCEPTION                = 4;
-    public final static int Interrupted_Exception       = 7;
+    public final static int INTERRUPTION_EXCEPTION      = 7;
+    public final static int JSON_EXCEPTION              = 8;
 
-    public final static int REGISTRATION_SUCCESFULLY     = 5;
+    public final static int REGISTRATION_SUCCESFULLY    = 5;
+    public final static int INCORRECT_DATA              = 6;
     public final static int Protocol_Exception          = 6;
 
 
@@ -42,6 +44,7 @@ public final class Constants {
 
     public final static String URL_SAVE_ITEM    = "http://10.0.2.2/TFG/ServerSide/Functions/SaveItem.php";
     public final static String URL_SAVE_USER    = "http://10.0.2.2/TFG/ServerSide/Functions/SaveUser.php";
+    public final static String URL_CHECK_USER    = "http://10.0.2.2/TFG/ServerSide/Functions/CheckUser.php";
 
 
 

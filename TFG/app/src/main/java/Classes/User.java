@@ -1,6 +1,12 @@
 package Classes;
 
+import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.io.Serializable;
 
 import Auxiliar.ErrorCode;
 import Connection.ConnectionThread;
@@ -14,13 +20,21 @@ import static Auxiliar.Constants.*;
  * Created by Llango on 16/10/2016.
  */
 
-public class User extends SQLObject {
+public class User extends SQLObject implements Serializable {
+
+
     String strEmail;
-    String strUserName;
+    String strUserName = "";
     String strPassword;
 
 
 
+    public User(String pstrTxtEmail, String pstrTxtPassword)
+    {
+        super();
+        strEmail = pstrTxtEmail;
+        strPassword = pstrTxtPassword;
+    }
 
     public  User(String pstrTxtEmail, String pstrUserName, String pstrTxtPassword)
     {
@@ -39,8 +53,57 @@ public class User extends SQLObject {
                 "password="+strPassword + "&" +
                 "email="+strEmail;
 
-        return super.save(URL_SAVE_USER, content);
+        String strReturn =  ExecuteQuery(URL_SAVE_USER, content);
+
+        //An intenger expected, the SQLCode
+        return Integer.parseInt(strReturn.trim());
 
     }
 
+    public String checkEmailPasswprdMatches() throws IOException, InterruptedException, JSONException {
+
+        String content = "";
+        content +="password=" + strPassword + "&" +
+                "email=" + strEmail;
+
+
+        String JSONstrReturn =  ExecuteQuery(URL_CHECK_USER, content);
+        Log.d("JSONstrReturn ", " -> " + JSONstrReturn);
+        JSONObject jsonObject = new JSONObject(JSONstrReturn);
+        Log.d("jsonObject ", " -> " + jsonObject.toString());
+        String a = jsonObject.getString("UserName");
+        Log.d("Username ", " -> " + a);
+        return a;
+
+    }
+
+    /**
+     *
+     *  Getters and Setters
+     *
+     */
+
+    public String getStrEmail() {
+        return strEmail;
+    }
+
+    public void setStrEmail(String strEmail) {
+        this.strEmail = strEmail;
+    }
+
+    public String getStrPassword() {
+        return strPassword;
+    }
+
+    public void setStrPassword(String strPassword) {
+        this.strPassword = strPassword;
+    }
+
+    public String getStrUserName() {
+        return strUserName;
+    }
+
+    public void setStrUserName(String strUserName) {
+        this.strUserName = strUserName;
+    }
 }
