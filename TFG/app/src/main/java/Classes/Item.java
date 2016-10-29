@@ -1,15 +1,21 @@
 package Classes;
 
+import android.util.Log;
+
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import Connection.SQLObject;
 import DatabaseAuxiliar.DatabaseObject;
+
+import static Auxiliar.Constants.URL_SAVE_USER;
 
 /**
  * Created by Llango on 16/10/2016.
  */
 
-public class Item extends DatabaseObject implements Serializable , Runnable {
+public class Item extends SQLObject implements Serializable {
 
 
 
@@ -39,24 +45,35 @@ public class Item extends DatabaseObject implements Serializable , Runnable {
         arrayListCoordsAdded = new ArrayList<Coordinate>(3);
     }
 
-    public void save()
-    {
-        this.run();
-    }
+    public int save() throws IOException, InterruptedException {
 
+        Log.d("SAVE","ITEM");
+        String content = "";
+        content += "type="+ strItemType + "&" +
+                "color="+ strItemColor + "&" +
+                "brand="+ strItemBrand + "&" +
+                "material="+ strItemMaterial + "&" +
+                "when="+ intWhen+ "&" +
+                "description="+strDescription + "&" +
+                "status="+strStatus;
 
-    @Override
-    public void run()
-    {
-        /*
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        HttpPost httpPost = new HttpPost(url);
-        httpPost.setEntity(new UrlEncodedFormEntity(params));
+        Coordinate coord = new Coordinate();
 
-        HttpResponse httpResponse = httpClient.execute(httpPost);
-        HttpEntity httpEntity = httpResponse.getEntity();
-        is = httpEntity.getContent();
-        */
+        for(int i = 0; i < arrayListCoordsAdded.size(); i++)
+        {
+            coord = arrayListCoordsAdded.get(i);
+            content +=  "&coordX"+i+"=" + coord.getDblXCoordinate() + "&coordY"+i+"=" + coord.getDblYCoordinate();
+
+        }
+
+        Log.d("ITEM","content : "+content);
+
+        //String strReturn =  ExecuteQuery(URL_SAVE_USER, content);
+
+        //An intenger expected, the SQLCode
+        //return Integer.parseInt(strReturn.trim());
+        return 1;
+
     }
 
     /**

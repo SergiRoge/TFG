@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import Auxiliar.ErrorCode;
 import Connection.ConnectionThread;
@@ -27,6 +28,8 @@ public class User extends SQLObject implements Serializable {
     String strUserName = "";
     String strPassword;
 
+    ArrayList<Item> listOfItems;
+
 
 
     public User(String pstrTxtEmail, String pstrTxtPassword)
@@ -34,6 +37,7 @@ public class User extends SQLObject implements Serializable {
         super();
         strEmail = pstrTxtEmail;
         strPassword = pstrTxtPassword;
+        listOfItems = new ArrayList<Item>();
     }
 
     public  User(String pstrTxtEmail, String pstrUserName, String pstrTxtPassword)
@@ -42,6 +46,7 @@ public class User extends SQLObject implements Serializable {
         strEmail = pstrTxtEmail;
         strUserName = pstrUserName;
         strPassword = pstrTxtPassword;
+        listOfItems = new ArrayList<Item>();
 
     }
 
@@ -106,4 +111,13 @@ public class User extends SQLObject implements Serializable {
     public void setStrUserName(String strUserName) {
         this.strUserName = strUserName;
     }
+
+    public ArrayList<Item> getListOfItems() {
+        return listOfItems;
+    }
+
+    public void setListOfItems(ArrayList<Item> listOfItems) {
+        this.listOfItems = listOfItems;
+    }
+
 }

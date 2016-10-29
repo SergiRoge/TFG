@@ -9,9 +9,15 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.io.IOException;
+
 import Classes.Item;
 import Classes.User;
 import Controller.Controller;
+
+import static Auxiliar.Auxiliar.showMessageError;
+import static Auxiliar.Constants.INTERRUPTION_EXCEPTION;
+import static Auxiliar.Constants.IO_EXCEPTION;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,35 +31,52 @@ public class MainActivity extends AppCompatActivity {
     Controller controller;
     User user;
 
-    Item item = null;
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Intent intent = getIntent();
+    protected void onCreate(Bundle savedInstanceState)
+    {
 
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_main);
+
+
+
+
+        Log.d("OnCreate","1");
         initializeComponents();
+        Log.d("OnCreate","2");
         initializeListeners();
+        Log.d("OnCreate","3");
+
 
         //TODO Crear demonio que estará eternamente comprobando
 
     }
+
     @Override
-    protected void onResume()
-    {
-        super.onResume();
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
 
-        item = (Item) getIntent().getSerializableExtra("Item");
-        if(item != null)
+        Item item = (Item) intent.getSerializableExtra("Item");
+
+        if (item != null)
         {
-            //Aquí tenemos el item, dependiendo si es Lost o si es Found haremos una cosa u otra
-
-
-            controller.saveItem(item);
+            try
+            {
+                int a = item.save();
+            }
+            catch (IOException e)
+            {
+                showMessageError(MainActivity.this,IO_EXCEPTION);
+            }
+            catch (InterruptedException e)
+            {
+                showMessageError(MainActivity.this,INTERRUPTION_EXCEPTION);
+            }
         }
-
     }
+
+
     /**
      *  Method that initialize all the listeners related to the components
      */
@@ -108,6 +131,10 @@ public class MainActivity extends AppCompatActivity {
             {
                 //Launch Register User Activity
                 Log.d("Button pressed","Lost Button");
+
+                //Intent I = new Intent(MainActivity.this,NewCoordActivity.class);
+                //startActivityForResult(I,1);
+
                 Intent I = new Intent(MainActivity.this, RegisterItem.class);
                 I.putExtra("ItemType","Lost");
                 startActivity(I);
@@ -130,11 +157,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
     /**
      *  Method that initialize all components that exist in the activity
      */
     public void initializeComponents()
     {
+        Log.d("InitialzieComponments","hola");
         controller = new Controller();
 
         user = (User) getIntent().getSerializableExtra("User");
@@ -145,7 +175,17 @@ public class MainActivity extends AppCompatActivity {
         btnILost = (Button) findViewById(R.id.btn_lost);
         btnIFound = (Button) findViewById(R.id.btn_found);
         txtWelcome = (TextView) findViewById(R.id.txt_welcome);
-        txtWelcome.setText("Welcome, " + user.getStrUserName());
+
+
+
+
+        try {
+            txtWelcome.setText("Welcome, " + user.getStrUserName());
+        }
+        catch(Exception e)
+        {
+
+        }
 
     }
 }

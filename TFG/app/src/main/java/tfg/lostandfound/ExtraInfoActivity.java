@@ -3,6 +3,7 @@ package tfg.lostandfound;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -56,8 +57,9 @@ public class ExtraInfoActivity extends AppCompatActivity {
                 Intent I = new Intent(ExtraInfoActivity.this, MainActivity.class);
                 item.setStrDescription(txtExtraInfo.getText().toString());
                 I.putExtra("Item", (Serializable) item);
-                I.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                finishAffinity();
+                Log.d("item ---> ","" + item);
+                //I.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                //finishAffinity();
                 startActivity(I);
             }
         });

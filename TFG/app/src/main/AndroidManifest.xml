@@ -26,7 +26,7 @@
             </intent-filter>
         </activity>
         <!-- android:launchMode="singleInstance" -->
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity" android:launchMode="singleInstance"/>
         <activity android:name=".RegisterItem" />
         <activity android:name=".CoordsActivity" />
         <activity android:name=".ExtraInfoActivity" />
@@ -55,7 +55,7 @@
         <activity
             android:name=".NewCoordActivity"
             android:label="@string/title_activity_new_coord"
-            android:launchMode="singleInstance" />
+            android:launchMode="singleTop" />
 
         <!--
             <service

@@ -72,6 +72,9 @@ public class LogInActivity extends AppCompatActivity {
                 //Call to controller to check if user exists or not
 
 
+                strTxtEmail = "aaaa@gmail.com";
+                strTxtPassword = "aaaa";
+
                 int error = OK;
                 if(verifyNormalField(strTxtPassword) && verifyEmailField(strTxtEmail))
                 {

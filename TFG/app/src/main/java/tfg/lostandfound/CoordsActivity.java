@@ -48,12 +48,6 @@ public class CoordsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coords);
 
-
-
-
-
-
-        //Si peta, poner esto arriba de todo
         initializeComponents();
         initializeListeners();
     }
@@ -83,7 +77,6 @@ public class CoordsActivity extends AppCompatActivity {
 
 
         item = (Item) getIntent().getSerializableExtra("Item");
-        Log.d("ItemType ", " ------ "+item.getStrStatus());
         try
         {
             if(item.getStrStatus().equals("Found"))

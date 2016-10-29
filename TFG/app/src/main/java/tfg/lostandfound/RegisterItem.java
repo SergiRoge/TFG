@@ -46,6 +46,9 @@ public class RegisterItem extends AppCompatActivity {
         initializeListeners();
     }
 
+
+
+
     /**
      *  Method that initialize all components that exist in the activity
      */
@@ -95,10 +98,13 @@ public class RegisterItem extends AppCompatActivity {
                 item = controller.createItem(strItemType, strItemColor, strItemBrand,
                         strItemMaterial, intOption, strItemTypeStatus);
 
-                Intent I = new Intent(RegisterItem.this, CoordsActivity.class);
+
+                Intent I = new Intent(RegisterItem.this,CoordsActivity.class);
                 I.putExtra("Item", (Serializable) item);
                 startActivity(I);
             }
         });
     }
+
+
 }
