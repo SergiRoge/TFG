@@ -2,6 +2,7 @@ package Classes;
 
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,6 +33,7 @@ public class User extends SQLObject implements Serializable {
 
 
 
+
     public User(String pstrTxtEmail, String pstrTxtPassword)
     {
         super();
@@ -51,6 +53,7 @@ public class User extends SQLObject implements Serializable {
     }
 
 
+
     public int save() throws IOException, InterruptedException {
 
         String content = "";
@@ -65,22 +68,82 @@ public class User extends SQLObject implements Serializable {
 
     }
 
-    public String checkEmailPasswprdMatches() throws IOException, InterruptedException, JSONException {
+    public int retrieveUserData() throws IOException, InterruptedException, JSONException
+    {
 
         String content = "";
         content +="password=" + strPassword + "&" +
                 "email=" + strEmail;
 
-
         String JSONstrReturn =  ExecuteQuery(URL_CHECK_USER, content);
-        Log.d("JSONstrReturn ", " -> " + JSONstrReturn);
-        JSONObject jsonObject = new JSONObject(JSONstrReturn);
-        Log.d("jsonObject ", " -> " + jsonObject.toString());
-        String a = jsonObject.getString("UserName");
-        Log.d("Username ", " -> " + a);
-        return a;
 
+        fillUserFields(JSONstrReturn);
+
+        return OK;
     }
+
+    /**
+     *
+     * @param pstrJSONObject   The JSON received from the server
+     * @return              int :   1, There was no user matching the email/password
+     *                              0, User retrieved succesfully from JSON
+     * @throws JSONException
+     */
+    public int fillUserFields(String pstrJSONObject) throws JSONException
+    {
+        //Getting the username of the user
+
+        Log.d("jsonObject ,", "-->" + pstrJSONObject);
+
+
+
+
+        JSONArray jsonArray = new JSONArray (pstrJSONObject);
+
+
+        strUserName = jsonArray.getJSONObject(0).getString("UserName");
+        if(strUserName.equals(""))
+        {
+            return 1;
+        }
+        //Getting the list of items listOfItems
+
+        Item item;
+
+        for(int i = 1; i < jsonArray.length(); i ++)
+        {
+            //{"ItemType":"Gafas","Brand":"RayBan","Material":"Cristal","Color":"Negro","When":"0","FoundLost":"Lost","Description":"Tipicas gafas RayBan","Status":0,
+
+            String itemType = jsonArray.getJSONObject(i).getString("ItemType");
+            String Brand = jsonArray.getJSONObject(i).getString("Brand");
+            String Material = jsonArray.getJSONObject(i).getString("Material");
+            String Color = jsonArray.getJSONObject(i).getString("Color");
+            String When = jsonArray.getJSONObject(i).getString("When");
+            String FoundLost = jsonArray.getJSONObject(i).getString("FoundLost");
+            String Description = jsonArray.getJSONObject(i).getString("Description");
+            String Status = jsonArray.getJSONObject(i).getString("Status");
+
+            String strArrayListCoordsAdded = jsonArray.getJSONObject(i).getString("CoordinatesList");
+
+            item = new Item(itemType, Color, Brand, Material, Integer.parseInt(When), Status, Description, FoundLost);
+
+            // "CoordinatesList":[{"XCoord":"0","YCoord":"0"},{"XCoord":"1","YCoord":"1"},{"XCoord":"2","YCoord":"2"}]}
+            JSONArray CoordsJSONArray = new JSONArray (strArrayListCoordsAdded);
+            Coordinate coord;
+            for(int j = 0; j < CoordsJSONArray.length(); j++)
+            {
+                Double XCoord = Double.parseDouble(CoordsJSONArray.getJSONObject(j).getString("XCoord"));
+                Double YCoord = Double.parseDouble(CoordsJSONArray.getJSONObject(j).getString("YCoord"));
+                coord = new Coordinate(XCoord,YCoord);
+                item.addCoordinateToArray(coord);
+            }
+            listOfItems.add(item);
+
+
+        }
+        return OK;
+    }
+
 
     /**
      *

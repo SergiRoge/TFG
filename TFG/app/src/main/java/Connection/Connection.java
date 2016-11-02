@@ -4,6 +4,9 @@ import android.util.Log;
 
 import com.google.firebase.auth.api.model.StringList;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -99,7 +102,6 @@ public class Connection extends Thread{
         IS = httpsURLConnection.getInputStream();
 
         SQLResult = convertinputStreamToString(IS);
-
 
 
         IS.close();

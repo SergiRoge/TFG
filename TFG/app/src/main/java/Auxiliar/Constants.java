@@ -44,7 +44,7 @@ public final class Constants {
 
     public final static String URL_SAVE_ITEM    = "http://10.0.2.2/TFG/ServerSide/Functions/SaveItem.php";
     public final static String URL_SAVE_USER    = "http://10.0.2.2/TFG/ServerSide/Functions/SaveUser.php";
-    public final static String URL_CHECK_USER    = "http://10.0.2.2/TFG/ServerSide/Functions/CheckUser.php";
+    public final static String URL_CHECK_USER    = "http://10.0.2.2/TFG/ServerSide/Functions/GetUser.php";
 
 
 

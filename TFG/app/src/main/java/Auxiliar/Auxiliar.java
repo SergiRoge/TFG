@@ -42,7 +42,8 @@ public final class Auxiliar {
     public static Item createRandomItem(int intItem)
     {
         //String pstrItemType, String pstrItemColor, String pstrItemBrand, String pstrItemMaterial, int pintWhen, String pstrStatus
-        Item item = new Item("Scarf_"+intItem,"Black_"+intItem,"Nike_"+intItem,"Cloth_"+intItem,1,"Lost");
+        //String pstrItemType, String pstrItemColor, String pstrItemBrand, String pstrItemMaterial, int pintWhen, String pstrStatus, String pstrDescription, String pFoundLost
+        Item item = new Item("Scarf_"+intItem,"Black_"+intItem,"Nike_"+intItem,"Cloth_"+intItem,1,"Lost", "Tipical Scarf", "Lost");
         return item;
 
     }
@@ -74,6 +75,9 @@ public final class Auxiliar {
             return "";
         }
     }
+
+
+
     public static boolean verifyNormalField(String pstrValue)
     {
         if(pstrValue.trim().length() < 4)

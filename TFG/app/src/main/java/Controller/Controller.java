@@ -2,6 +2,8 @@ package Controller;
 
 import android.util.Log;
 
+import org.json.JSONException;
+
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -61,13 +63,11 @@ public class Controller {
 
 
 
-    public int checkEmailAlreadyRegistered(String pstrTxtEmail)
+    public User getUserData(String pstrEmail, String pstrPassword ) throws IOException, InterruptedException, JSONException
     {
+        User user = new User(pstrEmail, pstrPassword);
 
-
-
-
-        return OK;
+        return user;
     }
 
 
@@ -88,9 +88,10 @@ public class Controller {
      * @param pintWhen          Integer When the item was lost
      * @return (Item) item      The item created
      */
-    public Item createItem(String pstrItemType, String pstrItemColor, String pstrItemBrand, String pstrItemMaterial, int pintWhen, String pstrStatus)
+    public Item createItem(String pstrItemType, String pstrItemColor, String pstrItemBrand, String pstrItemMaterial, int pintWhen, String pstrStatus, String pstrDescription, String pFoundLost)
     {
-        Item item = new Item(pstrItemType, pstrItemColor, pstrItemBrand, pstrItemMaterial, pintWhen, pstrStatus);
+        //(String pstrItemType, String pstrItemColor, String pstrItemBrand, String pstrItemMaterial, int pintWhen, String pstrStatus, String pstrDescription, String pFoundLost)
+        Item item = new Item(pstrItemType, pstrItemColor, pstrItemBrand, pstrItemMaterial, pintWhen, pstrStatus, pstrDescription, pFoundLost);
         return item;
     }
 

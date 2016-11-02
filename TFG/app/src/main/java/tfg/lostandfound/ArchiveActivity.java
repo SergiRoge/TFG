@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import Auxiliar.ItemAdapter;
 import Classes.Item;
 import Classes.ItemViewList;
+import Classes.User;
 import Controller.Controller;
 
 import static Auxiliar.Auxiliar.*;
@@ -32,6 +33,7 @@ public class ArchiveActivity extends AppCompatActivity {
     Controller controller;
     ArrayList<Item> arraylst_items;
 
+    User user;
 
     private ListView listView1;
 
@@ -107,7 +109,29 @@ public class ArchiveActivity extends AppCompatActivity {
     public void fillViewList()
     {
 
-        ItemViewList[] item_data = controller.getListItems();
+        user = (User) getIntent().getSerializableExtra("User");
+        int arrayLength = user.getListOfItems().size();
+        ItemViewList item_data[] = new ItemViewList[arrayLength];
+
+
+        Item item;
+        for(int iterator = 0; iterator < arrayLength; iterator++)
+        {
+            item = user.getListOfItems().get(iterator);
+
+            int intIcon;
+            if(item.getStrItemBrand().equals("Lost"))
+            {
+                intIcon = R.drawable.icon_lost;
+            }
+            else
+            {
+                intIcon = R.drawable.icon_found;
+            }
+
+            item_data[iterator] = new ItemViewList(intIcon, item.getStrDescription(), item);
+
+        }
 
 
         formatDataToShow();

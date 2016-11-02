@@ -4,6 +4,7 @@ package tfg.lostandfound;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -78,16 +79,13 @@ public class LogInActivity extends AppCompatActivity {
                 int error = OK;
                 if(verifyNormalField(strTxtPassword) && verifyEmailField(strTxtEmail))
                 {
-                    User user = new User(strTxtEmail, strTxtPassword);
                     try
                     {
+                        User user = new User(strTxtEmail, strTxtPassword);
+                        error = user.retrieveUserData();
 
-                        String strUserName = user.checkEmailPasswprdMatches();
-                        user.setStrUserName(strUserName);
-                        //the result of the query is a COUNT(*), if the return is 1, there have been
-                        //a match with the email and password given, if the return is 0, there have
-                        //not been matching. Other results are managed by the else statement.
-                        if(strUserName != null && !strUserName.isEmpty())
+
+                        if(error == OK)
                         {
                             Intent I = new Intent(LogInActivity.this, MainActivity.class);
                             I.putExtra("User", (Serializable) user);
@@ -100,14 +98,17 @@ public class LogInActivity extends AppCompatActivity {
                     }
                     catch (IOException e)
                     {
+                        Log.d("IOException ","-->" + e.toString());
                         showMessageError(LogInActivity.this,IO_EXCEPTION);
                     }
                     catch (InterruptedException e)
                     {
+                        Log.d("InterruptedException ","-->" + e.toString());
                         showMessageError(LogInActivity.this,INTERRUPTION_EXCEPTION);
                     }
                     catch (JSONException e)
                     {
+                        Log.d("JSONException ","-->" + e.toString());
                         showMessageError(LogInActivity.this,JSON_EXCEPTION);
                     }
 

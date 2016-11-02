@@ -28,20 +28,23 @@ public class Item extends SQLObject implements Serializable {
     private int intWhen = 0;
     private String strDescription= "";
     private String strStatus;
+    private String FoundLost;
 
 
     public  Item()
     {
 
     }
-    public Item(String pstrItemType, String pstrItemColor, String pstrItemBrand, String pstrItemMaterial, int pintWhen, String pstrStatus)
+    public Item(String pstrItemType, String pstrItemColor, String pstrItemBrand, String pstrItemMaterial, int pintWhen, String pstrStatus, String pstrDescription, String pFoundLost)
     {
         strItemType     = pstrItemType;
         strItemColor    = pstrItemColor;
         strItemBrand    = pstrItemBrand;
         strItemMaterial = pstrItemMaterial;
         intWhen         = pintWhen;
-        strStatus      = pstrStatus;
+        strStatus       = pstrStatus;
+        strDescription  = pstrDescription;
+        FoundLost       = pFoundLost;
         arrayListCoordsAdded = new ArrayList<Coordinate>(3);
     }
 
@@ -49,13 +52,14 @@ public class Item extends SQLObject implements Serializable {
 
         Log.d("SAVE","ITEM");
         String content = "";
-        content += "type="+ strItemType + "&" +
-                "color="+ strItemColor + "&" +
-                "brand="+ strItemBrand + "&" +
-                "material="+ strItemMaterial + "&" +
-                "when="+ intWhen+ "&" +
-                "description="+strDescription + "&" +
-                "status="+strStatus;
+        content += "foundLost="+ "" +
+                    "type="+ strItemType + "&" +
+                    "color="+ strItemColor + "&" +
+                    "brand="+ strItemBrand + "&" +
+                    "material="+ strItemMaterial + "&" +
+                    "when="+ intWhen+ "&" +
+                    "description="+strDescription + "&" +
+                    "status="+strStatus;
 
         Coordinate coord = new Coordinate();
 

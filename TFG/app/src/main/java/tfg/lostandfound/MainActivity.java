@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import Classes.Item;
 import Classes.User;
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
             try
             {
                 int a = item.save();
+                user.getListOfItems().add(item);
             }
             catch (IOException e)
             {
@@ -105,6 +107,8 @@ public class MainActivity extends AppCompatActivity {
                 //Launch Register User Activity
                 //TODO ARCHIVE SCREEN
                 Intent I = new Intent(MainActivity.this, ArchiveActivity.class);
+                I.putExtra("User", (Serializable) user);
+
                 startActivity(I);
             }
         });

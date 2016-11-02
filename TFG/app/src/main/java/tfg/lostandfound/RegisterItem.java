@@ -28,7 +28,7 @@ public class RegisterItem extends AppCompatActivity {
     private EditText txtMaterial;
     private Button btnNext;
     private Spinner spinnerWhen;
-    private String strItemTypeStatus;   //Found or Lost
+    private String strLostFound;   //Found or Lost
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class RegisterItem extends AppCompatActivity {
         controller = new Controller();
 
         final Bundle bundle = getIntent().getExtras();
-        strItemTypeStatus = bundle.getString("ItemType");
+        strLostFound = bundle.getString("ItemType");
 
 
 
@@ -95,8 +95,8 @@ public class RegisterItem extends AppCompatActivity {
                 String strItemMaterial = txtMaterial.getText().toString();
                 int intOption = spinnerWhen.getSelectedItemPosition();
 
-                item = controller.createItem(strItemType, strItemColor, strItemBrand,
-                        strItemMaterial, intOption, strItemTypeStatus);
+                //item = controller.createItem(strItemType, strItemColor, strItemBrand,
+                  //      strItemMaterial, intOption, strLostFound);
 
 
                 Intent I = new Intent(RegisterItem.this,CoordsActivity.class);
