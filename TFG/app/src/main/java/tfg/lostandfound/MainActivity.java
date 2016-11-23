@@ -15,6 +15,9 @@ import java.io.Serializable;
 import Classes.Item;
 import Classes.User;
 import Controller.Controller;
+import Services.LaunchService;
+import Services.MatchingChecker;
+import Services.NotificationDaemon;
 
 import static Auxiliar.Auxiliar.showMessageError;
 import static Auxiliar.Constants.INTERRUPTION_EXCEPTION;
@@ -26,11 +29,14 @@ public class MainActivity extends AppCompatActivity {
     ImageButton btnChats;
     ImageButton btnArchive;
     ImageButton btnOptions;
+    ImageButton btnLogOff;
     Button btnILost;
     Button btnIFound;
     TextView txtWelcome;
     Controller controller;
+    LaunchService launchService;
     User user;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -40,14 +46,12 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-
-
-
-        Log.d("OnCreate","1");
         initializeComponents();
-        Log.d("OnCreate","2");
         initializeListeners();
-        Log.d("OnCreate","3");
+
+        startService(new Intent(MainActivity.this, MyService.class));
+
+
 
 
         //TODO Crear demonio que estará eternamente comprobando
@@ -55,7 +59,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onNewIntent(Intent intent) {
+    protected void onNewIntent(Intent intent)
+    {
         super.onNewIntent(intent);
 
         Item item = (Item) intent.getSerializableExtra("Item");
@@ -64,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
         {
             try
             {
-                int a = item.save();
+                int a = item.save(user);
+                Log.d("PEPEPE ", "---------" + item.getStrFoundLost());
                 user.getListOfItems().add(item);
             }
             catch (IOException e)
@@ -158,7 +164,22 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(I);
             }
         });
-
+        /*
+            Listener for LogOff button
+         */
+        btnLogOff.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v)
+            {
+                //Launch Register User Activity
+                Log.d("Button pressed","Found Button");
+                stopService(new Intent(MainActivity.this, MyService.class));
+                Intent I = new Intent(MainActivity.this, LogInActivity.class);
+                I.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                finish();
+                startActivity(I);
+            }
+        });
     }
 
 
@@ -176,6 +197,8 @@ public class MainActivity extends AppCompatActivity {
         btnChats = (ImageButton) findViewById(R.id.btn_chats);
         btnArchive = (ImageButton) findViewById(R.id.btn_archive);
         btnOptions = (ImageButton) findViewById(R.id.btn_options);
+        btnLogOff = (ImageButton) findViewById(R.id.btn_logoff);
+
         btnILost = (Button) findViewById(R.id.btn_lost);
         btnIFound = (Button) findViewById(R.id.btn_found);
         txtWelcome = (TextView) findViewById(R.id.txt_welcome);

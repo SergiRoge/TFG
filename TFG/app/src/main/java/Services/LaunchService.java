@@ -1,15 +1,22 @@
 package Services;
 
-import android.app.IntentService;
-import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
-import android.os.IBinder;
 import android.util.Log;
 
-import java.io.Serializable;
+import tfg.lostandfound.MainActivity;
+import tfg.lostandfound.MyService;
 
-public class NotificationDaemon extends Thread{
+/**
+ * Created by Llango on 23/11/2016.
+ */
 
+public class LaunchService extends Thread
+{
+
+
+
+    Context context;
 
     @Override
     public void run()
@@ -28,4 +35,10 @@ public class NotificationDaemon extends Thread{
 
 
     }
+
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
 }

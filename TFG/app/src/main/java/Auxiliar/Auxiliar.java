@@ -43,8 +43,8 @@ public final class Auxiliar {
     {
         //String pstrItemType, String pstrItemColor, String pstrItemBrand, String pstrItemMaterial, int pintWhen, String pstrStatus
         //String pstrItemType, String pstrItemColor, String pstrItemBrand, String pstrItemMaterial, int pintWhen, String pstrStatus, String pstrDescription, String pFoundLost
-        Item item = new Item("Scarf_"+intItem,"Black_"+intItem,"Nike_"+intItem,"Cloth_"+intItem,1,"Lost", "Tipical Scarf", "Lost");
-        return item;
+        //Item item = new Item("Scarf_"+intItem,"Black_"+intItem,"Nike_"+intItem,"Cloth_"+intItem,1,"Lost", "Tipical Scarf", "Lost");
+        return null;
 
     }
     public static String  createRandomItemViewListItem(int intItem)
@@ -89,10 +89,6 @@ public final class Auxiliar {
         return m.matches();
     }
 
-    public void passwordEncryption(String pstrPassword)
-    {
-
-    }
 
     public static boolean verifyEmailField(String pstrValue)
     {

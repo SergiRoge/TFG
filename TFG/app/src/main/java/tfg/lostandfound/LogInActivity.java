@@ -1,3 +1,4 @@
+
 package tfg.lostandfound;
 
 
@@ -20,7 +21,6 @@ import Controller.Controller;
 import static Auxiliar.Auxiliar.*;
 import static Auxiliar.Constants.*;
 
-
 public class LogInActivity extends AppCompatActivity {
 
     /**
@@ -28,7 +28,7 @@ public class LogInActivity extends AppCompatActivity {
      */
     Button btnRegister;
     Button btnLogin;
-    Controller controller;
+    User user;
 
 
 
@@ -48,7 +48,6 @@ public class LogInActivity extends AppCompatActivity {
     {
         btnRegister = (Button) findViewById(R.id.btn_register);
         btnLogin = (Button) findViewById(R.id.btn_login);
-        controller = new Controller();
     }
 
     /**
@@ -81,7 +80,7 @@ public class LogInActivity extends AppCompatActivity {
                 {
                     try
                     {
-                        User user = new User(strTxtEmail, strTxtPassword);
+                        user = new User(strTxtEmail, strTxtPassword);
                         error = user.retrieveUserData();
 
 

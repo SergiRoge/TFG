@@ -7,9 +7,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import Connection.SQLObject;
-import DatabaseAuxiliar.DatabaseObject;
 
-import static Auxiliar.Constants.URL_SAVE_USER;
+import static Auxiliar.Constants.URL_SAVE_ITEM;
 
 /**
  * Created by Llango on 16/10/2016.
@@ -27,39 +26,56 @@ public class Item extends SQLObject implements Serializable {
     private String strItemMaterial = "";
     private int intWhen = 0;
     private String strDescription= "";
-    private String strStatus;
-    private String FoundLost;
+    private int intStatus;
+    private String strFoundLost;
 
 
     public  Item()
     {
 
     }
-    public Item(String pstrItemType, String pstrItemColor, String pstrItemBrand, String pstrItemMaterial, int pintWhen, String pstrStatus, String pstrDescription, String pFoundLost)
+
+    public int getIntStatus() {
+        return intStatus;
+    }
+
+    public void setIntStatus(int intStatus) {
+        this.intStatus = intStatus;
+    }
+
+    public String getStrFoundLost() {
+        return strFoundLost;
+    }
+
+    public void setStrFoundLost(String strFoundLost) {
+        this.strFoundLost = strFoundLost;
+    }
+
+    public Item(String pstrItemType, String pstrItemColor, String pstrItemBrand, String pstrItemMaterial, int pintWhen, int pintStatus, String pstrDescription, String pstrFoundLost)
     {
         strItemType     = pstrItemType;
         strItemColor    = pstrItemColor;
         strItemBrand    = pstrItemBrand;
         strItemMaterial = pstrItemMaterial;
         intWhen         = pintWhen;
-        strStatus       = pstrStatus;
+        intStatus       = pintStatus;
         strDescription  = pstrDescription;
-        FoundLost       = pFoundLost;
-        arrayListCoordsAdded = new ArrayList<Coordinate>(3);
+        strFoundLost       = pstrFoundLost;
+        arrayListCoordsAdded = new ArrayList<Coordinate>();
     }
 
-    public int save() throws IOException, InterruptedException {
+    public int save(User user) throws IOException, InterruptedException {
 
-        Log.d("SAVE","ITEM");
         String content = "";
-        content += "foundLost="+ "" +
-                    "type="+ strItemType + "&" +
+        content += "type="+ strItemType + "&" +
                     "color="+ strItemColor + "&" +
                     "brand="+ strItemBrand + "&" +
                     "material="+ strItemMaterial + "&" +
                     "when="+ intWhen+ "&" +
                     "description="+strDescription + "&" +
-                    "status="+strStatus;
+                    "status="+intStatus + "&" +
+                    "foundLost="+strFoundLost;
+
 
         Coordinate coord = new Coordinate();
 
@@ -69,10 +85,11 @@ public class Item extends SQLObject implements Serializable {
             content +=  "&coordX"+i+"=" + coord.getDblXCoordinate() + "&coordY"+i+"=" + coord.getDblYCoordinate();
 
         }
-
+        content += "&user="+user.getStrEmail();
+        content += "&coordsnumber="+arrayListCoordsAdded.size();
         Log.d("ITEM","content : "+content);
 
-        //String strReturn =  ExecuteQuery(URL_SAVE_USER, content);
+        String strReturn =  ExecuteQuery(URL_SAVE_ITEM, content);
 
         //An intenger expected, the SQLCode
         //return Integer.parseInt(strReturn.trim());
@@ -147,12 +164,12 @@ public class Item extends SQLObject implements Serializable {
         arrayListCoordsAdded.add(pCoordinate);
     }
 
-    public String getStrStatus() {
-        return strStatus;
+    public int getStrStatus() {
+        return intStatus;
     }
 
-    public void setStrStatus(String strStatus) {
-        this.strStatus = strStatus;
+    public void setStrStatus(int intStatus) {
+        this.intStatus = intStatus;
     }
 
 

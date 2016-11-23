@@ -129,7 +129,7 @@ public class ArchiveActivity extends AppCompatActivity {
                 intIcon = R.drawable.icon_found;
             }
 
-            item_data[iterator] = new ItemViewList(intIcon, item.getStrDescription(), item);
+            item_data[iterator] = new ItemViewList(intIcon, item.getStrStatus() + " - " + item.getStrDescription(), item);
 
         }
 

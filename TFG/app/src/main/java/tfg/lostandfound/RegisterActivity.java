@@ -31,11 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText txtUsername;
     EditText txtPassword;
     EditText txtEmail;
-
-    Controller controller;
-
-    ErrorCode error;
-
+    User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,10 +57,6 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v)
             {
 
-                txtUsername = (EditText) findViewById(R.id.txt_username);
-                txtPassword = (EditText) findViewById(R.id.txt_password);
-                txtEmail = (EditText) findViewById(R.id.txt_email);
-
                 String strTxtUsername = txtUsername.getText().toString();
                 String strTxtPassword = txtPassword.getText().toString();
                 String strTxtEmail = txtEmail.getText().toString();
@@ -74,7 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
                     int error = OK;
                     try
                     {
-                        User user = new User(strTxtEmail, strTxtUsername, strTxtPassword);
+                        user = new User(strTxtEmail, strTxtUsername, strTxtPassword);
                         error = user.save();
 
                         if(error == 1)
@@ -115,9 +107,9 @@ public class RegisterActivity extends AppCompatActivity {
      */
     public void initializeComponents()
     {
-        controller = new Controller();
         btnSave = (Button) findViewById(R.id.btn_save);
-        error = new ErrorCode();
-
+        txtUsername = (EditText) findViewById(R.id.txt_username);
+        txtPassword = (EditText) findViewById(R.id.txt_password);
+        txtEmail = (EditText) findViewById(R.id.txt_email);
     }
 }

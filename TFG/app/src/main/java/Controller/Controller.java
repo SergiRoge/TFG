@@ -91,8 +91,8 @@ public class Controller {
     public Item createItem(String pstrItemType, String pstrItemColor, String pstrItemBrand, String pstrItemMaterial, int pintWhen, String pstrStatus, String pstrDescription, String pFoundLost)
     {
         //(String pstrItemType, String pstrItemColor, String pstrItemBrand, String pstrItemMaterial, int pintWhen, String pstrStatus, String pstrDescription, String pFoundLost)
-        Item item = new Item(pstrItemType, pstrItemColor, pstrItemBrand, pstrItemMaterial, pintWhen, pstrStatus, pstrDescription, pFoundLost);
-        return item;
+        //Item item = new Item(pstrItemType, pstrItemColor, pstrItemBrand, pstrItemMaterial, pintWhen, pstrStatus, pstrDescription, pFoundLost);
+        return null;
     }
 
 

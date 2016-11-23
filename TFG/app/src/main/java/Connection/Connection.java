@@ -46,7 +46,8 @@ public class Connection extends Thread{
     String URL;
     String contents;
     
-    public Connection(String pstrURL, String pstrContents) throws IOException {
+    public Connection(String pstrURL, String pstrContents) throws IOException
+    {
 
         this.strURL = new URL(pstrURL);
         contents = pstrContents;
@@ -54,36 +55,8 @@ public class Connection extends Thread{
     }
 
 
-    /**
-     *  Method that will create a thread with the parameters username and password
-     *
-     * @param pstrUserName  String  The username of the user
-     * @param pstrPassword  String  The password of the user
-     * @return
-     */
-    public int checkUser(String pstrUserName, String pstrPassword)
+    public void execute() throws IOException
     {
-        ArrayList<String> arrayList = new ArrayList<String>();
-        arrayList.add(pstrUserName);
-        arrayList.add(pstrPassword);
-
-        /*
-        String METHOD_NAME = "price";
-        String URL = "10.0.2.2/service.php";
-        String SOAP_ACTION = "http://www.{{mywebservicetest}}.com/demourn:demo/price";
-        String NAMESPACE = "http://www.{{mywebservicetest}}.com/demourn:demo";
-        */
-
-
-        ConnectionThread connectionThread = new ConnectionThread("checkUser",arrayList);
-        connectionThread.run();
-
-        return 0;
-    }
-
-    public void execute() throws IOException  {
-
-
         httpsURLConnection.setReadTimeout(10000);
         httpsURLConnection.setConnectTimeout(15000);
         httpsURLConnection.setRequestMethod("POST");
@@ -92,8 +65,11 @@ public class Connection extends Thread{
         httpsURLConnection.setRequestProperty("Content-Length", Integer.toString(contents.length()));
         httpsURLConnection.connect();
 
+
+
         OS = httpsURLConnection.getOutputStream();
         bufferedWriter = new BufferedWriter(new OutputStreamWriter(OS, "UTF-8"));
+
         bufferedWriter.write(contents);
         bufferedWriter.flush();
         bufferedWriter.close();
@@ -114,7 +90,6 @@ public class Connection extends Thread{
     @Override
     public void run()
     {
-
         try
         {
             execute();

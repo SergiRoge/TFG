@@ -44,6 +44,8 @@
     <string name="hint_email">email</string>
     <string name="txt_extraInformation">Do you want to add some extra information ?</string>
     <string name="title_activity_new_coord">Map</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 
 
 </resources>

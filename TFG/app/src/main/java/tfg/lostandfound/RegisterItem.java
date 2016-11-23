@@ -3,6 +3,7 @@ package tfg.lostandfound;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -15,12 +16,15 @@ import java.util.ArrayList;
 import Classes.Item;
 import Controller.Controller;
 
+import static Auxiliar.Auxiliar.showMessageError;
+import static Auxiliar.Constants.INCORRECT_DATA;
+
 public class RegisterItem extends AppCompatActivity {
 
     /**
      * All the components needed
      */
-    private Item item = null;
+    private Item item;
     private Controller controller;
     private EditText txtLost;
     private EditText txtColor;
@@ -68,12 +72,19 @@ public class RegisterItem extends AppCompatActivity {
         spinnerArray.add(3,"2 days ago");
         spinnerArray.add(4,"1 week ago");
         spinnerArray.add(5,"1 month ago");
+        spinnerArray.add(6,"I don't remember");
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, spinnerArray);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerWhen = (Spinner) findViewById(R.id.spin_when);
         spinnerWhen.setAdapter(adapter);
+
+
+
+
+
     }
 
     /**
@@ -89,19 +100,34 @@ public class RegisterItem extends AppCompatActivity {
             public void onClick(View v)
             {
 
+
                 String strItemType = txtLost.getText().toString();
-                String strItemColor = txtColor.getText().toString();
-                String strItemBrand = txtBrand.getText().toString();
-                String strItemMaterial = txtMaterial.getText().toString();
-                int intOption = spinnerWhen.getSelectedItemPosition();
+                if(strItemType.equals(""))
+                {
+                    showMessageError(RegisterItem.this, INCORRECT_DATA);
+                }
+                else
+                {
+                    String strItemColor = txtColor.getText().toString();
+                    String strItemBrand = txtBrand.getText().toString();
+                    String strItemMaterial = txtMaterial.getText().toString();
+                    int intOption = spinnerWhen.getSelectedItemPosition();
 
-                //item = controller.createItem(strItemType, strItemColor, strItemBrand,
-                  //      strItemMaterial, intOption, strLostFound);
 
 
-                Intent I = new Intent(RegisterItem.this,CoordsActivity.class);
-                I.putExtra("Item", (Serializable) item);
-                startActivity(I);
+                    Log.d("FOUNDLOST : ", " ----- " + strLostFound);
+                    item = new Item(strItemType, strItemColor, strItemBrand, strItemMaterial, intOption, 0,"" ,strLostFound);
+
+
+                    //item = controller.createItem(strItemType, strItemColor, strItemBrand,
+                    //      strItemMaterial, intOption, strLostFound);
+
+                    Intent I = new Intent(RegisterItem.this,CoordsActivity.class);
+                    I.putExtra("Item", item);
+                    startActivity(I);
+                }
+
+
             }
         });
     }

@@ -28,9 +28,7 @@ public class SQLObject {
 
 
      */
-    String date;
-
-    Connection Conn;
+    Connection connection;
 
     public SQLObject(){
         /*
@@ -38,8 +36,9 @@ public class SQLObject {
             Inicializar todo lo necesario para acceder a base de datos
          */
     }
-    public String ExecuteQuery(String URL, String contents) throws IOException, InterruptedException {
-        Connection connection = new Connection(URL, contents);
+    public String ExecuteQuery(String URL, String contents) throws IOException, InterruptedException
+    {
+        connection = new Connection(URL, contents);
         connection.start();
         connection.join();
         return connection.SQLResult;

@@ -48,6 +48,8 @@ public class CoordsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coords);
 
+        item = (Item) getIntent().getSerializableExtra("Item");
+
         initializeComponents();
         initializeListeners();
     }
@@ -76,17 +78,18 @@ public class CoordsActivity extends AppCompatActivity {
 
 
 
-        item = (Item) getIntent().getSerializableExtra("Item");
+
+        Log.d("ITEM : ", "-> " + item);
         try
         {
-            if(item.getStrStatus().equals("Found"))
+            if(item.getStrFoundLost().equals("Found"))
             {
                 btnNext.setText("Save");
             }
         }
         catch(Exception e)
         {
-            //TODO showErrorFrom exception
+            Log.d("Exception","->" + e.toString());
         }
 
     }
@@ -149,19 +152,19 @@ public class CoordsActivity extends AppCompatActivity {
 
 
                 //If we registered a lost item, the next screen is the ExtraInfoActivity
-                if(item.getStrStatus().equals("Lost"))
+                if(item.getStrFoundLost().equals("Lost"))
                 {
                     Intent I = new Intent(CoordsActivity.this, ExtraInfoActivity.class);
 
-                    I.putExtra("Item", (Serializable) item);
+                    I.putExtra("Item", item);
                     startActivity(I);
                 }
                 //If not, we go to MainActivity
-                else if(item.getStrStatus().equals("Found"))
+                else if(item.getStrFoundLost().equals("Found"))
                 {
                     Intent I = new Intent(CoordsActivity.this, MainActivity.class);
                     I.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    I.putExtra("Item", (Serializable) item);
+                    I.putExtra("Item", item);
                     finishAffinity();
                     startActivity(I);
                 }

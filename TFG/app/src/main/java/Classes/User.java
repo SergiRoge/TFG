@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import Auxiliar.ErrorCode;
 import Connection.ConnectionThread;
 import Connection.SQLObject;
-import DatabaseAuxiliar.DatabaseObject;
 
 import static Auxiliar.Auxiliar.setErrorCode;
+import static Auxiliar.Auxiliar.showMessageError;
 import static Auxiliar.Constants.*;
 
 /**
@@ -125,17 +125,25 @@ public class User extends SQLObject implements Serializable {
 
             String strArrayListCoordsAdded = jsonArray.getJSONObject(i).getString("CoordinatesList");
 
-            item = new Item(itemType, Color, Brand, Material, Integer.parseInt(When), Status, Description, FoundLost);
+            item = new Item(itemType, Color, Brand, Material, Integer.parseInt(When), Integer.parseInt(Status), Description, FoundLost);
 
             // "CoordinatesList":[{"XCoord":"0","YCoord":"0"},{"XCoord":"1","YCoord":"1"},{"XCoord":"2","YCoord":"2"}]}
             JSONArray CoordsJSONArray = new JSONArray (strArrayListCoordsAdded);
             Coordinate coord;
             for(int j = 0; j < CoordsJSONArray.length(); j++)
             {
-                Double XCoord = Double.parseDouble(CoordsJSONArray.getJSONObject(j).getString("XCoord"));
-                Double YCoord = Double.parseDouble(CoordsJSONArray.getJSONObject(j).getString("YCoord"));
-                coord = new Coordinate(XCoord,YCoord);
-                item.addCoordinateToArray(coord);
+                String XCoord = CoordsJSONArray.getJSONObject(j).getString("XCoord");
+                String YCoord = CoordsJSONArray.getJSONObject(j).getString("YCoord");
+                try
+                {
+                    coord = new Coordinate(Double.parseDouble(XCoord),Double.parseDouble(YCoord));
+                    item.addCoordinateToArray(coord);
+                }
+                catch(Exception e)
+                {
+
+                }
+
             }
             listOfItems.add(item);
 

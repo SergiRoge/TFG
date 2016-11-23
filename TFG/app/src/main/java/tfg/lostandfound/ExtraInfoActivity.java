@@ -57,9 +57,8 @@ public class ExtraInfoActivity extends AppCompatActivity {
                 Intent I = new Intent(ExtraInfoActivity.this, MainActivity.class);
                 item.setStrDescription(txtExtraInfo.getText().toString());
                 I.putExtra("Item", (Serializable) item);
-                Log.d("item ---> ","" + item);
-                //I.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                //finishAffinity();
+                I.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                finishAffinity();
                 startActivity(I);
             }
         });

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -69,6 +70,15 @@
         android:layout_alignStart="@+id/imageView"
         android:id="@+id/txt_welcome"
         android:layout_toStartOf="@+id/btn_options" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_notification_clear_all"
+        android:layout_below="@+id/btn_options"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="11dp"
+        android:id="@+id/btn_logoff" />
 
 
 </RelativeLayout>
