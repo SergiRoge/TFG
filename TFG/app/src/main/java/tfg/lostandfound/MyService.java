@@ -1,15 +1,21 @@
 package tfg.lostandfound;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.IBinder;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.sql.Date;
 
+import Connection.SQLObject;
 import Services.NotificationDaemon;
 
 public class MyService extends Service {
@@ -21,15 +27,12 @@ public class MyService extends Service {
     MyTask myTask;
 
 
-    public void setEmail(String email)
-    {
+    public void setEmail(String email) {
         this.email = email;
     }
 
 
-
-    public MyService()
-    {
+    public MyService() {
     }
 
     @Override
@@ -38,10 +41,8 @@ public class MyService extends Service {
     }
 
 
-
     @Override
-    public void onCreate()
-    {
+    public void onCreate() {
         super.onCreate();
 
         //Toast.makeText(this, "Servicio creado", Toast.LENGTH_LONG).show();
@@ -51,11 +52,9 @@ public class MyService extends Service {
     }
 
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();
-
 
 
         //Toast.makeText(this, "Servicio destruido ", Toast.LENGTH_LONG).show();
@@ -66,12 +65,11 @@ public class MyService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d("onStartCommand ", "onStartCommand");
 
+
         myTask.execute();
         return super.onStartCommand(intent, flags, startId);
         //return 1;
     }
-
-
 
 
     private class MyTask extends AsyncTask<String, String, String> {
@@ -79,32 +77,43 @@ public class MyService extends Service {
         private DateFormat dateFormat;
         private String date;
         private boolean cent;
+        private MyNotification  notification;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             Log.d("onPreExecute ", "onPreExecute");
+
             cent = true;
         }
 
         @Override
-        protected String doInBackground(String... params)
-        {
+        protected String doInBackground(String... params) {
 //            Toast.makeText(getApplicationContext(), "doInBackground", Toast.LENGTH_SHORT).show();
 
-            while (cent){
+            while (cent) {
                 try {
                     Log.d("doInBackground ", "doInBackground");
                     checkForMatchingItems();
-                    //publishProgress();
+                    publishProgress();
                     // Stop 5s
-                    Thread.sleep(3600);
+                    Thread.sleep(5000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
             return null;
         }
+
+
+        private void checkForMatchingItems()
+        {
+            
+            SQLObject sql = new SQLObject();
+            sql.ExecuteQuery();
+
+        }
+
 
         @Override
         protected void onProgressUpdate(String... values) {
@@ -117,12 +126,9 @@ public class MyService extends Service {
             cent = false;
         }
 
-        public void checkForMatchingItems()
-        {
-
-        }
-
-
 
     }
+
+
+
 }

@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         initializeComponents();
         initializeListeners();
 
-        startService(new Intent(MainActivity.this, MyService.class));
+        //startService(new Intent(MainActivity.this, MyService.class));
 
 
 
