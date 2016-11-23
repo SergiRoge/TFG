@@ -36,6 +36,27 @@ public class MainActivity extends AppCompatActivity {
     Controller controller;
     LaunchService launchService;
     User user;
+    MyService service;
+
+
+
+    @Override
+    protected  void onResume()
+    {
+
+        super.onResume();
+        try
+        {
+            user = service.getUser();
+            txtWelcome.setText("Welcome, " + user.getStrUserName());
+        }
+        catch(Exception e)
+        {
+
+        }
+
+
+    }
 
 
     @Override
@@ -49,7 +70,9 @@ public class MainActivity extends AppCompatActivity {
         initializeComponents();
         initializeListeners();
 
-        //startService(new Intent(MainActivity.this, MyService.class));
+        service = new MyService();
+        service.setUser(user);
+        startService(new Intent(MainActivity.this, service.getClass()));
 
 
 

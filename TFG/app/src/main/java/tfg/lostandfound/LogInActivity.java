@@ -2,6 +2,7 @@
 package tfg.lostandfound;
 
 
+import android.app.ActivityManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
@@ -34,6 +35,8 @@ public class LogInActivity extends AppCompatActivity {
     Button btnLogin;
     User user;
 
+    String strEmail;
+
 
 
     @Override
@@ -41,8 +44,36 @@ public class LogInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
+        Log.d("Oncreate","sa");
         initializeComponents();
         initializeListeners();
+
+
+
+
+
+
+    }
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(LogInActivity.this.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        if( isMyServiceRunning(MyService.class))
+        {
+            Intent I = new Intent(LogInActivity.this, MainActivity.class);
+            startActivity(I);
+            finish();
+        }
+
     }
 
     /**
@@ -90,10 +121,9 @@ public class LogInActivity extends AppCompatActivity {
 
                         if(error == OK)
                         {
+
                             Intent I = new Intent(LogInActivity.this, MainActivity.class);
                             I.putExtra("User", (Serializable) user);
-                            startService(new Intent(LogInActivity.this, MyService.class));
-
                             startActivity(I);
                         }
                         else

@@ -15,21 +15,18 @@ import android.widget.Toast;
 
 import java.sql.Date;
 
+import Classes.User;
 import Connection.SQLObject;
 import Services.NotificationDaemon;
 
 public class MyService extends Service {
 
 
+    private User user;
     private String email;
     NotificationDaemon daemon;
 
     MyTask myTask;
-
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
 
     public MyService() {
@@ -71,6 +68,21 @@ public class MyService extends Service {
         //return 1;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public String getEmail()
+    {
+        return this.email;
+    }
 
     private class MyTask extends AsyncTask<String, String, String> {
 
@@ -108,9 +120,9 @@ public class MyService extends Service {
 
         private void checkForMatchingItems()
         {
-            
+
             SQLObject sql = new SQLObject();
-            sql.ExecuteQuery();
+            //sql.ExecuteQuery("SELECT ");
 
         }
 
