@@ -32,7 +32,9 @@ public class User extends SQLObject implements Serializable {
     ArrayList<Item> listOfItems;
 
 
-
+    public User()
+    {
+    }
 
     public User(String pstrTxtEmail, String pstrTxtPassword)
     {

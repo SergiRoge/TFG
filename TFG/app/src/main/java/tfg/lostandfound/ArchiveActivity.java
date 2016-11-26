@@ -21,7 +21,6 @@ import Auxiliar.ItemAdapter;
 import Classes.Item;
 import Classes.ItemViewList;
 import Classes.User;
-import Controller.Controller;
 
 import static Auxiliar.Auxiliar.*;
 import static Auxiliar.Constants.OK;
@@ -30,7 +29,6 @@ public class ArchiveActivity extends AppCompatActivity {
 
     Button btn_back;
     ListView lstview_items;
-    Controller controller;
     ArrayList<Item> arraylst_items;
 
     User user;
@@ -64,7 +62,6 @@ public class ArchiveActivity extends AppCompatActivity {
     {
         btn_back = (Button) findViewById(R.id.btn_back);
         lstview_items = (ListView) findViewById(R.id.lst_items);
-        controller = new Controller();
         arraylst_items = new ArrayList<Item>();
         arraylst_txtview_data_1 = new ArrayList<>();
     }

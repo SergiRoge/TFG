@@ -14,7 +14,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import Classes.Item;
-import Controller.Controller;
 
 import static Auxiliar.Auxiliar.showMessageError;
 import static Auxiliar.Constants.INCORRECT_DATA;
@@ -25,7 +24,6 @@ public class RegisterItem extends AppCompatActivity {
      * All the components needed
      */
     private Item item;
-    private Controller controller;
     private EditText txtLost;
     private EditText txtColor;
     private EditText txtBrand;
@@ -39,7 +37,6 @@ public class RegisterItem extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_item);
 
-        controller = new Controller();
 
         final Bundle bundle = getIntent().getExtras();
         strLostFound = bundle.getString("ItemType");

@@ -13,27 +13,54 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.sql.Date;
 
 import Classes.User;
 import Connection.SQLObject;
 import Services.NotificationDaemon;
 
+import static Auxiliar.Constants.*;
+
 public class MyService extends Service {
 
 
-    private User user;
-    private String email;
+    User user;
+    String email;
     NotificationDaemon daemon;
 
+
+    String pepito = "hola";
+
     MyTask myTask;
+    private boolean exit = false;
 
 
-    public MyService() {
+    public MyService(User pUser)
+    {
+        user = pUser;
+
+
+
+    }
+
+    public MyService()
+    {
+
+
     }
 
     @Override
     public IBinder onBind(Intent intent) {
+
+
+        user = (User) intent.getSerializableExtra("User");
+
+
         return null;
     }
 
@@ -42,28 +69,34 @@ public class MyService extends Service {
     public void onCreate() {
         super.onCreate();
 
-        //Toast.makeText(this, "Servicio creado", Toast.LENGTH_LONG).show();
-        Log.d("Servicio ", "Creado");
-        daemon = new NotificationDaemon();
-        myTask = new MyTask();
+
+        myTask = new MyTask(user);
+
     }
 
 
     @Override
-    public void onDestroy() {
+    public void onDestroy()
+    {
         super.onDestroy();
 
 
-        //Toast.makeText(this, "Servicio destruido ", Toast.LENGTH_LONG).show();
-        Log.d("Servicio ", "destruido");
+
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d("onStartCommand ", "onStartCommand");
 
+        user = (User) intent.getSerializableExtra("User");
+
+
+
+        myTask.tUser = user;
 
         myTask.execute();
+
+
+
         return super.onStartCommand(intent, flags, startId);
         //return 1;
     }
@@ -72,8 +105,8 @@ public class MyService extends Service {
         return user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(User puser) {
+        this.user = puser;
     }
 
     public void setEmail(String email) {
@@ -86,15 +119,21 @@ public class MyService extends Service {
 
     private class MyTask extends AsyncTask<String, String, String> {
 
-        private DateFormat dateFormat;
-        private String date;
         private boolean cent;
-        private MyNotification  notification;
+        private User tUser;
 
+
+        public MyTask(User pUser)
+        {
+
+
+
+            tUser = pUser;
+        }
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            Log.d("onPreExecute ", "onPreExecute");
+
 
             cent = true;
         }
@@ -105,7 +144,7 @@ public class MyService extends Service {
 
             while (cent) {
                 try {
-                    Log.d("doInBackground ", "doInBackground");
+
                     checkForMatchingItems();
                     publishProgress();
                     // Stop 5s
@@ -122,7 +161,41 @@ public class MyService extends Service {
         {
 
             SQLObject sql = new SQLObject();
-            //sql.ExecuteQuery("SELECT ");
+
+            String content = "email="+ tUser.getStrEmail();
+
+
+            try
+            {
+                String strReturn = sql.ExecuteQuery(URL_CHECK_FOUND_ITEMS, "");
+
+
+                JSONObject jsonObject = new JSONObject(strReturn);
+
+                int IDItemLost = Integer.parseInt(jsonObject.getString("IDItemLost"));
+                int IDItemFound = Integer.parseInt(jsonObject.getString("IDItemFound"));
+
+
+                //Si esto se cumple, lanzamos notificacion
+                if((IDItemLost != 0) && (IDItemFound != 0))
+                {
+
+                    Intent intent = new Intent("DATA");
+                    intent.putExtra("data", "IDItemLost," + IDItemLost + ",IDItemFound," + IDItemFound);
+                    sendBroadcast(intent);
+                }
+
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+            catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
         }
 

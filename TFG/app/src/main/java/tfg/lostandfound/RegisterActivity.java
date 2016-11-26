@@ -15,7 +15,6 @@ import java.util.regex.Pattern;
 
 import Auxiliar.ErrorCode;
 import Classes.User;
-import Controller.Controller;
 
 import static Auxiliar.Auxiliar.*;
 import static Auxiliar.Constants.*;

@@ -1,8 +1,15 @@
 package tfg.lostandfound;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +21,7 @@ import java.io.Serializable;
 
 import Classes.Item;
 import Classes.User;
-import Controller.Controller;
+import Controller.ServiceController;
 import Services.LaunchService;
 import Services.MatchingChecker;
 import Services.NotificationDaemon;
@@ -33,11 +40,17 @@ public class MainActivity extends AppCompatActivity {
     Button btnILost;
     Button btnIFound;
     TextView txtWelcome;
-    Controller controller;
-    LaunchService launchService;
     User user;
     MyService service;
+    IntentFilter filter;
+    ReceptorServicio myReceiver;
 
+    Intent intentService;
+
+    boolean notificationsRead = false;
+
+
+    ServiceController serviceController;
 
 
     @Override
@@ -47,8 +60,19 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         try
         {
-            user = service.getUser();
+
+
+            // este trocito se debe mover
+
+
+
+
+
+
             txtWelcome.setText("Welcome, " + user.getStrUserName());
+
+
+
         }
         catch(Exception e)
         {
@@ -70,9 +94,24 @@ public class MainActivity extends AppCompatActivity {
         initializeComponents();
         initializeListeners();
 
-        service = new MyService();
-        service.setUser(user);
-        startService(new Intent(MainActivity.this, service.getClass()));
+        //serviceController = new ServiceController(user);
+
+
+        //serviceController.createService();
+        //serviceController.startService();
+
+        service = new MyService(user);
+
+        filter = new IntentFilter("DATA");
+        myReceiver = new ReceptorServicio();
+        registerReceiver(myReceiver, filter);
+
+        user = service.getUser();
+       // Log.d("Username ", "-> " + user.getStrEmail() );
+//        Log.d("Username 2", "-> " + service.getUser().getStrEmail() );
+        Intent intentService = new Intent(MainActivity.this, service.getClass());
+        intentService.putExtra("User", (Serializable) user);
+        startService(intentService);
 
 
 
@@ -106,6 +145,10 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+
+
+
 
 
     /**
@@ -212,8 +255,8 @@ public class MainActivity extends AppCompatActivity {
      */
     public void initializeComponents()
     {
+
         Log.d("InitialzieComponments","hola");
-        controller = new Controller();
 
         user = (User) getIntent().getSerializableExtra("User");
 
@@ -238,4 +281,54 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+    private void launchNotification() {
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this);
+        mBuilder.setSmallIcon(R.mipmap.ic_launcher);
+        mBuilder.setContentTitle("Notificación de Prueba");
+        mBuilder.setContentText("Contenido");
+        mBuilder.setAutoCancel(true);
+        mBuilder.setTicker("Notificación de Prueba");
+        mBuilder.setVisibility(NotificationCompat.VISIBILITY_SECRET);
+
+/*
+        Intent resultIntent = new Intent(this, MainActivity.class);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addParentStack(MainActivity.class);
+        stackBuilder.addNextIntent(resultIntent);
+
+
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+                mBuilder.setContentIntent(resultPendingIntent);
+       NotificationCompat.Action actionA =
+                new NotificationCompat.Action(0, "Botón 1", resultPendingIntent);
+        mBuilder.addAction(actionA);
+
+*/
+        //Si comento lo de arriba, no viajo a la pantalla.
+
+        NotificationManager mNotificationManager = (NotificationManager)
+                getSystemService(MainActivity.this.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(0, mBuilder.build());
+
+        unregisterReceiver(myReceiver);
+        //stopService(intentService);
+
+    }
+
+
+    private class ReceptorServicio extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context arg0, Intent arg1) {
+            if(!notificationsRead)
+            {
+                launchNotification();
+
+            }
+
+        }
+    }
+
+
 }

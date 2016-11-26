@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import Classes.User;
-import Controller.Controller;
 
 import static Auxiliar.Auxiliar.*;
 import static Auxiliar.Constants.*;
