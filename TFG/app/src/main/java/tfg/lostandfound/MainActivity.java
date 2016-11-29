@@ -21,6 +21,7 @@ import java.io.Serializable;
 
 import Classes.Item;
 import Classes.User;
+import Connection.SQLObject;
 import Controller.ServiceController;
 import Services.LaunchService;
 import Services.MatchingChecker;
@@ -29,6 +30,7 @@ import Services.NotificationDaemon;
 import static Auxiliar.Auxiliar.showMessageError;
 import static Auxiliar.Constants.INTERRUPTION_EXCEPTION;
 import static Auxiliar.Constants.IO_EXCEPTION;
+import static Auxiliar.Constants.URL_MATCHING_RESULT;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected  void onResume()
     {
-
+        Log.d("--------->","onResume");
         super.onResume();
         try
         {
@@ -86,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        Log.d("--------->","onCreate");
 
         super.onCreate(savedInstanceState);
 
@@ -103,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
         service = new MyService(user);
 
         filter = new IntentFilter("DATA");
+
         myReceiver = new ReceptorServicio();
         registerReceiver(myReceiver, filter);
 
@@ -123,27 +127,65 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onNewIntent(Intent intent)
     {
+        Log.d("--------->","onNewIntent");
+
         super.onNewIntent(intent);
 
-        Item item = (Item) intent.getSerializableExtra("Item");
+        String strFrom = intent.getExtras().getString("FROM");
 
-        if (item != null)
+        //Si venimos de la pantalla ItemMatchingActivity
+        if(strFrom.equals("ItemMatchingActivity"))
         {
+            Log.d("a","a");
+            String strResult = intent.getExtras().getString("Result");
+            String rowID = intent.getExtras().getString("RowID");
+            Log.d("--------->","strResult " + strResult);
+            Log.d("rowID","-> " + rowID);
+
+            String content = "";
+            content += "result="+strResult+"&rowid="+rowID;
+            SQLObject sqlObject = new SQLObject();
             try
             {
-                int a = item.save(user);
-                Log.d("PEPEPE ", "---------" + item.getStrFoundLost());
-                user.getListOfItems().add(item);
+                String strReturn  = sqlObject.ExecuteQuery(URL_MATCHING_RESULT,content);
+                Log.d("strReturn","-> " + strReturn);
             }
             catch (IOException e)
             {
-                showMessageError(MainActivity.this,IO_EXCEPTION);
+                e.printStackTrace();
             }
             catch (InterruptedException e)
             {
-                showMessageError(MainActivity.this,INTERRUPTION_EXCEPTION);
+                e.printStackTrace();
+            }
+
+
+        }
+        else
+        {
+            Item item = (Item) intent.getSerializableExtra("Item");
+
+            if (item != null)
+            {
+                try
+                {
+                    int a = item.save(user);
+                    Log.d("PEPEPE ", "---------" + item.getStrFoundLost());
+                    user.getListOfItems().add(item);
+                }
+                catch (IOException e)
+                {
+                    showMessageError(MainActivity.this,IO_EXCEPTION);
+                }
+                catch (InterruptedException e)
+                {
+                    showMessageError(MainActivity.this,INTERRUPTION_EXCEPTION);
+                }
             }
         }
+
+
+
     }
 
 
@@ -281,18 +323,40 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-    private void launchNotification() {
+    private void launchNotification(Intent intent) {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this);
         mBuilder.setSmallIcon(R.mipmap.ic_launcher);
-        mBuilder.setContentTitle("Notificación de Prueba");
-        mBuilder.setContentText("Contenido");
+        mBuilder.setContentTitle("Quizá has encontrado el objeto de alguien ");
+        //mBuilder.setContentText("Contenido");
         mBuilder.setAutoCancel(true);
-        mBuilder.setTicker("Notificación de Prueba");
+        mBuilder.setTicker("Item_found_notification");
         mBuilder.setVisibility(NotificationCompat.VISIBILITY_SECRET);
 
-/*
-        Intent resultIntent = new Intent(this, MainActivity.class);
+
+        Intent resultIntent = new Intent(this, ItemMatchingActivity.class);
+
+
+        resultIntent.putExtra("User", (Serializable) user);
+        resultIntent.putExtra("IDItemLost", ""+intent.getExtras().getString("IDItemLost"));
+        resultIntent.putExtra("IDItemFound", ""+intent.getExtras().getString("IDItemFound"));
+        resultIntent.putExtra("Description", ""+intent.getExtras().getString("Description"));
+        resultIntent.putExtra("Type", ""+intent.getExtras().getString("Type"));
+        resultIntent.putExtra("Material", ""+intent.getExtras().getString("Material"));
+        resultIntent.putExtra("Color", ""+intent.getExtras().getString("Color"));
+        resultIntent.putExtra("RowID", ""+intent.getExtras().getString("RowID"));
+
+
+
+        Log.d("Launch : IDItemFound","-->  "+intent.getExtras().getString("IDItemLost"));
+        Log.d("Launch : IDItemLost","--->  "+intent.getExtras().getString("IDItemFound"));
+        Log.d("Launch : strDescription","-->  " + intent.getExtras().getString("Description"));
+        Log.d("Launch : strType","-->  " + intent.getExtras().getString("Type"));
+        Log.d("Launch : strColor","-->  " + intent.getExtras().getString("Color"));
+        Log.d("Launch : strMaterial","-->  " + intent.getExtras().getString("Material"));
+
+
+
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         stackBuilder.addParentStack(MainActivity.class);
         stackBuilder.addNextIntent(resultIntent);
@@ -305,25 +369,23 @@ public class MainActivity extends AppCompatActivity {
                 new NotificationCompat.Action(0, "Botón 1", resultPendingIntent);
         mBuilder.addAction(actionA);
 
-*/
-        //Si comento lo de arriba, no viajo a la pantalla.
 
         NotificationManager mNotificationManager = (NotificationManager)
                 getSystemService(MainActivity.this.NOTIFICATION_SERVICE);
         mNotificationManager.notify(0, mBuilder.build());
 
-        unregisterReceiver(myReceiver);
-        //stopService(intentService);
 
+
+        unregisterReceiver(myReceiver);
     }
 
 
     private class ReceptorServicio extends BroadcastReceiver {
         @Override
-        public void onReceive(Context arg0, Intent arg1) {
+        public void onReceive(Context arg0, Intent intent) {
             if(!notificationsRead)
             {
-                launchNotification();
+                launchNotification(intent);
 
             }
 

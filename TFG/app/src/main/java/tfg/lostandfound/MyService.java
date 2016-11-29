@@ -18,6 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.sql.Date;
 
 import Classes.User;
@@ -144,11 +145,11 @@ public class MyService extends Service {
 
             while (cent) {
                 try {
-
+                    Thread.sleep(5000);
                     checkForMatchingItems();
                     publishProgress();
                     // Stop 5s
-                    Thread.sleep(5000);
+
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -169,20 +170,42 @@ public class MyService extends Service {
             {
                 String strReturn = sql.ExecuteQuery(URL_CHECK_FOUND_ITEMS, "");
 
-
+                Log.d("JSON DEVUELTO : ", "--> " + strReturn );
                 JSONObject jsonObject = new JSONObject(strReturn);
 
-                int IDItemLost = Integer.parseInt(jsonObject.getString("IDItemLost"));
-                int IDItemFound = Integer.parseInt(jsonObject.getString("IDItemFound"));
+
+                String IDItemLost = jsonObject.getString("IDItemLost");
+                String IDItemFound = jsonObject.getString("IDItemFound");
+                String strType = jsonObject.getString("Type");
+                String strColor = jsonObject.getString("Color");
+                String strMaterial = jsonObject.getString("Material");
+                String strDescription = jsonObject.getString("Description");
+                String RowID = jsonObject.getString("RowID");
 
 
                 //Si esto se cumple, lanzamos notificacion
-                if((IDItemLost != 0) && (IDItemFound != 0))
+                if((Integer.parseInt(IDItemLost) != 0) && (Integer.parseInt(IDItemFound) != 0))
                 {
 
                     Intent intent = new Intent("DATA");
-                    intent.putExtra("data", "IDItemLost," + IDItemLost + ",IDItemFound," + IDItemFound);
+                    intent.putExtra("IDItemLost", IDItemLost);
+                    intent.putExtra("IDItemFound", IDItemFound);
+                    intent.putExtra("Type", strType);
+                    intent.putExtra("Color", strColor);
+                    intent.putExtra("Material", strMaterial);
+                    intent.putExtra("Description", strDescription);
+                    intent.putExtra("RowID", RowID);
+
+
+                    Log.d("SERVICE : IDItemFound","-->  "+IDItemFound);
+                    Log.d("SERVICE : IDItemLost","--->  "+IDItemLost);
+                    Log.d("SE : strItemDescription","-->  " + strDescription);
+                    Log.d("SERVICE : strType","-->  " + strType);
+                    Log.d("SERVICE : strColor","-->  " + strColor);
+                    Log.d("SERVICE : strMaterial","-->  " + strMaterial);
+
                     sendBroadcast(intent);
+
                 }
 
             }

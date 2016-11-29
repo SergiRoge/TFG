@@ -30,8 +30,7 @@
         <service
             android:name=".MyService"
             android:enabled="true"
-            android:exported="true"></service>
-
+            android:exported="true" />
 
         <!-- android:launchMode="singleInstance" -->
         <activity
@@ -76,7 +75,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-
+        <activity android:name=".ItemMatchingActivity"></activity>
     </application>
 
 </manifest>
