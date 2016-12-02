@@ -78,6 +78,7 @@ public class ArchiveActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Launch Register User Activity
                 Intent I = new Intent(ArchiveActivity.this, MainActivity.class);
+                I.putExtra("FROM"," ");
                 startActivity(I);
             }
         });
@@ -126,7 +127,7 @@ public class ArchiveActivity extends AppCompatActivity {
                 intIcon = R.drawable.icon_found;
             }
 
-            item_data[iterator] = new ItemViewList(intIcon, item.getStrStatus() + " - " + item.getStrDescription(), item);
+            item_data[iterator] = new ItemViewList(intIcon, item.getStrFoundLost() + " - " + item.getStrItemType() + ", " + item.getStrItemColor() + ", " + item.getStrItemMaterial(), item);
 
         }
 

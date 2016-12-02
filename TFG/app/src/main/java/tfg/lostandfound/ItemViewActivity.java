@@ -18,6 +18,7 @@ public class ItemViewActivity extends AppCompatActivity {
     TextView txtviewItemMaterial;
     TextView txtviewItemBrand;
     TextView txtviewWhen;
+    TextView txtTittle;
 
     Button btnBack;
     Button btnDelete;
@@ -43,6 +44,7 @@ public class ItemViewActivity extends AppCompatActivity {
      */
     public void initializeComponents()
     {
+        txtTittle = (TextView) findViewById(R.id.txt_title);
         txtviewItemType = (TextView) findViewById(R.id.txt_ItemType);
         txtviewItemColor = (TextView) findViewById(R.id.txt_ItemColor);
         txtviewItemMaterial = (TextView) findViewById(R.id.txt_ItemMaterial);
@@ -50,6 +52,7 @@ public class ItemViewActivity extends AppCompatActivity {
         txtviewWhen = (TextView) findViewById(R.id.txt_ItemWhen);
 
 
+        txtTittle.setText(item.getStrFoundLost());
         txtviewItemType.setText(item.getStrItemType());
         txtviewItemColor.setText(item.getStrItemColor());
         txtviewItemMaterial.setText(item.getStrItemMaterial());

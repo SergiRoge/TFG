@@ -56,9 +56,8 @@ public class MyService extends Service {
     }
 
     @Override
-    public IBinder onBind(Intent intent) {
-
-
+    public IBinder onBind(Intent intent)
+    {
         user = (User) intent.getSerializableExtra("User");
 
 
@@ -132,7 +131,8 @@ public class MyService extends Service {
             tUser = pUser;
         }
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute()
+        {
             super.onPreExecute();
 
 
@@ -143,14 +143,18 @@ public class MyService extends Service {
         protected String doInBackground(String... params) {
 //            Toast.makeText(getApplicationContext(), "doInBackground", Toast.LENGTH_SHORT).show();
 
-            while (cent) {
-                try {
+            while (cent)
+            {
+                try
+                {
                     Thread.sleep(5000);
                     checkForMatchingItems();
                     publishProgress();
                     // Stop 5s
 
-                } catch (InterruptedException e) {
+                }
+                catch (InterruptedException e)
+                {
                     e.printStackTrace();
                 }
             }
@@ -195,14 +199,6 @@ public class MyService extends Service {
                     intent.putExtra("Material", strMaterial);
                     intent.putExtra("Description", strDescription);
                     intent.putExtra("RowID", RowID);
-
-
-                    Log.d("SERVICE : IDItemFound","-->  "+IDItemFound);
-                    Log.d("SERVICE : IDItemLost","--->  "+IDItemLost);
-                    Log.d("SE : strItemDescription","-->  " + strDescription);
-                    Log.d("SERVICE : strType","-->  " + strType);
-                    Log.d("SERVICE : strColor","-->  " + strColor);
-                    Log.d("SERVICE : strMaterial","-->  " + strMaterial);
 
                     sendBroadcast(intent);
 

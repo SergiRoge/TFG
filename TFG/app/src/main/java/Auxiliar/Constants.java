@@ -27,6 +27,7 @@ public final class Constants {
     public final static int BUTTON_1 = 1;
     public final static int BUTTON_2 = 2;
     public final static int BUTTON_3 = 3;
+    public final static String INITIAL_MESSAGE = "Hola, creo que tengo algo tuyo ! :)";
 
      //When
 

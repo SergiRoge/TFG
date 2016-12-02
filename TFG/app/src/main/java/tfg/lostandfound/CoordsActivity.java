@@ -165,6 +165,7 @@ public class CoordsActivity extends AppCompatActivity {
                     Intent I = new Intent(CoordsActivity.this, MainActivity.class);
                     I.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     I.putExtra("FROM"," ");
+
                     I.putExtra("Item", item);
                     finishAffinity();
                     startActivity(I);

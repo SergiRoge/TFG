@@ -186,6 +186,12 @@ public class User extends SQLObject implements Serializable {
     }
 
     public ArrayList<Item> getListOfItems() {
+
+        for(int i = 0; i < listOfItems.size(); i++ )
+        {
+            Log.d("item numero " + (i+1)," -> " + listOfItems.get(i).getStrItemType());
+        }
+
         return listOfItems;
     }
 

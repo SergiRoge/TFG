@@ -111,8 +111,7 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(myReceiver, filter);
 
         user = service.getUser();
-       // Log.d("Username ", "-> " + user.getStrEmail() );
-//        Log.d("Username 2", "-> " + service.getUser().getStrEmail() );
+
         Intent intentService = new Intent(MainActivity.this, service.getClass());
         intentService.putExtra("User", (Serializable) user);
         startService(intentService);
@@ -127,20 +126,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onNewIntent(Intent intent)
     {
-        Log.d("--------->","onNewIntent");
-
         super.onNewIntent(intent);
-
         String strFrom = intent.getExtras().getString("FROM");
 
         //Si venimos de la pantalla ItemMatchingActivity
         if(strFrom.equals("ItemMatchingActivity"))
         {
-            Log.d("a","a");
             String strResult = intent.getExtras().getString("Result");
             String rowID = intent.getExtras().getString("RowID");
-            Log.d("--------->","strResult " + strResult);
-            Log.d("rowID","-> " + rowID);
+
+
 
             String content = "";
             content += "result="+strResult+"&rowid="+rowID;
@@ -148,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
             try
             {
                 String strReturn  = sqlObject.ExecuteQuery(URL_MATCHING_RESULT,content);
-                Log.d("strReturn","-> " + strReturn);
+
             }
             catch (IOException e)
             {
@@ -170,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
                 try
                 {
                     int a = item.save(user);
-                    Log.d("PEPEPE ", "---------" + item.getStrFoundLost());
+
                     user.getListOfItems().add(item);
                 }
                 catch (IOException e)
@@ -248,7 +243,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v)
             {
                 //Launch Register User Activity
-                Log.d("Button pressed","Lost Button");
+
 
                 //Intent I = new Intent(MainActivity.this,NewCoordActivity.class);
                 //startActivityForResult(I,1);
@@ -266,7 +261,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v)
             {
                 //Launch Register User Activity
-                Log.d("Button pressed","Found Button");
+
                 Intent I = new Intent(MainActivity.this, RegisterItem.class);
                 I.putExtra("ItemType","Found");
                 startActivity(I);
@@ -280,7 +275,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v)
             {
                 //Launch Register User Activity
-                Log.d("Button pressed","Found Button");
+
                 stopService(new Intent(MainActivity.this, MyService.class));
                 Intent I = new Intent(MainActivity.this, LogInActivity.class);
                 I.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -298,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
     public void initializeComponents()
     {
 
-        Log.d("InitialzieComponments","hola");
+
 
         user = (User) getIntent().getSerializableExtra("User");
 
@@ -347,13 +342,6 @@ public class MainActivity extends AppCompatActivity {
         resultIntent.putExtra("RowID", ""+intent.getExtras().getString("RowID"));
 
 
-
-        Log.d("Launch : IDItemFound","-->  "+intent.getExtras().getString("IDItemLost"));
-        Log.d("Launch : IDItemLost","--->  "+intent.getExtras().getString("IDItemFound"));
-        Log.d("Launch : strDescription","-->  " + intent.getExtras().getString("Description"));
-        Log.d("Launch : strType","-->  " + intent.getExtras().getString("Type"));
-        Log.d("Launch : strColor","-->  " + intent.getExtras().getString("Color"));
-        Log.d("Launch : strMaterial","-->  " + intent.getExtras().getString("Material"));
 
 
 
