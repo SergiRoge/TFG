@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.util.Log;
 
 import tfg.lostandfound.MainActivity;
-import tfg.lostandfound.MyService;
 
 /**
  * Created by Llango on 23/11/2016.

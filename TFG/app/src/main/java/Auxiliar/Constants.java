@@ -48,6 +48,7 @@ public final class Constants {
     public final static String URL_CHECK_USER    = "http://10.0.2.2/TFG/ServerSide/Functions/GetUser.php";
     public final static String URL_CHECK_FOUND_ITEMS    = "http://10.0.2.2/TFG/ServerSide/Matching/CheckFoundItems.php";
     public final static String URL_MATCHING_RESULT    = "http://10.0.2.2/TFG/ServerSide/Matching/MatchingResult.php";
+    public final static String URL_CHECK_NEW_CHATS    = "http://10.0.2.2/TFG/ServerSide/Chat/CheckNewChats.php";
 
 
 

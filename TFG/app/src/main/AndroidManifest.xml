@@ -28,7 +28,7 @@
         </activity>
 
         <service
-            android:name=".MyService"
+            android:name=".MatchingService"
             android:enabled="true"
             android:exported="true" />
 
@@ -75,7 +75,12 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".ItemMatchingActivity"></activity>
+        <activity android:name=".ItemMatchingActivity" />
+
+        <service
+            android:name=".ChatService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

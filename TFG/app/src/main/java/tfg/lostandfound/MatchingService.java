@@ -27,12 +27,11 @@ import Services.NotificationDaemon;
 
 import static Auxiliar.Constants.*;
 
-public class MyService extends Service {
+public class MatchingService extends Service {
 
 
     User user;
     String email;
-    NotificationDaemon daemon;
 
 
     String pepito = "hola";
@@ -41,7 +40,7 @@ public class MyService extends Service {
     private boolean exit = false;
 
 
-    public MyService(User pUser)
+    public MatchingService(User pUser)
     {
         user = pUser;
 
@@ -49,7 +48,7 @@ public class MyService extends Service {
 
     }
 
-    public MyService()
+    public MatchingService()
     {
 
 
@@ -59,7 +58,7 @@ public class MyService extends Service {
     public IBinder onBind(Intent intent)
     {
         user = (User) intent.getSerializableExtra("User");
-
+        Log.d("MATCHING SERVICE: ", "--> onBind ");
 
         return null;
     }
@@ -68,7 +67,7 @@ public class MyService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        Log.d("MATCHING SERVICE: ", "--> onCreate ");
 
         myTask = new MyTask(user);
 
@@ -88,12 +87,13 @@ public class MyService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         user = (User) intent.getSerializableExtra("User");
-
+        Log.d("MATCHING SERVICE: ", "--> onStartCommand ");
 
 
         myTask.tUser = user;
 
-        myTask.execute();
+        //myTask.execute();
+        myTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
 
 
 
@@ -133,6 +133,8 @@ public class MyService extends Service {
         @Override
         protected void onPreExecute()
         {
+            Log.d("MATCHING SERVICE: ", "--> onPreExecute ");
+
             super.onPreExecute();
 
 
@@ -221,7 +223,7 @@ public class MyService extends Service {
 
         @Override
         protected void onProgressUpdate(String... values) {
-            Toast.makeText(getApplicationContext(), "Hola k haces", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Matching Service", Toast.LENGTH_SHORT).show();
         }
 
         @Override

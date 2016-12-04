@@ -1,10 +1,14 @@
 package Chat;
 
+import java.io.Serializable;
+
+import Connection.SQLObject;
+
 /**
  * Created by Llango on 01/12/2016.
  */
 
-public class Message {
+public class Message extends SQLObject implements Serializable {
 
     private String message;
     private String date;

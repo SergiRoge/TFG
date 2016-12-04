@@ -66,7 +66,7 @@ public class LogInActivity extends AppCompatActivity {
     public void onResume()
     {
         super.onResume();
-        if( isMyServiceRunning(MyService.class))
+        if( isMyServiceRunning(MatchingService.class))
         {
             Intent I = new Intent(LogInActivity.this, MainActivity.class);
             startActivity(I);

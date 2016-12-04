@@ -20,7 +20,6 @@ import Classes.User;
 import Connection.Connection;
 import Connection.ConnectionThread;
 import tfg.lostandfound.MainActivity;
-import tfg.lostandfound.MyService;
 import tfg.lostandfound.R;
 
 import static Auxiliar.Auxiliar.*;
@@ -34,7 +33,6 @@ import static Auxiliar.Constants.*;
 public class ServiceController {
 
     private User user;
-    private MyService service;
     Intent intent;
 
 
@@ -43,18 +41,11 @@ public class ServiceController {
         this.user = pUser;
     }
 
-    public void createService()
-    {
-        service = new MyService(user);
-    }
 
     public void startService(Context context)
     {
-        user = service.getUser();
         // Log.d("Username ", "-> " + user.getStrEmail() );
 //        Log.d("Username 2", "-> " + service.getUser().getStrEmail() );
-        Intent intentService = new Intent(context, service.getClass());
-        intentService.putExtra("User", (Serializable) user);
         startService(context);    }
 
     private void launchNotification() {

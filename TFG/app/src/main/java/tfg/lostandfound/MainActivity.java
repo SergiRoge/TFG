@@ -16,16 +16,23 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import java.io.IOException;
-import java.io.Serializable;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+
+import Chat.Chat;
 import Classes.Item;
 import Classes.User;
 import Connection.SQLObject;
 import Controller.ServiceController;
-import Services.LaunchService;
-import Services.MatchingChecker;
-import Services.NotificationDaemon;
 
 import static Auxiliar.Auxiliar.showMessageError;
 import static Auxiliar.Constants.INTERRUPTION_EXCEPTION;
@@ -43,11 +50,15 @@ public class MainActivity extends AppCompatActivity {
     Button btnIFound;
     TextView txtWelcome;
     User user;
-    MyService service;
-    IntentFilter filter;
-    ReceptorServicio myReceiver;
 
-    Intent intentService;
+    MatchingService matchingService;
+    IntentFilter matchingFilter;
+    MatchingReceiver matchingReceiver;
+
+
+    ChatService chatService;
+    IntentFilter chatFilter;
+    ChatReceiver chatReceiver;
 
     boolean notificationsRead = false;
 
@@ -60,26 +71,7 @@ public class MainActivity extends AppCompatActivity {
     {
         Log.d("--------->","onResume");
         super.onResume();
-        try
-        {
-
-
-            // este trocito se debe mover
-
-
-
-
-
-
-            txtWelcome.setText("Welcome, " + user.getStrUserName());
-
-
-
-        }
-        catch(Exception e)
-        {
-
-        }
+        txtWelcome.setText("Welcome, " + user.getStrUserName());
 
 
     }
@@ -96,28 +88,15 @@ public class MainActivity extends AppCompatActivity {
 
         initializeComponents();
         initializeListeners();
+        initializeServicesAndReceivers();
 
-        //serviceController = new ServiceController(user);
-
-
-        //serviceController.createService();
-        //serviceController.startService();
-
-        service = new MyService(user);
-
-        filter = new IntentFilter("DATA");
-
-        myReceiver = new ReceptorServicio();
-        registerReceiver(myReceiver, filter);
-
-        user = service.getUser();
-
-        Intent intentService = new Intent(MainActivity.this, service.getClass());
-        intentService.putExtra("User", (Serializable) user);
-        startService(intentService);
-
-
-
+        try {
+            loadChats();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
         //TODO Crear demonio que estará eternamente comprobando
 
@@ -144,6 +123,29 @@ public class MainActivity extends AppCompatActivity {
             {
                 String strReturn  = sqlObject.ExecuteQuery(URL_MATCHING_RESULT,content);
 
+                Log.d("strReturn : ",">->-> " + strReturn);
+                //Si el resultado es si, creamos nuevo chat con el usuario que perdio el objeto
+                if(strResult.equals("YES"))
+                {
+                    JSONObject jsonObject = new JSONObject(strReturn);
+
+
+                    String Email = jsonObject.getString("Email");
+                    String UserName = jsonObject.getString("UserName");
+
+                    Chat chat = new Chat(UserName, Email);
+
+                    user.lst_chats.add(chat);
+
+                    saveChats();
+
+                }
+                //Si es que no, no hacemos nada
+                else if(strResult.equals("NO"))
+                {
+                    //Do Nothing
+                }
+
             }
             catch (IOException e)
             {
@@ -151,6 +153,8 @@ public class MainActivity extends AppCompatActivity {
             }
             catch (InterruptedException e)
             {
+                e.printStackTrace();
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
 
@@ -183,7 +187,57 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void saveChats() throws IOException {
 
+        FileOutputStream stream = null;
+        stream = MainActivity.this.openFileOutput("file", Context.MODE_PRIVATE);
+        ObjectOutputStream dout = new ObjectOutputStream(stream);
+        dout.writeObject(user.lst_chats);
+
+        dout.flush();
+        stream.getFD().sync();
+        stream.close();
+
+
+    }
+
+    private void loadChats() throws IOException, ClassNotFoundException {
+        String[] readBack = null;
+
+        FileInputStream stream = null;
+
+    /* you should declare private and final FILENAME_CITY */
+        stream = MainActivity.this.openFileInput("file");
+        ObjectInputStream din = new ObjectInputStream(stream);
+        user.lst_chats = (ArrayList<Chat>) din.readObject();
+        din.close();
+        stream.close();
+    }
+
+    public void initializeServicesAndReceivers()
+    {
+
+        matchingService = new MatchingService(user);
+        matchingFilter = new IntentFilter("DATA");
+        matchingReceiver = new MatchingReceiver();
+        registerReceiver(matchingReceiver, matchingFilter);
+        user = matchingService.getUser();
+        Intent intentService = new Intent(MainActivity.this, matchingService.getClass());
+        intentService.putExtra("User", (Serializable) user);
+        startService(intentService);
+
+
+
+        chatService = new ChatService(user);
+        chatFilter = new IntentFilter("CHAT");
+        chatReceiver = new ChatReceiver();
+        registerReceiver(chatReceiver, chatFilter);
+        Intent chatIntentService = new Intent(MainActivity.this, chatService.getClass());
+        chatIntentService.putExtra("User", (Serializable) user);
+        startService(chatIntentService);
+
+
+    }
 
 
 
@@ -203,6 +257,7 @@ public class MainActivity extends AppCompatActivity {
                 //Launch Register User Activity
                 //TODO CHATS SCREEN
                 Intent I = new Intent(MainActivity.this, ChatsActivity.class);
+                I.putExtra("User", (Serializable) user);
                 startActivity(I);
             }
         });
@@ -276,7 +331,7 @@ public class MainActivity extends AppCompatActivity {
             {
                 //Launch Register User Activity
 
-                stopService(new Intent(MainActivity.this, MyService.class));
+                stopService(new Intent(MainActivity.this, MatchingService.class));
                 Intent I = new Intent(MainActivity.this, LogInActivity.class);
                 I.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 finish();
@@ -364,11 +419,11 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        unregisterReceiver(myReceiver);
+        unregisterReceiver(matchingReceiver);
     }
 
 
-    private class ReceptorServicio extends BroadcastReceiver {
+    private class MatchingReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context arg0, Intent intent) {
             if(!notificationsRead)
@@ -379,6 +434,16 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+    private class ChatReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context arg0, Intent intent) {
+            if(!notificationsRead)
+            {
+                launchNotification(intent);
 
+            }
+
+        }
+    }
 
 }

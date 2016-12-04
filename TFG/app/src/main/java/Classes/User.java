@@ -1,11 +1,13 @@
 package Classes;
 
+import android.content.Context;
 import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,7 +19,7 @@ import Connection.SQLObject;
 import static Auxiliar.Auxiliar.setErrorCode;
 import static Auxiliar.Auxiliar.showMessageError;
 import static Auxiliar.Constants.*;
-
+import Chat.Chat;
 /**
  * Created by Llango on 16/10/2016.
  */
@@ -31,6 +33,8 @@ public class User extends SQLObject implements Serializable {
 
     ArrayList<Item> listOfItems;
 
+    public ArrayList<Chat> lst_chats;
+
 
     public User()
     {
@@ -42,6 +46,7 @@ public class User extends SQLObject implements Serializable {
         strEmail = pstrTxtEmail;
         strPassword = pstrTxtPassword;
         listOfItems = new ArrayList<Item>();
+        lst_chats = new ArrayList<Chat>();
     }
 
     public  User(String pstrTxtEmail, String pstrUserName, String pstrTxtPassword)
@@ -51,6 +56,8 @@ public class User extends SQLObject implements Serializable {
         strUserName = pstrUserName;
         strPassword = pstrTxtPassword;
         listOfItems = new ArrayList<Item>();
+        lst_chats = new ArrayList<Chat>();
+
 
     }
 
@@ -69,6 +76,10 @@ public class User extends SQLObject implements Serializable {
         return Integer.parseInt(strReturn.trim());
 
     }
+
+
+
+
 
     public int retrieveUserData() throws IOException, InterruptedException, JSONException
     {

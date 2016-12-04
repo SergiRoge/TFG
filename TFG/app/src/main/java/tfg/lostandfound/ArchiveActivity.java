@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -51,9 +52,7 @@ public class ArchiveActivity extends AppCompatActivity {
 
     }
 
-    private void formatDataToShow() {
 
-    }
 
     /**
      *  Method that initialize all components that exist in the activity
@@ -104,42 +103,41 @@ public class ArchiveActivity extends AppCompatActivity {
      * are mixed,
      *
      */
-    public void fillViewList()
-    {
+    public void fillViewList() {
 
         user = (User) getIntent().getSerializableExtra("User");
         int arrayLength = user.getListOfItems().size();
-        ItemViewList item_data[] = new ItemViewList[arrayLength];
-
-
-        Item item;
-        for(int iterator = 0; iterator < arrayLength; iterator++)
+        if(arrayLength > 0)
         {
-            item = user.getListOfItems().get(iterator);
+            ItemViewList item_data[] = new ItemViewList[arrayLength];
 
-            int intIcon;
-            if(item.getStrItemBrand().equals("Lost"))
-            {
-                intIcon = R.drawable.icon_lost;
+
+            Item item;
+            for (int iterator = 0; iterator < arrayLength; iterator++) {
+                item = user.getListOfItems().get(iterator);
+
+                int intIcon;
+                if (item.getStrItemBrand().equals("Lost")) {
+                    intIcon = R.drawable.icon_lost;
+                } else {
+                    intIcon = R.drawable.icon_found;
+                }
+
+                item_data[iterator] = new ItemViewList(intIcon, item.getStrFoundLost() + " - " + item.getStrItemType() + ", " + item.getStrItemColor() + ", " + item.getStrItemMaterial(), item);
+
             }
-            else
-            {
-                intIcon = R.drawable.icon_found;
-            }
 
-            item_data[iterator] = new ItemViewList(intIcon, item.getStrFoundLost() + " - " + item.getStrItemType() + ", " + item.getStrItemColor() + ", " + item.getStrItemMaterial(), item);
 
+            ItemAdapter adapter = new ItemAdapter(this, R.layout.listview_item_row, item_data);
+
+
+            listView1 = (ListView) findViewById(R.id.lst_items);
+            listView1.setAdapter(adapter);
         }
-
-
-        formatDataToShow();
-        ItemAdapter adapter = new ItemAdapter(this, R.layout.listview_item_row, item_data);
-
-
-        listView1 = (ListView)findViewById(R.id.lst_items);
-        listView1.setAdapter(adapter);
-
-
+        else
+        {
+            Toast.makeText(getApplicationContext(), "No tienes ningun chat", Toast.LENGTH_SHORT).show();
+        }
 
 
     }
