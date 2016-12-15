@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.drawable.Icon;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.NotificationCompat;
@@ -38,6 +39,7 @@ import static Auxiliar.Auxiliar.showMessageError;
 import static Auxiliar.Constants.INTERRUPTION_EXCEPTION;
 import static Auxiliar.Constants.IO_EXCEPTION;
 import static Auxiliar.Constants.URL_MATCHING_RESULT;
+import static tfg.lostandfound.R.drawable.chat_warning;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -67,6 +69,23 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        try
+        {
+
+            unregisterReceiver(matchingReceiver);
+            unregisterReceiver(chatReceiver);
+        }
+        catch(Exception e)
+        {
+
+        }
+
+    }
+
+    @Override
     protected  void onResume()
     {
         Log.d("--------->","onResume");
@@ -90,13 +109,6 @@ public class MainActivity extends AppCompatActivity {
         initializeListeners();
         initializeServicesAndReceivers();
 
-        try {
-            loadChats();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
 
         //TODO Crear demonio que estará eternamente comprobando
 
@@ -108,8 +120,20 @@ public class MainActivity extends AppCompatActivity {
         super.onNewIntent(intent);
         String strFrom = intent.getExtras().getString("FROM");
 
+
+
+
+        if(strFrom.equals("ChatActivity"))
+        {
+            //btnChats.setBackgroundResource(chat_warning);
+
+
+        }
         //Si venimos de la pantalla ItemMatchingActivity
-        if(strFrom.equals("ItemMatchingActivity"))
+
+
+
+        else if(strFrom.equals("ItemMatchingActivity"))
         {
             String strResult = intent.getExtras().getString("Result");
             String rowID = intent.getExtras().getString("RowID");
@@ -129,21 +153,20 @@ public class MainActivity extends AppCompatActivity {
                 {
                     JSONObject jsonObject = new JSONObject(strReturn);
 
-
+                    Log.d("jsonObject" ," lista chats " + jsonObject.toString());
                     String Email = jsonObject.getString("Email");
                     String UserName = jsonObject.getString("UserName");
 
                     Chat chat = new Chat(UserName, Email);
 
-                    user.lst_chats.add(chat);
+                    user.saveChat(chat);
 
-                    saveChats();
 
                 }
                 //Si es que no, no hacemos nada
                 else if(strResult.equals("NO"))
                 {
-                    //Do Nothing
+                    //TODO Añadir a la tNonMatchingItems
                 }
 
             }
@@ -187,33 +210,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void saveChats() throws IOException {
-
-        FileOutputStream stream = null;
-        stream = MainActivity.this.openFileOutput("file", Context.MODE_PRIVATE);
-        ObjectOutputStream dout = new ObjectOutputStream(stream);
-        dout.writeObject(user.lst_chats);
-
-        dout.flush();
-        stream.getFD().sync();
-        stream.close();
-
-
-    }
-
-    private void loadChats() throws IOException, ClassNotFoundException {
-        String[] readBack = null;
-
-        FileInputStream stream = null;
-
-    /* you should declare private and final FILENAME_CITY */
-        stream = MainActivity.this.openFileInput("file");
-        ObjectInputStream din = new ObjectInputStream(stream);
-        user.lst_chats = (ArrayList<Chat>) din.readObject();
-        din.close();
-        stream.close();
-    }
-
     public void initializeServicesAndReceivers()
     {
 
@@ -229,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         chatService = new ChatService(user);
-        chatFilter = new IntentFilter("CHAT");
+        chatFilter = new IntentFilter("CHATS");
         chatReceiver = new ChatReceiver();
         registerReceiver(chatReceiver, chatFilter);
         Intent chatIntentService = new Intent(MainActivity.this, chatService.getClass());
@@ -257,7 +253,9 @@ public class MainActivity extends AppCompatActivity {
                 //Launch Register User Activity
                 //TODO CHATS SCREEN
                 Intent I = new Intent(MainActivity.this, ChatsActivity.class);
+                Log.d("antes de chats" ," lista chats " + user.lst_chats.size());
                 I.putExtra("User", (Serializable) user);
+                //finish();
                 startActivity(I);
             }
         });
@@ -272,7 +270,7 @@ public class MainActivity extends AppCompatActivity {
                 //TODO ARCHIVE SCREEN
                 Intent I = new Intent(MainActivity.this, ArchiveActivity.class);
                 I.putExtra("User", (Serializable) user);
-
+                //finish();
                 startActivity(I);
             }
         });
@@ -286,7 +284,7 @@ public class MainActivity extends AppCompatActivity {
                 //Launch Register User Activity
                 //TODO OPTIONS SCREEN
                 Intent I = new Intent(MainActivity.this, OptionsActivity.class);
-
+                //finish();
                 startActivity(I);
             }
         });
@@ -305,6 +303,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent I = new Intent(MainActivity.this, RegisterItem.class);
                 I.putExtra("ItemType","Lost");
+                finish();
                 startActivity(I);
             }
         });
@@ -319,6 +318,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent I = new Intent(MainActivity.this, RegisterItem.class);
                 I.putExtra("ItemType","Found");
+                finish();
                 startActivity(I);
             }
         });
@@ -332,8 +332,16 @@ public class MainActivity extends AppCompatActivity {
                 //Launch Register User Activity
 
                 stopService(new Intent(MainActivity.this, MatchingService.class));
+                stopService(new Intent(MainActivity.this, ChatService.class));
+                unregisterReceiver(matchingReceiver);
+                unregisterReceiver(chatReceiver);
+
+
                 Intent I = new Intent(MainActivity.this, LogInActivity.class);
                 I.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                user = null;
+
                 finish();
                 startActivity(I);
             }
@@ -373,7 +381,52 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-    private void launchNotification(Intent intent) {
+
+    private void LaunchChatNotification(Intent intent) throws IOException, InterruptedException {
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this);
+        mBuilder.setSmallIcon(R.mipmap.ic_launcher);
+        mBuilder.setContentTitle("Alguien quizá ha encontrado algo tuyo");
+        //mBuilder.setContentText("Contenido");
+        mBuilder.setAutoCancel(true);
+        mBuilder.setTicker("Item_found_notification");
+        mBuilder.setVisibility(NotificationCompat.VISIBILITY_SECRET);
+
+
+        Intent resultIntent = new Intent(this, ChatsActivity.class);
+
+        Log.d("notif chats : ","-->" + user.lst_chats.size());
+
+        resultIntent.putExtra("User", (Serializable) user);
+
+
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addParentStack(MainActivity.class);
+        stackBuilder.addNextIntent(resultIntent);
+
+
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.setContentIntent(resultPendingIntent);
+        NotificationCompat.Action actionA =
+                new NotificationCompat.Action(0, "Botón 1", resultPendingIntent);
+        mBuilder.addAction(actionA);
+
+
+        NotificationManager mNotificationManager = (NotificationManager)
+                getSystemService(MainActivity.this.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(0, mBuilder.build());
+
+
+
+        btnChats.setBackgroundResource(chat_warning);
+
+
+
+        //unregisterReceiver(chatReceiver);
+    }
+
+    private void launchMatchingNotification(Intent intent) {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this);
         mBuilder.setSmallIcon(R.mipmap.ic_launcher);
@@ -428,7 +481,7 @@ public class MainActivity extends AppCompatActivity {
         public void onReceive(Context arg0, Intent intent) {
             if(!notificationsRead)
             {
-                launchNotification(intent);
+                launchMatchingNotification(intent);
 
             }
 
@@ -439,7 +492,14 @@ public class MainActivity extends AppCompatActivity {
         public void onReceive(Context arg0, Intent intent) {
             if(!notificationsRead)
             {
-                launchNotification(intent);
+
+                try {
+                    LaunchChatNotification(intent);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
             }
 

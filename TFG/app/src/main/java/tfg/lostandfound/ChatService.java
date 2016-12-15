@@ -7,15 +7,18 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
 
 import Classes.User;
 import Connection.SQLObject;
 
-import static Auxiliar.Constants.URL_CHECK_FOUND_ITEMS;
+import Chat.Chat;
 import static Auxiliar.Constants.URL_CHECK_NEW_CHATS;
 
 public class ChatService extends Service
@@ -102,7 +105,7 @@ public class ChatService extends Service
             {
                 try
                 {
-                    Thread.sleep(5000);
+                    Thread.sleep(30000);
                     checkNewChat();
                     publishProgress();
                     // Stop 5s
@@ -124,21 +127,48 @@ public class ChatService extends Service
 
             String content = "email="+ tUser.getStrEmail();
 
-
-/*
+            ArrayList<Chat> chatArrayList = new ArrayList<Chat>();
 
             try
             {
-                //String strReturn = sql.ExecuteQuery(URL_CHECK_NEW_CHATS, "");
+                String strReturn = sql.ExecuteQuery(URL_CHECK_NEW_CHATS, content);
 
-                //Log.d("JSON DEVUELTO : ", "--> " + strReturn );
+                Log.d("BUSCANDO CHATS : ", "--> " + strReturn );
                 //JSONObject jsonObject = new JSONObject(strReturn);
 
+                JSONArray jsonArray = new JSONArray (strReturn);
 
-                //String IDItemLost = jsonObject.getString("IDItemLost");
+                if(jsonArray.length() > 0)
+                {
+                    Chat chat;
+                    for(int i = 0; i < jsonArray.length(); i++)
+                    {
+                        String UserName = jsonArray.getJSONObject(i).getString("UserName");
+                        String Email = jsonArray.getJSONObject(i).getString("Email");
+
+                        chat = new Chat(UserName, Email);
+
+                        // chatArrayList.add(chat);
+                        tUser.saveChat(chat);
+
+                    }
+
+                    if(chatArrayList.size() > 0)
+                    {
+                        Log.d("Size Chats "," : " + chatArrayList.size());
 
 
-            }/*
+                        Intent intent = new Intent("CHATS");
+                        intent.putExtra("Chats", (Serializable) chatArrayList);
+                        sendBroadcast(intent);
+                    }
+                }
+
+
+
+
+
+            }
             catch (IOException e)
             {
                 e.printStackTrace();
@@ -149,7 +179,7 @@ public class ChatService extends Service
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-*/
+
         }
 
 

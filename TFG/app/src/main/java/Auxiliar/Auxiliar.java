@@ -114,7 +114,7 @@ public final class Auxiliar {
                 strTitle = ERROR;
                 strMessage = "A server error happened";
                 break;
-            case INCORRECT_USER_PASSWORD:
+            case INCORRECT_USER:
                 strTitle = WARNING;
                 strMessage = "The user/ password is incorrect";
                 break;

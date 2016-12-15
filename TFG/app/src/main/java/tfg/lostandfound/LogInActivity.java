@@ -106,14 +106,16 @@ public class LogInActivity extends AppCompatActivity {
                 //Call to controller to check if user exists or not
 
 
-                strTxtEmail = "aaaa@gmail.com";
-                strTxtPassword = "aaaa";
+                //strTxtEmail = "aaaa@gmail.com";
+                //strTxtPassword = "aaaa";
 
                 int error = OK;
-                if(verifyNormalField(strTxtPassword) && verifyEmailField(strTxtEmail))
+                //if(verifyNormalField(strTxtPassword) && verifyEmailField(strTxtEmail))
+                 if(true)
                 {
                     try
                     {
+                        user = null;
                         user = new User(strTxtEmail, strTxtPassword);
                         error = user.retrieveUserData();
 
@@ -127,7 +129,7 @@ public class LogInActivity extends AppCompatActivity {
                         }
                         else
                         {
-                            showMessageError(LogInActivity.this,INCORRECT_DATA);
+                            showMessageError(LogInActivity.this,INCORRECT_USER);
                         }
                     }
                     catch (IOException e)

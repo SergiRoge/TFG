@@ -174,9 +174,9 @@ public class MatchingService extends Service {
 
             try
             {
-                String strReturn = sql.ExecuteQuery(URL_CHECK_FOUND_ITEMS, "");
+                String strReturn = sql.ExecuteQuery(URL_CHECK_FOUND_ITEMS, content);
 
-                Log.d("JSON DEVUELTO : ", "--> " + strReturn );
+                Log.d("check found items: ", "--> " + strReturn );
                 JSONObject jsonObject = new JSONObject(strReturn);
 
 

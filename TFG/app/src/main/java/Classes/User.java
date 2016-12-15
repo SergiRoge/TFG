@@ -89,10 +89,9 @@ public class User extends SQLObject implements Serializable {
                 "email=" + strEmail;
 
         String JSONstrReturn =  ExecuteQuery(URL_CHECK_USER, content);
+        return fillUserFields(JSONstrReturn);
 
-        fillUserFields(JSONstrReturn);
 
-        return OK;
     }
 
     /**
@@ -108,35 +107,42 @@ public class User extends SQLObject implements Serializable {
 
         Log.d("jsonObject ,", "-->" + pstrJSONObject);
 
-
-
-
         JSONArray jsonArray = new JSONArray (pstrJSONObject);
+
+        int a = 1;
+        //strUserName = jsonArray.getJSONObject(0).getString("chat");
+
+
+
+
+
+
 
 
         strUserName = jsonArray.getJSONObject(0).getString("UserName");
-        if(strUserName.equals(""))
+        Log.d("strUserName : ", "---> " + strUserName);
+        if(strUserName.equals("") || strUserName == null || strUserName.equals("null"))
         {
-            return 1;
+            return INCORRECT_USER;
         }
         //Getting the list of items listOfItems
 
         Item item;
-
-        for(int i = 1; i < jsonArray.length(); i ++)
+        JSONArray ItemList = new JSONArray (jsonArray.getJSONObject(1).getString("ItemList").toString());
+        for(int i = 0; i < ItemList.length(); i ++)
         {
             //{"ItemType":"Gafas","Brand":"RayBan","Material":"Cristal","Color":"Negro","When":"0","FoundLost":"Lost","Description":"Tipicas gafas RayBan","Status":0,
 
-            String itemType = jsonArray.getJSONObject(i).getString("ItemType");
-            String Brand = jsonArray.getJSONObject(i).getString("Brand");
-            String Material = jsonArray.getJSONObject(i).getString("Material");
-            String Color = jsonArray.getJSONObject(i).getString("Color");
-            String When = jsonArray.getJSONObject(i).getString("When");
-            String FoundLost = jsonArray.getJSONObject(i).getString("FoundLost");
-            String Description = jsonArray.getJSONObject(i).getString("Description");
-            String Status = jsonArray.getJSONObject(i).getString("Status");
+            String itemType = ItemList.getJSONObject(i).getString("ItemType");
+            String Brand = ItemList.getJSONObject(i).getString("Brand");
+            String Material = ItemList.getJSONObject(i).getString("Material");
+            String Color = ItemList.getJSONObject(i).getString("Color");
+            String When = ItemList.getJSONObject(i).getString("When");
+            String FoundLost = ItemList.getJSONObject(i).getString("FoundLost");
+            String Description = ItemList.getJSONObject(i).getString("Description");
+            String Status = ItemList.getJSONObject(i).getString("Status");
 
-            String strArrayListCoordsAdded = jsonArray.getJSONObject(i).getString("CoordinatesList");
+            String strArrayListCoordsAdded = ItemList.getJSONObject(i).getString("CoordinatesList");
 
             item = new Item(itemType, Color, Brand, Material, Integer.parseInt(When), Integer.parseInt(Status), Description, FoundLost);
 
@@ -154,6 +160,7 @@ public class User extends SQLObject implements Serializable {
                 }
                 catch(Exception e)
                 {
+                    return INCORRECT_USER;
 
                 }
 
@@ -161,6 +168,18 @@ public class User extends SQLObject implements Serializable {
             listOfItems.add(item);
 
 
+        }
+
+        JSONArray ChatList = new JSONArray (jsonArray.getJSONObject(2).getString("ChatList").toString());
+        Chat chat;
+        for(int i = 0; i < ChatList.length(); i ++)
+        {
+
+            String UserName= ChatList.getJSONObject(i).getString("ChatUserName");
+            String Email = ChatList.getJSONObject(i).getString("ChatEmail");
+            chat = new Chat(UserName, Email);
+            Log.d("Chat añadido : ", "-> " + chat.getUser().getStrUserName() );
+            lst_chats.add(chat);
         }
         return OK;
     }
@@ -210,4 +229,17 @@ public class User extends SQLObject implements Serializable {
         this.listOfItems = listOfItems;
     }
 
+    public void saveChat(Chat chat)  throws IOException, InterruptedException {
+
+        String content = "";
+        content += "email="+ this.strEmail+ "&" +
+                "otherEmail="+ chat.getUser().getStrEmail();
+
+        String strReturn =  ExecuteQuery(URL_SAVE_CHAT, content);
+        Log.d("save chat ", "-> " + strReturn);
+
+        lst_chats.add(chat);
+
+
+    }
 }

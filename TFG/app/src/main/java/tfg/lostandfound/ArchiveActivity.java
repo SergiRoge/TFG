@@ -38,6 +38,13 @@ public class ArchiveActivity extends AppCompatActivity {
 
     ArrayList<TextView> arraylst_txtview_data_1;
 
+
+    protected void onDestroy()
+    {
+        Log.d("ARCHIVE On ", " Destroy");
+        super.onDestroy();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -78,6 +85,7 @@ public class ArchiveActivity extends AppCompatActivity {
                 //Launch Register User Activity
                 Intent I = new Intent(ArchiveActivity.this, MainActivity.class);
                 I.putExtra("FROM"," ");
+                finish();
                 startActivity(I);
             }
         });
@@ -107,6 +115,7 @@ public class ArchiveActivity extends AppCompatActivity {
 
         user = (User) getIntent().getSerializableExtra("User");
         int arrayLength = user.getListOfItems().size();
+        Log.d("Usuario " + user.getStrUserName() + " : " + user.getListOfItems().size(), " items");
         if(arrayLength > 0)
         {
             ItemViewList item_data[] = new ItemViewList[arrayLength];

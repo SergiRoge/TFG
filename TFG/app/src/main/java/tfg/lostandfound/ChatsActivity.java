@@ -34,6 +34,28 @@ public class ChatsActivity extends AppCompatActivity {
 
     ArrayList<TextView> arraylst_txtview_data_1;
 
+    User user;
+
+    protected void onDestroy()
+    {
+        Log.d("CHATS On ", " Destroy");
+        super.onDestroy();
+    }
+
+
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        fillViewList();
+
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        fillViewList();
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +66,6 @@ public class ChatsActivity extends AppCompatActivity {
         initializeListeners();
         fillViewList();
 
-
         /*
             Listener for Save button
          */
@@ -53,9 +74,12 @@ public class ChatsActivity extends AppCompatActivity {
 
     private void fillViewList()
     {
+
         User user = (User) getIntent().getSerializableExtra("User");
-        Log.d("user.lst_chats ", "-> " + user.lst_chats);
+
         int arrayLength = user.lst_chats.size();
+        Log.d("user.lst_chats ", "-> " + arrayLength);
+
         if(arrayLength > 0)
         {
             ChatViewList chat_data[] = new ChatViewList[arrayLength];
@@ -64,7 +88,7 @@ public class ChatsActivity extends AppCompatActivity {
             Item item;
             for(int iterator = 0; iterator < arrayLength; iterator++)
             {
-
+                Log.d("chat con usuario ", "-> " + user.lst_chats.get(iterator).getUser().getStrUserName());
                 int intIcon = 0;
                 //RELLENAR
                 chat_data[iterator] = new ChatViewList("chat con el usuario " + user.lst_chats.get(iterator).getUser().getStrUserName());
@@ -80,6 +104,7 @@ public class ChatsActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "No tienes ningun chat", Toast.LENGTH_SHORT).show();
         }
 
+            int a = 1;
 
     }
 
@@ -91,8 +116,8 @@ public class ChatsActivity extends AppCompatActivity {
             {
                 //Launch Register User Activity
                 Intent I = new Intent(ChatsActivity.this, MainActivity.class);
-                I.putExtra("FROM"," ");
-
+                I.putExtra("FROM","ChatActivity");
+                finish();
                 startActivity(I);
             }
         });
@@ -107,7 +132,7 @@ public class ChatsActivity extends AppCompatActivity {
 
                 Intent I = new Intent(ChatsActivity.this, ChatActivity.class);
                 //I.putExtra("User", (Serializable) user);
-
+                finish();
                 ChatsActivity.this.startActivityForResult(I,1);
             }
         });
