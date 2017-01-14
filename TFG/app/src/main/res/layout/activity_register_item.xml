@@ -20,14 +20,15 @@
         android:id="@+id/lbl_lost_screen"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="36dp" />
+        android:layout_marginTop="36dp"
+        android:text="¿Has perdido algún objeto?" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txt_ItemType"
         android:layout_marginTop="41dp"
-        android:hint="@string/hint_itemType_txt"
+        android:hint="¿Qué objeto era?"
         android:layout_below="@+id/lbl_lost_screen"
         android:layout_alignStart="@+id/lbl_lost_screen"
         android:layout_alignEnd="@+id/lbl_lost_screen" />
@@ -36,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txt_ItemColor"
-        android:hint="@string/hint_itemColor_txt"
+        android:hint="¿De qué color era?"
         android:layout_below="@+id/txt_ItemType"
         android:layout_marginTop="27dp"
         android:layout_alignStart="@+id/txt_ItemType"
@@ -50,7 +51,7 @@
         android:layout_below="@+id/txt_ItemColor"
         android:layout_alignStart="@+id/txt_ItemColor"
         android:layout_alignEnd="@+id/txt_ItemColor"
-        android:hint="@string/hint_itemBrand_txt" />
+        android:hint="¿De qué marca era?" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -60,13 +61,14 @@
         android:layout_below="@+id/txt_ItemBrand"
         android:layout_alignStart="@+id/txt_ItemBrand"
         android:layout_alignEnd="@+id/txt_ItemBrand"
-        android:hint="@string/hint_itemMaterial_txt" />
+        android:hint="¿De que material estaba hecho?" />
 
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="29dp"
+
             android:id="@+id/spin_when"
             android:layout_below="@+id/txt_ItemMaterial"
             android:layout_alignStart="@+id/txt_ItemMaterial"
@@ -76,7 +78,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/btn_next_txt"
+            android:text="Siguiente"
             android:id="@+id/btn_Next"
             android:layout_below="@+id/spin_when"
             android:layout_alignParentBottom="true"

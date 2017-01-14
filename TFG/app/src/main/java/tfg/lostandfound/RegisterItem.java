@@ -63,13 +63,13 @@ public class RegisterItem extends AppCompatActivity {
 
         ArrayList<String> spinnerArray =  new ArrayList<String>();
 
-        spinnerArray.add(0,"When did you lost it ?");
-        spinnerArray.add(1,"Today");
-        spinnerArray.add(2,"Yesterday");
-        spinnerArray.add(3,"2 days ago");
-        spinnerArray.add(4,"1 week ago");
-        spinnerArray.add(5,"1 month ago");
-        spinnerArray.add(6,"I don't remember");
+        spinnerArray.add(0,"¿Cuando lo perdiste?");
+        spinnerArray.add(1,"Hoy");
+        spinnerArray.add(2,"Ayer");
+        spinnerArray.add(3,"Hace 2 días");
+        spinnerArray.add(4,"Hace 1 semana");
+        spinnerArray.add(5,"Hace 1 mes");
+        spinnerArray.add(6,"No me acuerdo");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, spinnerArray);

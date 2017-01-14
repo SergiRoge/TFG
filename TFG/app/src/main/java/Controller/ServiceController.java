@@ -23,7 +23,6 @@ import tfg.lostandfound.MainActivity;
 import tfg.lostandfound.R;
 
 import static Auxiliar.Auxiliar.*;
-import static Auxiliar.Auxiliar.createRandomItemViewListItem;
 import static Auxiliar.Constants.*;
 
 /**

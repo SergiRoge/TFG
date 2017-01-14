@@ -14,12 +14,26 @@ import com.google.android.gms.awareness.state.Weather;
 import Classes.ItemViewList;
 import tfg.lostandfound.R;
 
+/**
+ * Auxiliar class that contains the data to show in the ArchiveActivity.
+ * By default, you can show information with ease by only using a ListView and filling it with data.
+ * But using this way, it's defined a layout, and this layout is shown in every row of the ListView.
+ * That's why its needed this adaptor.
+ *
+ */
 public class ItemAdapter extends ArrayAdapter<ItemViewList> {
 
     Context context;
     int layoutResourceId;
     ItemViewList data[] = null;
 
+    /**
+     * Constructor with parameters
+     *
+     * @param context
+     * @param layoutResourceId
+     * @param data
+     */
     public ItemAdapter(Context context, int layoutResourceId, ItemViewList[] data) {
         super(context, layoutResourceId, (ItemViewList[]) data);
         this.layoutResourceId = layoutResourceId;
@@ -27,6 +41,14 @@ public class ItemAdapter extends ArrayAdapter<ItemViewList> {
         this.data = data;
     }
 
+    /**
+     * Method that returns the data from an element of the listview
+     *
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;

@@ -88,9 +88,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected  void onResume()
     {
-        Log.d("--------->","onResume");
+        Log.d("--------->","onResume use : " + user);
         super.onResume();
-        txtWelcome.setText("Welcome, " + user.getStrUserName());
+
 
 
     }
@@ -109,8 +109,6 @@ public class MainActivity extends AppCompatActivity {
         initializeListeners();
         initializeServicesAndReceivers();
 
-
-        //TODO Crear demonio que estará eternamente comprobando
 
     }
 
@@ -191,6 +189,7 @@ public class MainActivity extends AppCompatActivity {
             {
                 try
                 {
+                    Log.d("user en onnewintent " ,"-- " + user);
                     int a = item.save(user);
 
                     user.getListOfItems().add(item);
@@ -207,6 +206,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+        txtWelcome.setText("Bienvenido " + user.getStrUserName());
 
     }
 
@@ -303,7 +303,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent I = new Intent(MainActivity.this, RegisterItem.class);
                 I.putExtra("ItemType","Lost");
-                finish();
+                //finish();
                 startActivity(I);
             }
         });
@@ -318,7 +318,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent I = new Intent(MainActivity.this, RegisterItem.class);
                 I.putExtra("ItemType","Found");
-                finish();
+               // finish();
                 startActivity(I);
             }
         });

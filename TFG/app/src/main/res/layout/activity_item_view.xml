@@ -63,14 +63,14 @@
                 android:layout_marginTop="100dp"
                 android:layout_height="match_parent"
                 android:id="@+id/btn_back"
-                android:text="Back"
+                android:text="Atrás"
                 android:textSize="20sp"
                 android:layout_below="@+id/txt_ItemWhen"/>
             <Button
                 android:layout_width="150dp"
                 android:layout_height="match_parent"
                 android:id="@+id/btn_delete"
-                android:text="Delete"
+                android:text="Borrar"
                 android:textSize="20sp"
                 android:layout_alignBottom="@+id/btn_back"
                 android:layout_alignParentEnd="true"

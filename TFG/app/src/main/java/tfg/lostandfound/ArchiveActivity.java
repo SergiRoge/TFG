@@ -26,6 +26,15 @@ import Classes.User;
 import static Auxiliar.Auxiliar.*;
 import static Auxiliar.Constants.OK;
 
+
+/**
+ * Class ArchiveActivity
+ *
+ * The java class related to archive_activity.xml
+ *
+ * It manages all the behaviour of the widgets on the screen.
+ *
+ */
 public class ArchiveActivity extends AppCompatActivity {
 
     Button btn_back;
@@ -39,12 +48,20 @@ public class ArchiveActivity extends AppCompatActivity {
     ArrayList<TextView> arraylst_txtview_data_1;
 
 
+    /**
+     * Method onDestroy
+     */
     protected void onDestroy()
     {
         Log.d("ARCHIVE On ", " Destroy");
         super.onDestroy();
     }
 
+    /**
+     * Override method onCreate
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -52,6 +69,9 @@ public class ArchiveActivity extends AppCompatActivity {
         setContentView(R.layout.activity_archive);
 
 
+        /**
+         * Calling the methods that initialize the components and the listeners
+         */
         initializeComponents();
         initializeListeners();
         fillViewList();
@@ -77,7 +97,7 @@ public class ArchiveActivity extends AppCompatActivity {
      */
     public void initializeListeners() {
         /*
-            Listener for Back button
+            Listener for Back button, when pressed, it returns to MainActivity
          */
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +110,9 @@ public class ArchiveActivity extends AppCompatActivity {
             }
         });
 
+        /*
+            Listener for the list view, when pressed, it leads the user to the item view activity
+         */
         lstview_items.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapter, View v, int position, long arg3) {
@@ -107,8 +130,7 @@ public class ArchiveActivity extends AppCompatActivity {
     }
 
     /**
-     * Method that fills the list of items in the archive ViewList, both lost items and found items
-     * are mixed,
+     * Method that fills the list of items in the archive ViewList.
      *
      */
     public void fillViewList() {
@@ -116,47 +138,62 @@ public class ArchiveActivity extends AppCompatActivity {
         user = (User) getIntent().getSerializableExtra("User");
         int arrayLength = user.getListOfItems().size();
         Log.d("Usuario " + user.getStrUserName() + " : " + user.getListOfItems().size(), " items");
+
+        //If the user has registered any items
         if(arrayLength > 0)
         {
+            //we create the array that will show the data in the list view
             ItemViewList item_data[] = new ItemViewList[arrayLength];
 
 
             Item item;
-            for (int iterator = 0; iterator < arrayLength; iterator++) {
+            for (int iterator = 0; iterator < arrayLength; iterator++)
+            {
                 item = user.getListOfItems().get(iterator);
 
                 int intIcon;
-                if (item.getStrItemBrand().equals("Lost")) {
+                //This should set the icon depending by the status of the item
+                //but it does not work
+                if (item.getStrFoundLost().equals("Lost"))
+                {
                     intIcon = R.drawable.icon_lost;
-                } else {
+                }
+                else
+                {
                     intIcon = R.drawable.icon_found;
                 }
 
+                //we add each row with the icon, and the text shown in each row
                 item_data[iterator] = new ItemViewList(intIcon, item.getStrFoundLost() + " - " + item.getStrItemType() + ", " + item.getStrItemColor() + ", " + item.getStrItemMaterial(), item);
 
             }
 
 
+            //We create the new adapter with the layout and the data to be shown
             ItemAdapter adapter = new ItemAdapter(this, R.layout.listview_item_row, item_data);
 
-
+            //And set the previous created adapter
             listView1 = (ListView) findViewById(R.id.lst_items);
             listView1.setAdapter(adapter);
         }
         else
         {
+            //If there is no items, we show a little message that notifies that to the user
             Toast.makeText(getApplicationContext(), "No tienes ningun chat", Toast.LENGTH_SHORT).show();
         }
 
 
     }
+
+
+    //TODO elmininar esto
     /**
      *  The callback called when coming from the NewCoordActivity.
      *
      * @param requestCode   The code received from the NewCoordActivity.
      * @param resultCode    The code received from the NewCoordActivity.
      * @param data          The data to be retreived.
-     */
+     *//*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
@@ -172,5 +209,5 @@ public class ArchiveActivity extends AppCompatActivity {
             }
 
 
-    }
+    }*/
 }

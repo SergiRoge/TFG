@@ -18,16 +18,20 @@ import java.util.ArrayList;
 import Classes.Coordinate;
 import Classes.Item;
 
+import static Auxiliar.Auxiliar.showMessageError;
 import static Auxiliar.Constants.*;
 
-public class CoordsActivity extends AppCompatActivity {
 
-
-    /**
-     *  All the atributes needed
-     *
-     */
-
+/**
+ * Class CoordsActivity
+ *
+ * The java class related to activity_coords.xml
+ *
+ * It manages all the behaviour of the widgets on the screen.
+ *
+ */
+public class CoordsActivity extends AppCompatActivity
+{
     private Item item;
 
     private Button btnnew1;
@@ -43,13 +47,18 @@ public class CoordsActivity extends AppCompatActivity {
     private Coordinate coordinate3;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         Log.d("OnCreate","OnCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coords);
 
+        //We get the item through the intent
         item = (Item) getIntent().getSerializableExtra("Item");
 
+        /**
+         * Calling the methods that initialize the components and the listeners
+         */
         initializeComponents();
         initializeListeners();
     }
@@ -66,22 +75,12 @@ public class CoordsActivity extends AppCompatActivity {
         btnnew1 = (Button) findViewById(R.id.btn_New1);
         btnnew2 = (Button) findViewById(R.id.btn_New2);
         btnnew3 = (Button) findViewById(R.id.btn_New3);
-
         btnNext = (Button) findViewById(R.id.btn_next);
-        /**
-         * Getting all the extras
-         *
-         * If the item is a Found item, we change the text of the button 'Next' to 'Save' to
-         * notify the user is the last step.
-         * Also the listener will be changed
-         */
 
-
-
-
-        Log.d("ITEM : ", "-> " + item);
         try
         {
+            //If the registered item is Found, the label of the button is Save
+            //(By default is Next)
             if(item.getStrFoundLost().equals("Found"))
             {
                 btnNext.setText("Save");
@@ -155,13 +154,14 @@ public class CoordsActivity extends AppCompatActivity {
                 if(item.getStrFoundLost().equals("Lost"))
                 {
                     Intent I = new Intent(CoordsActivity.this, ExtraInfoActivity.class);
-
                     I.putExtra("Item", item);
                     startActivity(I);
                 }
                 //If not, we go to MainActivity
                 else if(item.getStrFoundLost().equals("Found"))
                 {
+                    showMessageError(CoordsActivity.this,ITEM_REGISTERED_ALERT);
+
                     Intent I = new Intent(CoordsActivity.this, MainActivity.class);
                     I.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     I.putExtra("FROM"," ");
@@ -206,23 +206,25 @@ public class CoordsActivity extends AppCompatActivity {
 
         switch (Integer.parseInt(strBtnPressed))
         {
+            //Depending by the button pressed, it
             case BUTTON_1:
                 txtCoordX = (TextView) findViewById(R.id.txtCoordX1);
                 txtCoordY = (TextView) findViewById(R.id.txtCoordY1);
                 coordinate1 = new Coordinate(Double.parseDouble(xCoord),Double.parseDouble(yCoord));
-
                 break;
+
             case BUTTON_2:
                 txtCoordX = (TextView) findViewById(R.id.txtCoordX2);
                 txtCoordY = (TextView) findViewById(R.id.txtCoordY2);
                 coordinate2 = new Coordinate(Double.parseDouble(xCoord),Double.parseDouble(yCoord));
                 break;
+
             case BUTTON_3:
                 txtCoordX = (TextView) findViewById(R.id.txtCoordX3);
                 txtCoordY = (TextView) findViewById(R.id.txtCoordY3);
                 coordinate3 = new Coordinate(Double.parseDouble(xCoord),Double.parseDouble(yCoord));
-
                 break;
+
             default:
                 break;
         }

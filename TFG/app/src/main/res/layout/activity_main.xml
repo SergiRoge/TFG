@@ -18,7 +18,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/btn_lostItem_txt"
+        android:text="He perdido"
         android:id="@+id/btn_lost"
         android:layout_centerVertical="true"
         android:layout_alignStart="@+id/imageView"
@@ -27,7 +27,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/btn_foundItem_txt"
+        android:text="He encontrado"
         android:id="@+id/btn_found"
         android:layout_below="@+id/btn_lost"
         android:layout_alignEnd="@+id/btn_lost"

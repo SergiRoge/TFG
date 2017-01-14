@@ -13,7 +13,8 @@
         android:id="@+id/lbl_lost_screen"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="36dp" />
+        android:layout_marginTop="36dp"
+        android:text="Añade una ubicación" />
 
     <fragment
         android:id="@+id/map"
@@ -41,7 +42,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/btn_save_item"
+        android:text="Guardar"
         android:id="@+id/btn_save_coord"
         android:layout_marginTop="14dp"
         android:layout_below="@+id/txt_x_coord"

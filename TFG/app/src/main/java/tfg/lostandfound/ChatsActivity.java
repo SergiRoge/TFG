@@ -23,6 +23,15 @@ import Classes.User;
 
 
 import Chat.Chat;
+
+/**
+ * Class ChatsActivity
+ *
+ * The java class related to activity_chats.xml
+ *
+ * It manages all the behaviour of the widgets on the screen.
+ *
+ */
 public class ChatsActivity extends AppCompatActivity {
 
 
@@ -36,6 +45,9 @@ public class ChatsActivity extends AppCompatActivity {
 
     User user;
 
+    /**
+     * Method onDestroy
+     */
     protected void onDestroy()
     {
         Log.d("CHATS On ", " Destroy");
@@ -48,7 +60,10 @@ public class ChatsActivity extends AppCompatActivity {
         fillViewList();
 
     }
-
+    /**
+     * Override method onResume
+     *
+     */
     @Override
     protected void onResume()
     {
@@ -56,22 +71,28 @@ public class ChatsActivity extends AppCompatActivity {
         fillViewList();
 
     }
-
+    /**
+     * Override method onCreate
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chats);
-
+        /**
+         * Calling the methods that initialize the components and the listeners
+         */
         initializeComponents();
         initializeListeners();
         fillViewList();
 
-        /*
-            Listener for Save button
-         */
 
     }
-
+    /**
+     * Method that fills the list of items in the archive ViewList.
+     *
+     */
     private void fillViewList()
     {
 
@@ -80,8 +101,11 @@ public class ChatsActivity extends AppCompatActivity {
         int arrayLength = user.lst_chats.size();
         Log.d("user.lst_chats ", "-> " + arrayLength);
 
+        //If the user has any chat with other user
         if(arrayLength > 0)
         {
+            //we create the array that will show the data in the list view
+
             ChatViewList chat_data[] = new ChatViewList[arrayLength];
 
 
@@ -90,13 +114,16 @@ public class ChatsActivity extends AppCompatActivity {
             {
                 Log.d("chat con usuario ", "-> " + user.lst_chats.get(iterator).getUser().getStrUserName());
                 int intIcon = 0;
-                //RELLENAR
+
+                //we add each row with the text shown in each row
                 chat_data[iterator] = new ChatViewList("chat con el usuario " + user.lst_chats.get(iterator).getUser().getStrUserName());
 
             }
-
+            //We create the new adapter with the layout and the data to be shown
             ChatAdapter adapter = new ChatAdapter(this, R.layout.listview_item_row, chat_data);
             listView1 = (ListView)findViewById(R.id.lst_chats);
+
+            //And set the previous created adapter
             listView1.setAdapter(adapter);
         }
         else
@@ -107,9 +134,14 @@ public class ChatsActivity extends AppCompatActivity {
             int a = 1;
 
     }
-
+    /**
+     *  Method that initialize all the listeners related to the components
+     */
     private void initializeListeners()
     {
+         /*
+            Listener for Back button, when pressed, it returns to MainActivity
+         */
         btn_back.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v)
@@ -121,7 +153,9 @@ public class ChatsActivity extends AppCompatActivity {
                 startActivity(I);
             }
         });
-
+        /*
+            Listener for the list view, when pressed, it leads the user to the chat with the other user
+         */
         lstview_chats.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapter, View v, int position, long arg3) {
@@ -139,7 +173,9 @@ public class ChatsActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     *  Method that initialize all components that exist in the activity
+     */
     public void initializeComponents()
     {
         btn_back = (Button) findViewById(R.id.btn_back);

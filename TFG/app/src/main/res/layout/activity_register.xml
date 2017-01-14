@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/lbl_register_scren"
+        android:text="Registro de usuario"
         android:id="@+id/lbl_register_scren"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
@@ -20,38 +20,41 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:hint="@string/hint_username"
+        android:hint="Nombre de usuario"
         android:ems="10"
         android:id="@+id/txt_username"
         android:layout_below="@+id/lbl_register_scren"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="48dp" />
+        android:layout_marginTop="48dp"
+         />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/hint_email"
+        android:hint="Correo electrónico"
         android:inputType="textEmailAddress"
         android:ems="10"
         android:id="@+id/txt_email"
         android:layout_centerVertical="true"
-        android:layout_alignStart="@+id/txt_password" />
+        android:layout_alignStart="@+id/txt_password"
+ />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
-        android:hint="@string/hint_password"
+        android:hint="Contraseña"
         android:ems="10"
         android:id="@+id/txt_password"
         android:layout_below="@+id/txt_username"
         android:layout_alignStart="@+id/txt_username"
-        android:layout_marginTop="31dp" />
+        android:layout_marginTop="31dp"
+   />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/btn_save_item"
+        android:text="Guardar"
         android:id="@+id/btn_save"
         android:layout_below="@+id/txt_email"
         android:layout_centerHorizontal="true"

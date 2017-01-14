@@ -18,7 +18,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/btn_login_txt"
+        android:text="Acceder"
         android:id="@+id/btn_login"
         android:layout_below="@+id/txt_password"
         android:layout_alignStart="@+id/txt_password"
@@ -27,7 +27,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/btn_register_txt"
+        android:text="Registrarse"
         android:id="@+id/btn_register"
         android:layout_below="@+id/btn_login"
         android:layout_alignStart="@+id/btn_login"
@@ -38,14 +38,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txt_email"
-        android:hint="@string/hint_email"
+        android:hint="Correo electrónico"
         android:layout_below="@+id/imageView"
         android:layout_alignStart="@+id/imageView"
         android:layout_marginTop="30dp"
         android:layout_alignEnd="@+id/imageView" />
 
     <EditText
-        android:hint="@string/txt_password_txt"
+        android:hint="Contraseña"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPassword"

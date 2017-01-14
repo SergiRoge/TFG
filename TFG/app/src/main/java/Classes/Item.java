@@ -12,6 +12,10 @@ import static Auxiliar.Constants.URL_SAVE_ITEM;
 
 /**
  * Created by Llango on 16/10/2016.
+ *
+ * Class that contains all the information of an item.
+ * Extends SQLObject to get the inherit methods.
+ * Implements Serializable in order to be able to get through activities.
  */
 
 public class Item extends SQLObject implements Serializable {
@@ -35,22 +39,18 @@ public class Item extends SQLObject implements Serializable {
 
     }
 
-    public int getIntStatus() {
-        return intStatus;
-    }
 
-    public void setIntStatus(int intStatus) {
-        this.intStatus = intStatus;
-    }
-
-    public String getStrFoundLost() {
-        return strFoundLost;
-    }
-
-    public void setStrFoundLost(String strFoundLost) {
-        this.strFoundLost = strFoundLost;
-    }
-
+    /**
+     * Constructor with parameters
+     * @param pstrItemType
+     * @param pstrItemColor
+     * @param pstrItemBrand
+     * @param pstrItemMaterial
+     * @param pintWhen
+     * @param pintStatus
+     * @param pstrDescription
+     * @param pstrFoundLost
+     */
     public Item(String pstrItemType, String pstrItemColor, String pstrItemBrand, String pstrItemMaterial, int pintWhen, int pintStatus, String pstrDescription, String pstrFoundLost)
     {
         strItemType     = pstrItemType;
@@ -64,8 +64,20 @@ public class Item extends SQLObject implements Serializable {
         arrayListCoordsAdded = new ArrayList<Coordinate>();
     }
 
+
+    /**
+     *  Method that saves the information of an item to database.
+     *
+     * @param user
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     */
+
     public int save(User user) throws IOException, InterruptedException {
 
+
+        //We prepare all parameters of an item
         String content = "";
         content += "type="+ strItemType + "&" +
                     "color="+ strItemColor + "&" +
@@ -79,20 +91,24 @@ public class Item extends SQLObject implements Serializable {
 
         Coordinate coord = new Coordinate();
 
+        //We prepare the coordinate section
         for(int i = 0; i < arrayListCoordsAdded.size(); i++)
         {
             coord = arrayListCoordsAdded.get(i);
             content +=  "&coordX"+i+"=" + coord.getDblXCoordinate() + "&coordY"+i+"=" + coord.getDblYCoordinate();
 
         }
+
+        //The user section
         content += "&user="+user.getStrEmail();
+
+        //And the number of coordinates added
         content += "&coordsnumber="+arrayListCoordsAdded.size();
         Log.d("ITEM","content : "+content);
 
+        //We call the method that will save the item to the database
         String strReturn =  ExecuteQuery(URL_SAVE_ITEM, content);
 
-        //An intenger expected, the SQLCode
-        //return Integer.parseInt(strReturn.trim());
         return 1;
 
     }
@@ -156,6 +172,23 @@ public class Item extends SQLObject implements Serializable {
 
     public void setArrayListCoordsAdded(ArrayList<Coordinate> arrayListCoordsAdded) {
         this.arrayListCoordsAdded = arrayListCoordsAdded;
+    }
+
+
+    public int getIntStatus() {
+        return intStatus;
+    }
+
+    public void setIntStatus(int intStatus) {
+        this.intStatus = intStatus;
+    }
+
+    public String getStrFoundLost() {
+        return strFoundLost;
+    }
+
+    public void setStrFoundLost(String strFoundLost) {
+        this.strFoundLost = strFoundLost;
     }
 
     public void addCoordinateToArray(Coordinate pCoordinate)

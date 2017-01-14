@@ -29,6 +29,13 @@ import static Auxiliar.Constants.*;
  * Created by Llango on 16/10/2016.
  */
 
+/**
+ * Class Connection
+ *
+ * Extends Thread to work properly, it's needed because when establishing a connection with a server must be done in a separate thread.
+ * If not, its used the interface thread and the UI becamos frozen.
+ *
+ */
 public class Connection extends Thread{
 
 
@@ -45,7 +52,16 @@ public class Connection extends Thread{
 
     String URL;
     String contents;
-    
+
+
+
+    /**
+     * Constructor with parameters
+     *
+     * @param pstrURL
+     * @param pstrContents
+     * @throws IOException
+     */
     public Connection(String pstrURL, String pstrContents) throws IOException
     {
 
@@ -55,6 +71,15 @@ public class Connection extends Thread{
     }
 
 
+    /**
+     *  Main method
+     *
+     *  Initializes the values of the connection with the server and stablishes de connection with it.
+     *  Reads the data received from it and close the connection.
+     *
+     *
+     * @throws IOException
+     */
     public void execute() throws IOException
     {
         httpsURLConnection.setReadTimeout(10000);
@@ -87,6 +112,9 @@ public class Connection extends Thread{
     }
 
 
+    /**
+     * The main method of a thread, calls execute method.
+     */
     @Override
     public void run()
     {

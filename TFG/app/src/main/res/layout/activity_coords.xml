@@ -49,7 +49,7 @@
                 <Button
                     android:layout_width="84dp"
                     android:layout_height="wrap_content"
-                    android:text="New"
+                    android:text="Nueva"
                     android:id="@+id/btn_New1" />
             </LinearLayout>
 
@@ -81,7 +81,7 @@
                 <Button
                     android:layout_width="84dp"
                     android:layout_height="wrap_content"
-                    android:text="New"
+                    android:text="Nueva"
                     android:id="@+id/btn_New2" />
             </LinearLayout>
 
@@ -114,7 +114,7 @@
                 <Button
                     android:layout_width="84dp"
                     android:layout_height="wrap_content"
-                    android:text="New"
+                    android:text="Nueva"
                     android:id="@+id/btn_New3" />
             </LinearLayout>
 
@@ -123,14 +123,14 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:id="@+id/lblCoords"
-                android:text="@string/lbl_coords_txt"
+                android:text="Introduce hasta 3 ubicaciones"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/btn_next_txt"
+                android:text="Siguiente"
                 android:id="@+id/btn_next"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true" />

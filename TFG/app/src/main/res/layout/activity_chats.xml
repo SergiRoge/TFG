@@ -50,7 +50,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/lbl_txt_back"
+                android:text="Atrás"
                 android:id="@+id/btn_back"
                 android:layout_centerHorizontal="true" />
 

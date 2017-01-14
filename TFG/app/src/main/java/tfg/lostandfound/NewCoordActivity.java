@@ -17,6 +17,17 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+
+import Connection.SQLObject;
+
 public class NewCoordActivity extends FragmentActivity implements OnMapReadyCallback {
 
     /**
@@ -26,7 +37,7 @@ public class NewCoordActivity extends FragmentActivity implements OnMapReadyCall
     private TextView txtXCoord;
     private TextView txtYCoord;
     private Button btnSave;
-
+    private String strJSON;
 
 
 
@@ -87,7 +98,71 @@ public class NewCoordActivity extends FragmentActivity implements OnMapReadyCall
             public void onCameraChange(CameraPosition arg0) {
                 mMap.clear();
 
-                MarkerOptions marker = new MarkerOptions().position(arg0.target);
+                final MarkerOptions marker = new MarkerOptions().position(arg0.target);
+
+                //marker.getPosition();
+
+                Log.d("posicion : ", "---->" + marker.getPosition().latitude);
+
+
+
+                //This code below gets the full adress of the position
+                //It will be an imrpovement
+                /*
+                Thread thread = new Thread()
+                {
+                    public void run()
+                    {
+                        try
+                        {
+                            URL url = new URL(
+                                    "http://maps.googleapis.com/maps/api/geocode/json?latlng="+ marker.getPosition().latitude +"," + marker.getPosition().longitude);
+                            Log.d("URL ", "-> " + url.toString());
+
+                            URLConnection con = url.openConnection();
+                            BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                            strJSON = " ";
+                            strJSON  += br.readLine();
+                            String a = "";
+                            boolean found = false;
+                            while (strJSON != null && !found)
+                            {
+
+                                a = br.readLine();
+                                Log.d("A : ", " -> " + a);
+                                if(a.contains("formatted_address"))
+                                {
+                                    strJSON = a;
+                                    found = true;
+                                    Log.d("encontro : ", " -> " + a);
+                                }
+
+                            }
+
+                            //Log.d("JSON ", "-> "+ strJSON);
+                        }
+                        catch (Exception e)
+                        {
+                            e.printStackTrace();
+                        }
+
+
+
+                            String direccion = strJSON.split(":")[1];
+                            strJSON = direccion;
+                            Log.d("adress ","tostring   " + direccion);
+
+
+
+
+                    }
+                };
+
+                thread.start();
+
+                */
+
+
 
                 Double x = (double)Math.round(marker.getPosition().latitude * 10000d) / 10000d;
                 Double y = (double)Math.round(marker.getPosition().longitude * 10000d) / 10000d;

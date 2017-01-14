@@ -20,22 +20,28 @@ import static Auxiliar.Auxiliar.setErrorCode;
 
 /**
  * Created by Sergi on 13/03/2016.
+ *
+ * Class SQLObject, has the method ExecuteQuery, which creates and establishes a new connection with
+ * the server, waits until the thread has finished and return the result of the server.
  */
 public class SQLObject {
 
-    /*
-        Todas las propiedades necesarias para la conexion
 
-
-     */
     Connection connection;
 
     public SQLObject(){
-        /*
 
-            Inicializar todo lo necesario para acceder a base de datos
-         */
     }
+
+    /**
+     * Creates the new connection object and starts the thread.
+     *
+     * @param URL
+     * @param contents
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     */
     public String ExecuteQuery(String URL, String contents) throws IOException, InterruptedException
     {
         connection = new Connection(URL, contents);

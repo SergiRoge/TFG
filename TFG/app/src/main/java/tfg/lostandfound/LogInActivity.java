@@ -110,8 +110,8 @@ public class LogInActivity extends AppCompatActivity {
                 //strTxtPassword = "aaaa";
 
                 int error = OK;
-                //if(verifyNormalField(strTxtPassword) && verifyEmailField(strTxtEmail))
-                 if(true)
+                if(verifyNormalField(strTxtPassword) && verifyEmailField(strTxtEmail))
+
                 {
                     try
                     {
@@ -141,6 +141,8 @@ public class LogInActivity extends AppCompatActivity {
                     {
                         Log.d("InterruptedException ","-->" + e.toString());
                         showMessageError(LogInActivity.this,INTERRUPTION_EXCEPTION);
+
+
                     }
                     catch (JSONException e)
                     {

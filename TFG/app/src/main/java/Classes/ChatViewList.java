@@ -4,6 +4,10 @@ package Classes;
  * Created by Llango on 03/12/2016.
  */
 
+
+/**
+ * Class that contains the information shown in the elements of the chat view list.
+ */
 public class ChatViewList
 {
     public String title;
@@ -16,6 +20,11 @@ public class ChatViewList
         super();
     }
 
+    /**
+     * Constructor with parameters
+     *
+     * @param title
+     */
     public ChatViewList(String title) {
         super();
         this.title = title;
@@ -23,6 +32,7 @@ public class ChatViewList
     }
 
 
+        /* Setters and Getters */
 
     public String getTitle() {
         return title;
@@ -32,11 +42,4 @@ public class ChatViewList
         this.title = title;
     }
 
-    public User getTheOtherUser() {
-        return theOtherUser;
-    }
-
-    public void setTheOtherUser(User theOtherUser) {
-        this.theOtherUser = theOtherUser;
-    }
 }

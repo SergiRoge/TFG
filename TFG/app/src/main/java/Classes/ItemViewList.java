@@ -9,16 +9,28 @@ import android.widget.TextView;
  * Created by Llango on 21/10/2016.
  */
 
+
+/**
+ * Class that contains the information shown in the elements of the item view list.
+ */
 public class ItemViewList{
 
     public int icon;
     public String title;
     Item item;
 
+
     public ItemViewList(){
         super();
     }
 
+    /**
+     * Constructor with parameters
+     *
+     * @param icon
+     * @param title
+     * @param pItem
+     */
     public ItemViewList(int icon, String title, Item pItem) {
         super();
         this.icon = icon;
@@ -26,6 +38,9 @@ public class ItemViewList{
         item = pItem;
 
     }
+
+    /* Setters and Getters */
+
 
     public int getIcon() {
         return icon;
